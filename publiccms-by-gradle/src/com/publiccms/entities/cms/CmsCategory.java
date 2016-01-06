@@ -38,8 +38,8 @@ public class CmsCategory implements java.io.Serializable, Staticable {
     private String childIds;
     @MyColumn(title = "标签ID")
     private String tagTypeIds;
-    @MyColumn(title = "英文名")
-    private String englishName;
+    @MyColumn(title = "编码")
+    private String code;
     @MyColumn(title = "模板路径")
     private String templatePath;
     @MyColumn(title = "路径")
@@ -83,7 +83,7 @@ public class CmsCategory implements java.io.Serializable, Staticable {
     }
 
     public CmsCategory(int siteId, String name, Integer parentId, Integer typeId, String childIds, String tagTypeIds,
-            String englishName, String templatePath, String path, boolean hasStatic, String url, String contentPath,
+            String code, String templatePath, String path, boolean hasStatic, String url, String contentPath,
             Integer pageSize, boolean allowContribute, int sort, boolean hidden, boolean disabled, int contents, Integer extendId) {
         this.siteId = siteId;
         this.name = name;
@@ -91,7 +91,7 @@ public class CmsCategory implements java.io.Serializable, Staticable {
         this.typeId = typeId;
         this.childIds = childIds;
         this.tagTypeIds = tagTypeIds;
-        this.englishName = englishName;
+        this.code = code;
         this.templatePath = templatePath;
         this.path = path;
         this.hasStatic = hasStatic;
@@ -171,13 +171,13 @@ public class CmsCategory implements java.io.Serializable, Staticable {
         this.tagTypeIds = tagTypeIds;
     }
 
-    @Column(name = "english_name", length = 50)
-    public String getEnglishName() {
-        return this.englishName;
+    @Column(name = "code", length = 50)
+    public String getCode() {
+        return this.code;
     }
 
-    public void setEnglishName(String englishName) {
-        this.englishName = englishName;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Column(name = "template_path", nullable = false)

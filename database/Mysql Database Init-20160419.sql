@@ -250,7 +250,7 @@ CREATE TABLE `cms_content_attribute` (
   `source` varchar(50) default NULL COMMENT '内容来源',
   `source_url` varchar(2048) default NULL COMMENT '来源地址',
   `data` longtext COMMENT '数据JSON',
-  `text` text COMMENT '内容',
+  `text` longtext COMMENT '内容',
   `word_count` int(11) NOT NULL COMMENT '字数',
   PRIMARY KEY  (`content_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='内容扩展';
