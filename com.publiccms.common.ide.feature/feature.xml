@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.publiccms.common.ide.feature"
+      label="Feature"
+      version="1.0.0.qualifier"
+      provider-name="PUBLICCMS">
+
+   <description url="http://www.publiccms.com/">
+      http://www.publiccms.com/
+   </description>
+
+   <copyright url="http://www.publiccms.com/">
+      http://www.publiccms.com/
+   </copyright>
+
+   <license url="http://www.publiccms.com/">
+      http://www.publiccms.com/
+   </license>
+
+   <url>
+      <discovery label="Public CMS" url="http://www.publiccms.com/"/>
+   </url>
+
+   <plugin
+         id="com.publiccms.common.ide"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

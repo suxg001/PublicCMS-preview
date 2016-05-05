@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension
+         id="com.publiccms.common.ide.cms.nature"
+         name="Public CMS Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run class="com.publiccms.common.ide.PublicCMSNature"></run>
+      </runtime>
+      <requires-nature
+            id="org.eclipse.jdt.core.javanature">
+      </requires-nature>
+   </extension>
+	<extension
+         id="com.publiccms.common.ide.template.nature"
+         name="Public CMS Template Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run class="com.publiccms.common.ide.PublicCMSTemplateNature"></run>
+      </runtime>
+   </extension>
+	<extension point="org.eclipse.ui.popupMenus">
+		<objectContribution objectClass="org.eclipse.core.resources.IResource"
+			adaptable="true" id="com.publiccms.common.ide.cms.convert">
+			<enablement>
+				<not>
+					<test forcePluginActivation="true"
+						property="org.eclipse.core.resources.projectNature" value="com.publiccms.common.ide.cms.nature" />
+				</not>
+			</enablement>
+			<action
+				class="com.publiccms.common.ide.popup.actions.ConvertToPublicCMSProjectAction"
+				enablesFor="+"
+				id="com.publiccms.common.ide.popup.actions.ConvertToPublicCMSProject"
+				label="Convert to PublicCMS Project" menubarPath="org.eclipse.ui.projectConfigure/additions">
+			</action>
+		</objectContribution>
+		<objectContribution objectClass="org.eclipse.core.resources.IResource"
+			adaptable="true" id="com.publiccms.common.ide.template.convert">
+			<enablement>
+				<not>
+					<test forcePluginActivation="true"
+							property="org.eclipse.core.resources.projectNature" value="com.publiccms.common.ide.template.nature" />
+				</not>
+			</enablement>
+			<action
+				class="com.publiccms.common.ide.popup.actions.ConvertToPublicCMSTemplateProjectAction"
+				enablesFor="+"
+				id="com.publiccms.common.ide.popup.actions.ConvertToPublicCMSTemplateProject"
+				label="Convert to PublicCMS Template Project" menubarPath="org.eclipse.ui.projectConfigure/additions">
+			</action>
+		</objectContribution>
+		<objectContribution objectClass="org.eclipse.core.resources.IResource"
+			adaptable="true" id="com.publiccms.common.ide.popup.menu">
+			<menu label="Public CMS" id="com.publiccms.common.ide.popup.menu">
+				<separator name="actions" />
+			</menu>
+			<visibility>
+				<or>
+					<objectState name="nature"
+						value="com.publiccms.common.ide.template.nature" />
+					<objectState name="nature" value="com.publiccms.common.ide.cms.nature" />
+				</or>
+			</visibility>
+			<action
+				class="com.publiccms.common.ide.popup.actions.AnnotationEntitysAction"
+				definitionId="com.publiccms.common.ide.popup.actions.AnnotationEntitys"
+				enablesFor="+" id="com.publiccms.common.ide.popup.actions.AnnotationEntitys"
+				label="Annotation Entitys" menubarPath="com.publiccms.common.ide.popup.menu/actions">
+				<visibility>
+		           <and>
+		             <objectState name="open" value="true"/>
+		             <objectState name="nature" value="com.publiccms.common.ide.cms.nature"/>
+		           </and>
+		         </visibility>
+			</action>
+			<action
+				class="com.publiccms.common.ide.popup.actions.GeneratingCodeAction"
+				definitionId="com.publiccms.common.ide.popup.actions.GeneratingCode"
+				enablesFor="+" id="com.publiccms.common.ide.popup.actions.GeneratingCode"
+				label="Generating Code" menubarPath="com.publiccms.common.ide.popup.menu/actions">
+				<visibility>
+		           <and>
+		             <objectState name="open" value="true"/>
+		             <objectState name="nature" value="com.publiccms.common.ide.cms.nature"/>
+		           </and>
+		         </visibility>
+			</action>
+			<action
+				class="com.publiccms.common.ide.popup.actions.CreateTemplateAction"
+				definitionId="com.publiccms.common.ide.popup.actions.CreateTemplate"
+				enablesFor="+" id="com.publiccms.common.ide.popup.actions.CreateTemplate"
+				label="Create Template" menubarPath="com.publiccms.common.ide.popup.menu/actions">
+				<visibility>
+		           <and>
+		             <objectState name="open" value="true"/>
+		             <objectState name="nature" value="com.publiccms.common.ide.template.nature"/>
+		           </and>
+		         </visibility>
+			</action>
+		</objectContribution>
+	</extension>
+	<extension point="org.eclipse.ui.decorators">
+		<decorator
+		       adaptable="true"
+		       icon="icons/cms-nature.png"
+		       id="com.publiccms.common.ide.cms.nature.decorator"
+		       label="Public CMS"
+		       location="BOTTOM_LEFT"
+		       state="true">
+		   <enablement>
+		     <objectState name="nature" value="com.publiccms.common.ide.cms.nature"/>
+		   </enablement>
+		</decorator>
+	</extension>
+	<extension point="org.eclipse.ui.decorators">
+		<decorator
+		       adaptable="true"
+		       icon="icons/template-nature.png"
+		       id="com.publiccms.common.ide.template.nature.decorator"
+		       label="Public CMS Template"
+		       location="BOTTOM_LEFT"
+		       state="true">
+		   <enablement>
+		     <objectState name="nature" value="com.publiccms.common.ide.template.nature"/>
+		   </enablement>
+		</decorator>
+	</extension>
+	<extension point="org.eclipse.ui.propertyPages">
+		<page
+			class="com.publiccms.common.ide.properties.PublicCMSPropertyPage"
+			id="com.publiccms.common.ide.properties.PublicCMSPropertyPage" name="Public CMS">
+			<filter name="nature" value="com.publiccms.common.ide.cms.nature"/>
+			<enabledWhen>
+				<adapt type="org.eclipse.core.resources.IProject">
+				</adapt>
+			</enabledWhen>
+		</page>
+	</extension>
+	<extension
+      point = "org.eclipse.ui.newWizards">
+		<category
+		   id = "com.publiccms.common.ide.wizards.new"
+		   name="Public CMS">
+		</category>
+	 	<wizard
+	        category="com.publiccms.common.ide.wizards.new"
+	        class="com.publiccms.common.ide.wizards.NewTemplateWizard"
+	        icon="icons/newtemplate.png"
+	        id="com.publiccms.common.ide.wizards.NewTemplate"
+	        name="Public CMS Template">
+	    	   <description>Create a New Public CMS Template</description>
+		   <selection class="org.eclipse.core.resources.IResource"/>
+		</wizard>
+	</extension>
+</plugin>

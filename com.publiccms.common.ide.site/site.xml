@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="Public CMS IDE" url="http://www.publiccms.com/ide/">
+      Public CMS IDE update site
+   </description>
+   <feature url="features/com.publiccms.common.ide.feature_1.0.0.201605051154.jar" id="com.publiccms.common.ide.feature" version="1.0.0.201605051154" os="aix,hpux,linux,macosx,qnx,solaris,win32" ws="carbon,cocoa,gtk,motif,photon,win32,wpf" arch="ia64,ia64_32,PA_RISC,ppc,sparc,x86,x86_64"/>
+   <category-def name="publiccms.ide" label="Public CMS IDE"/>
+</site>

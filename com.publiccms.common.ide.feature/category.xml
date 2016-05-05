@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <category-def name="publiccms.ide" label="Public CMS IDE">
+      <description>
+         Public CMS IDE
+      </description>
+   </category-def>
+</site>
