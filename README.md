@@ -23,9 +23,9 @@ https://git.oschina.net/sanluan/PublicCMS-lib
 V2016.0510更新：
 
 1. 动态站点新增分类保存500错误bug修复
-2. 分类类型不能删除bug修复
-3. 新增分类推荐，页面推荐
-4. RenderHandler新增char类型处理
+1. 分类类型不能删除bug修复
+1. 新增分类推荐，页面推荐
+1. RenderHandler新增char类型处理
 
 V2016.0423更新
 

@@ -24,11 +24,11 @@
 				<@import path="/ftl/tools.ftl" namespace="t"/>
 				<p class="message red"><@t.m error/></p>
 			<#else>
-				<p class="message">提交成功，请等待审核通过</p>
+				<p class="message">提交成功，感谢您贡献下载链接，请等待审核通过</p>
 			</#if>
 		<#else>
 			<form method="post" action="//cms.publiccms.com/place/save.do" onsubmit="return check();">
-				<input name="path" type="hidden" value="/index.html/750c5b01-3e58-43ab-b1c1-f9cfc8b4f5f8.html" />
+				<input name="path" type="hidden" value="/index.html/c6ae8ea8-103d-4c93-8ff2-79d67a38b3ae.html" />
 				<input name="returnUrl" type="hidden" value="${site.dynamicPath}friendlink.html?result=true" />
 				<p><label>下载链接标题:</label><input name="title" type="text" size="60" maxlength="60" value=""/></p>
 				<p><label>下载链接地址:</label><input name="url" type="text" size="60"  maxlength="60" value=""/></p>
