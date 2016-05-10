@@ -68,14 +68,12 @@ public class CmsCategory implements java.io.Serializable, Staticable {
     public CmsCategory() {
     }
 
-    public CmsCategory(int siteId, String name, String templatePath, String path, boolean hasStatic, String contentPath,
+    public CmsCategory(int siteId, String name, String path, boolean hasStatic, 
             boolean allowContribute, int sort, boolean disabled, int contents) {
         this.siteId = siteId;
         this.name = name;
-        this.templatePath = templatePath;
         this.path = path;
         this.hasStatic = hasStatic;
-        this.contentPath = contentPath;
         this.allowContribute = allowContribute;
         this.sort = sort;
         this.disabled = disabled;
@@ -180,7 +178,7 @@ public class CmsCategory implements java.io.Serializable, Staticable {
         this.code = code;
     }
 
-    @Column(name = "template_path", nullable = false)
+    @Column(name = "template_path")
     public String getTemplatePath() {
         return this.templatePath;
     }
@@ -217,7 +215,7 @@ public class CmsCategory implements java.io.Serializable, Staticable {
         this.url = url;
     }
 
-    @Column(name = "content_path", nullable = false, length = 500)
+    @Column(name = "content_path", length = 500)
     public String getContentPath() {
         return this.contentPath;
     }
