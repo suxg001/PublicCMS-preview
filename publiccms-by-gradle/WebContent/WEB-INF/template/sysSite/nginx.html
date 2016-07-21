@@ -11,6 +11,7 @@
 			<dt>Nginx配置:</dt>
 			<dd>
 				<textarea id="nginx" name="description" style="width: 100%;" rows="20"><@_disk>
+<#assign rootPath=rootPath?replace('\\','/')/>
 <@_sysDomainList advanced=true siteId=siteId>
 	<#if page.totalCount gt 0>
 		<#assign dynamicPath=a.dynamicPath/>
@@ -22,7 +23,7 @@
 			<#assign dynamicPath=dynamicPath[0..dynamicPath?index_of('/')-1]/>
 		</#if>
 		<#if dynamicPath?index_of(':') gt 0>
-			<#assign dynamicPort=dynamicPath[sitePath?index_of(':')+1..]/>
+			<#assign dynamicPort=dynamicPath[dynamicPath?index_of(':')+1..]/>
 		</#if>
 		<#assign ports =[dynamicPort!80]/>
 		<#assign domains=[]/>
@@ -61,7 +62,7 @@ server {
 	}
 			</#if>
 			<#if a.resourcePath?starts_with(a.dynamicPath)>
-	location /${a.resourcePath[a.dynamicPath.length..]} {
+	location /${a.resourcePath[a.dynamicPath?length..]} {
 		alias ${rootPath}/resource/site_${siteId}/;
 	}
 			</#if>

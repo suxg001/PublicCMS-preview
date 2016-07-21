@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.publiccms.common.base.Staticable;
+import com.publiccms.common.spi.Staticable;
 import com.sanluan.common.source.entity.MyColumn;
 
 /**

@@ -1,11 +1,14 @@
 package com.publiccms.views.controller.admin.cms;
 
 import static com.publiccms.common.tools.ExtendUtils.getExtendString;
+import static com.publiccms.common.tools.ExtendUtils.getExtentDataMap;
 import static com.publiccms.logic.component.TemplateComponent.INCLUDE_DIRECTORY;
 import static com.publiccms.logic.service.cms.CmsPlaceService.ITEM_TYPE_CUSTOM;
 import static com.publiccms.logic.service.cms.CmsPlaceService.STATUS_NORMAL;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static org.apache.commons.lang3.StringUtils.join;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -66,8 +69,8 @@ public class CmsPlaceAdminController extends AbstractController {
                 if (empty(oldEntity) || virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                     return TEMPLATE_ERROR;
                 }
-                entity = service.update(entity.getId(), entity, new String[] { "id", "siteId", "status", "userId", "type",
-                        "clicks", "path", "createDate", "disabled" });
+                entity = service.update(entity.getId(), entity,
+                        new String[] { "id", "siteId", "status", "userId", "type", "clicks", "path", "createDate", "disabled" });
                 if (notEmpty(entity)) {
                     logOperateService.save(new LogOperate(site.getId(), userId, LogLoginService.CHANNEL_WEB_MANAGER,
                             "update.place", getIpAddress(request), getDate(), entity.getPath()));
@@ -81,8 +84,9 @@ public class CmsPlaceAdminController extends AbstractController {
                         getIpAddress(request), getDate(), entity.getPath()));
             }
             String filePath = siteComponent.getWebTemplateFilePath(site, INCLUDE_DIRECTORY + entity.getPath());
-            String extentString = getExtendString(metadataComponent.getPlaceExtendDataMap(filePath,
-                    placeParamters.getExtendDataList()));
+            Map<String, String> map = getExtentDataMap(placeParamters.getExtendDataList(),
+                    metadataComponent.getPlaceMetadata(filePath).getExtendList());
+            String extentString = getExtendString(map);
             attributeService.updateAttribute(entity.getId(), extentString);
         }
         return TEMPLATE_DONE;

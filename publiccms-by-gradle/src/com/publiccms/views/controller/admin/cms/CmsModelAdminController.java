@@ -68,7 +68,7 @@ public class CmsModelAdminController extends AbstractController {
                             + entity.getName()));
         }
         if (empty(extendService.getEntity(entity.getExtendId()))) {
-            service.updateExtendId(entity.getId(), (Integer) extendService.save(new SysExtend("model", entity.getId())));
+            entity = service.updateExtendId(entity.getId(), (Integer) extendService.save(new SysExtend("model", entity.getId())));
         }
         extendFieldService.update(entity.getExtendId(), modelParamters.getContentExtends());
         return TEMPLATE_DONE;

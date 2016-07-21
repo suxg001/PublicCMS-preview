@@ -1,6 +1,6 @@
 package com.publiccms.logic.component;
 
-import static com.publiccms.common.constants.CommonConstants.DEFAULT_PAGE_BREAK_TAG;
+import static com.publiccms.common.constants.CommonConstants.getDefaultPageBreakTag;
 import static com.publiccms.common.tools.ExtendUtils.getExtendMap;
 import static com.publiccms.logic.component.SiteComponent.CONTEXT_SITE;
 import static com.publiccms.logic.component.SiteComponent.expose;
@@ -23,6 +23,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import com.publiccms.common.base.AbstractTaskDirective;
 import com.publiccms.common.base.AbstractTemplateDirective;
+import com.publiccms.common.spi.Cacheable;
 import com.publiccms.entities.cms.CmsCategory;
 import com.publiccms.entities.cms.CmsCategoryAttribute;
 import com.publiccms.entities.cms.CmsCategoryModel;
@@ -38,7 +39,6 @@ import com.publiccms.logic.service.cms.CmsPlaceService;
 import com.publiccms.views.pojo.CmsPageMetadata;
 import com.publiccms.views.pojo.CmsPlaceMetadata;
 import com.sanluan.common.base.Base;
-import com.sanluan.common.base.Cacheable;
 import com.sanluan.common.handler.PageHandler;
 
 import freemarker.template.Configuration;
@@ -96,7 +96,7 @@ public class TemplateComponent extends Base implements Cacheable {
                 model = new HashMap<String, Object>();
             }
             if (empty(metadata)) {
-                metadata = metadataComponent.getTemplateMetadata(filePath);
+                metadata = metadataComponent.getTemplateMetadata(siteComponent.getWebTemplateFilePath() + templatePath);
             }
             model.put("metadata", metadata);
             expose(model, site);
@@ -132,9 +132,8 @@ public class TemplateComponent extends Base implements Cacheable {
             if (notEmpty(categoryModel) && notEmpty(category) && !entity.isOnlyUrl()) {
                 try {
                     if (site.isUseStatic() && notEmpty(categoryModel.getTemplatePath())) {
-                        String url = site.getSitePath()
-                                + createContentFile(site, entity, category, true,
-                                        getFullFileName(site, categoryModel.getTemplatePath()), null, null);
+                        String url = site.getSitePath() + createContentFile(site, entity, category, true,
+                                getFullFileName(site, categoryModel.getTemplatePath()), null, null);
                         contentService.updateUrl(entity.getId(), url, true);
                     } else {
                         Map<String, Object> model = new HashMap<String, Object>();
@@ -188,7 +187,7 @@ public class TemplateComponent extends Base implements Cacheable {
         }
 
         if (notEmpty(attribute) && notEmpty(attribute.getText())) {
-            String[] texts = splitByWholeSeparator(attribute.getText(), DEFAULT_PAGE_BREAK_TAG);
+            String[] texts = splitByWholeSeparator(attribute.getText(), getDefaultPageBreakTag());
             if (createMultiContentPage) {
                 for (int i = 1; i < texts.length; i++) {
                     PageHandler page = new PageHandler(i + 1, 1, texts.length, null);
@@ -224,9 +223,8 @@ public class TemplateComponent extends Base implements Cacheable {
         if (notEmpty(entity.getPath())) {
             try {
                 if (site.isUseStatic() && notEmpty(entity.getTemplatePath())) {
-                    String url = site.getSitePath()
-                            + createCategoryFile(site, entity, getFullFileName(site, entity.getTemplatePath()), entity.getPath(),
-                                    pageIndex, totalPage);
+                    String url = site.getSitePath() + createCategoryFile(site, entity,
+                            getFullFileName(site, entity.getTemplatePath()), entity.getPath(), pageIndex, totalPage);
                     categoryService.updateUrl(entity.getId(), url, true);
                 } else {
                     Map<String, Object> model = new HashMap<String, Object>();

@@ -51,7 +51,7 @@ public class SourceMaker extends Base {
         // 生成某个包所有实体类的代码
         // sourceMaker.make(basePackage, "plugin", overwrite);
         // 生成某个实体类的代码
-        sourceMaker.make(Class.forName("com.publiccms.entities.cms.CmsWord"), basePackage, overwrite);
+        sourceMaker.make(Class.forName("com.publiccms.entities.sys.SysCluster"), basePackage, overwrite);
     }
 
     /**

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.publiccms.logic.service.log.LogLoginService;
 import com.publiccms.logic.service.log.LogOperateService;
 import com.publiccms.logic.service.log.LogTaskService;
+import com.publiccms.logic.service.log.LogUploadService;
 import com.publiccms.logic.service.sys.SysAppTokenService;
 import com.publiccms.logic.service.sys.SysEmailTokenService;
 import com.sanluan.common.base.Base;
@@ -29,12 +30,14 @@ public class ScheduledTaskComponent extends Base {
     @Autowired
     private LogTaskService logTaskService;
     @Autowired
+    private LogUploadService logUploadService;
+    @Autowired
     private CacheComponent cacheComponent;
 
     /**
      * 每分钟清理半小时前的token
      */
-    @Scheduled(cron = "0 * *  * * ?")
+    @Scheduled(fixedDelay = 60 * 1000L)
     public void clearAppToken() {
         Date date = addMinutes(getDate(), -30);
         appTokenService.delete(date);
@@ -58,5 +61,6 @@ public class ScheduledTaskComponent extends Base {
         logLoginService.delete(null, date);
         logOperateService.delete(null, date);
         logTaskService.delete(null, date);
+        logUploadService.delete(null, date);
     }
 }

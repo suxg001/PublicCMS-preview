@@ -26,7 +26,11 @@ public class SysTaskService extends BaseService<SysTask> {
             entity.setStatus(status);
         }
     }
-    
+
+    public boolean updateStatusToRunning(Integer id) {
+        return 1 == dao.updateStatusToRunning(id);
+    }
+
     @Autowired
     private SysTaskDao dao;
 }

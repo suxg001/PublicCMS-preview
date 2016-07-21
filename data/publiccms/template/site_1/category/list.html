@@ -24,10 +24,9 @@
 		<@echoBread category.id/>
 	</div>
 	<div class="container">
-<@_contentList categoryId=category.id containChild=true pageIndex=pageIndex count=category.pageSize>
 		<div class="data-list left-content">
+<@_contentList categoryId=category.id containChild=true pageIndex=pageIndex count=category.pageSize>
 	<@import path="/ftl/tools.ftl" namespace="t"/>
-
 	<#list page.list as a>
 		<@include path="/ftl/data-list.ftl"/>
 	</#list>
@@ -42,6 +41,7 @@
 			<#else>
 				<@include path="/ftl/category_page.ftl"/>
 			</#if>
+</@_contentList>
 		</div>
 		<aside>
 			<@_includePlace path="/category/list.html/49d393ca-f0f1-4723-a9b0-6f9b6d7cc04d.html"/> <#-- 编辑推荐 -->
@@ -57,7 +57,6 @@
 				</ul>
 			</div>
 		</aside>
-</@_contentList>
 	</div>
 </main>
 <@_includePlace path="/index.html/6369e868-50b9-4245-9d39-fd440384a685.html"/> <#-- 尾部Footer -->

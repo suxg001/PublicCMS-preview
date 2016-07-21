@@ -33,29 +33,29 @@ public class FreeMarkerUtils extends Base {
      * @throws IOException
      * @throws TemplateException
      */
-    public static void makeFileByFile(String templateFilePath, String destFilePath, Configuration config,
+    public static void makeFileByFile(String templateFilePath, String destFilePath, Configuration configuration,
             Map<String, Object> model) throws IOException, TemplateException {
-        makeFileByFile(templateFilePath, destFilePath, config, model, true, false);
+        makeFileByFile(templateFilePath, destFilePath, configuration, model, true, false);
     }
 
     /**
      * @param templateFilePath
      * @param destFilePath
-     * @param config
+     * @param configuration
      * @param model
      * @param override
      * @throws IOException
      * @throws TemplateException
      */
-    public static void makeFileByFile(String templateFilePath, String destFilePath, Configuration config,
+    public static void makeFileByFile(String templateFilePath, String destFilePath, Configuration configuration,
             Map<String, Object> model, boolean override) throws IOException, TemplateException {
-        makeFileByFile(templateFilePath, destFilePath, config, model, override, false);
+        makeFileByFile(templateFilePath, destFilePath, configuration, model, override, false);
     }
 
     /**
      * @param templateFilePath
      * @param destFilePath
-     * @param config
+     * @param configuration
      * @param model
      * @param override
      * @param append
@@ -64,10 +64,10 @@ public class FreeMarkerUtils extends Base {
      * @throws IOException
      * @throws TemplateException
      */
-    public static void makeFileByFile(String templateFilePath, String destFilePath, Configuration config,
-            Map<String, Object> model, boolean override, boolean append) throws MalformedTemplateNameException, ParseException,
-            IOException, TemplateException {
-        Template t = config.getTemplate(templateFilePath);
+    public static void makeFileByFile(String templateFilePath, String destFilePath, Configuration configuration,
+            Map<String, Object> model, boolean override, boolean append)
+            throws MalformedTemplateNameException, ParseException, IOException, TemplateException {
+        Template t = configuration.getTemplate(templateFilePath);
         File destFile = new File(destFilePath);
         if (override || append || !destFile.exists()) {
             File parent = destFile.getParentFile();
@@ -97,7 +97,7 @@ public class FreeMarkerUtils extends Base {
 
     /**
      * @param template
-     * @param configuration
+     * @param configurationuration
      * @return
      * @throws TemplateException
      * @throws IOException
@@ -122,15 +122,15 @@ public class FreeMarkerUtils extends Base {
 
     /**
      * @param templateContent
-     * @param config
+     * @param configuration
      * @param model
      * @return
      * @throws IOException
      * @throws TemplateException
      */
-    public static String makeStringByString(String templateContent, Configuration config, Map<String, Object> model)
+    public static String makeStringByString(String templateContent, Configuration configuration, Map<String, Object> model)
             throws IOException, TemplateException {
-        Template t = new Template(String.valueOf(templateContent.hashCode()), templateContent, config);
+        Template t = new Template(String.valueOf(templateContent.hashCode()), templateContent, configuration);
         return FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
     }
 }

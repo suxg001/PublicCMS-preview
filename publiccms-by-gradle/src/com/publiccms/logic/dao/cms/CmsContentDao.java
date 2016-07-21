@@ -54,11 +54,14 @@ public class CmsContentDao extends BaseDao<CmsContent> {
     }
 
     public int deleteByCategoryIds(int siteId, Integer[] categoryIds) {
-        QueryHandler queryHandler = getQueryHandler("update CmsContent bean set bean.disabled = :disabled");
-        queryHandler.condition("bean.siteId = :siteId").setParameter("siteId", siteId);
-        queryHandler.condition("bean.categoryId in (:categoryIds)").setParameter("categoryIds", categoryIds)
-                .setParameter("disabled", true);
-        return update(queryHandler);
+        if (notEmpty(categoryIds)) {
+            QueryHandler queryHandler = getQueryHandler("update CmsContent bean set bean.disabled = :disabled");
+            queryHandler.condition("bean.siteId = :siteId").setParameter("siteId", siteId);
+            queryHandler.condition("bean.categoryId in (:categoryIds)").setParameter("categoryIds", categoryIds)
+                    .setParameter("disabled", true);
+            return update(queryHandler);
+        }
+        return 0;
     }
 
     public void index(int siteId, Integer[] ids) {

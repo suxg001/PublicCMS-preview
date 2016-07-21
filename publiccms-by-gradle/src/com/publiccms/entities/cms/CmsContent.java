@@ -29,12 +29,12 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Resolution;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.publiccms.common.base.Staticable;
 import com.publiccms.common.index.CmsContentBridge;
 import com.publiccms.common.index.CmsContentInterceptor;
 import com.publiccms.common.index.PublishDateFilterFactory;
 import com.publiccms.common.index.SiteIdFilterFactory;
 import com.publiccms.common.index.StringBridge;
+import com.publiccms.common.spi.Staticable;
 import com.sanluan.common.source.entity.MyColumn;
 
 /**

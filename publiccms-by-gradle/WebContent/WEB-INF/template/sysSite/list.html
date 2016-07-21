@@ -42,7 +42,7 @@
 			<#list page.list as a>
 			<tr target="sid" rel="${a.id}">
 				<td>${a.id}</td>
-				<td>${a.name}</td>
+				<td>${a.name} <#if site.id=a.id>[当前站点]</#if></td>
 				<td>${a.useStatic?then('是(${a.sitePath!})','否')}  ${a.useSsi?then('[已启用服务器端包含]','')}</td>
 				<td>${a.dynamicPath!}</td>
 				<td>${a.resourcePath!}</td>

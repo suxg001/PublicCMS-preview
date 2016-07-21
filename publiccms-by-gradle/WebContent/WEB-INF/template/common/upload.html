@@ -3,6 +3,7 @@ var imagesSuffix=["png","gif","jpg","jpeg","bmp"];
 var resourcePath = '${site.resourcePath}';
 function checkFileType(){
 <#if onlyImage?has_content>
+	<#assign image=true/>
 	var filenames=$('input[name=file]',$.pdialog.getCurrent()).val().toLowerCase().split('.');
 	if(-1 != $.inArray(filenames[filenames.length-1], imagesSuffix)){
 		return true;
@@ -40,11 +41,11 @@ function selectFile(path){
 			</dl>
 			<ul class="tree" style="height:200px">
 			<#if admin?has_content>
-		<@_logOperateList operate='uploadfile' userId=admin.id pageIndex=1 count=5>
+		<@_logUploadList userId=admin.id image=image pageIndex=1 count=5>
 			<#list page.list as a>
-				<li><a href="javascript:;" onclick="if(selectFile('${a.content!}')){$.bringBack({'${field!'fileName'}':'${a.content!}'});}return false;">${a.content!}</a></li>
+				<li><a href="javascript:;" onclick="if(selectFile('${a.filePath!}')){$.bringBack({'${field!'fileName'}':'${a.filePath!}'});}return false;">${a.filePath!}</a></li>
 			</#list>
-		</@_logOperateList>
+		</@_logUploadList>
 			</ul>
 			<script>
 				$('ul li a',$.pdialog.getCurrent()).hover(function(){

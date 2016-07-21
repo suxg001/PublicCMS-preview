@@ -1,7 +1,7 @@
 package com.publiccms.views.controller.admin.cms;
 
 import static com.publiccms.common.tools.ExtendUtils.getExtendString;
-import static com.publiccms.common.tools.ExtendUtils.getExtentDataMap;
+import static com.publiccms.common.tools.ExtendUtils.getSysExtentDataMap;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static com.sanluan.common.tools.RequestUtils.getValue;
 import static org.apache.commons.lang3.StringUtils.join;
@@ -83,17 +83,16 @@ public class CmsCategoryAdminController extends AbstractController {
      * @return
      */
     @RequestMapping("save")
-    public String save(CmsCategory entity, CmsCategoryAttribute attribute,
-            @ModelAttribute CmsCategoryParamters categoryParamters, HttpServletRequest request, HttpSession session,
-            ModelMap model) {
+    public String save(CmsCategory entity, CmsCategoryAttribute attribute, @ModelAttribute CmsCategoryParamters categoryParamters,
+            HttpServletRequest request, HttpSession session, ModelMap model) {
         SysSite site = getSite(request);
         if (notEmpty(entity.getId())) {
             CmsCategory oldEntity = service.getEntity(entity.getId());
             if (empty(oldEntity) || virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
-            entity = service.update(entity.getId(), entity, new String[] { "siteId", "childIds", "tagTypeIds", "url", "disabled",
-                    "extendId", "contents", "typeId" });
+            entity = service.update(entity.getId(), entity,
+                    new String[] { "siteId", "childIds", "tagTypeIds", "url", "disabled", "extendId", "contents", "typeId" });
             if (notEmpty(entity)) {
                 if (notEmpty(oldEntity.getParentId()) && !oldEntity.getParentId().equals(entity.getParentId())) {
                     service.generateChildIds(site.getId(), oldEntity.getParentId());
@@ -101,20 +100,21 @@ public class CmsCategoryAdminController extends AbstractController {
                 } else if (notEmpty(entity.getParentId()) && empty(oldEntity.getParentId())) {
                     service.generateChildIds(site.getId(), entity.getParentId());
                 }
-                logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                        LogLoginService.CHANNEL_WEB_MANAGER, "update.category", getIpAddress(request), getDate(), entity.getId()
-                                + ":" + entity.getName()));
+                logOperateService.save(
+                        new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,
+                                "update.category", getIpAddress(request), getDate(), entity.getId() + ":" + entity.getName()));
             }
         } else {
             entity.setSiteId(site.getId());
             service.save(entity);
             service.addChildIds(entity.getParentId(), entity.getId());
-            logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                    LogLoginService.CHANNEL_WEB_MANAGER, "save.category", getIpAddress(request), getDate(), entity.getId() + ":"
-                            + entity.getName()));
+            logOperateService
+                    .save(new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,
+                            "save.category", getIpAddress(request), getDate(), entity.getId() + ":" + entity.getName()));
         }
         if (empty(extendService.getEntity(entity.getExtendId()))) {
-            service.updateExtendId(entity.getId(), (Integer) extendService.save(new SysExtend("category", entity.getId())));
+            entity = service.updateExtendId(entity.getId(),
+                    (Integer) extendService.save(new SysExtend("category", entity.getId())));
         }
 
         Integer[] tagTypeIds = tagTypeService.update(site.getId(), categoryParamters.getTagTypes());
@@ -123,8 +123,8 @@ public class CmsCategoryAdminController extends AbstractController {
         Map<String, String[]> parameterMap = request.getParameterMap();
         @SuppressWarnings("unchecked")
         // 修改或增加分类与模型的映射
-        List<CmsModel> modelList = (List<CmsModel>) modelService.getPage(site.getId(), null, null, null, null, null, false, null,
-                null).getList();
+        List<CmsModel> modelList = (List<CmsModel>) modelService
+                .getPage(site.getId(), null, null, null, null, null, false, null, null).getList();
         for (CmsModel cmsmodel : modelList) {
             categoryModelService.updateCategoryModel(notEmpty(getValue(parameterMap, "model_" + cmsmodel.getId())),
                     entity.getId(), cmsmodel, parameterMap);
@@ -134,10 +134,9 @@ public class CmsCategoryAdminController extends AbstractController {
         CmsCategoryType categoryType = categoryTypeService.getEntity(entity.getTypeId());
         if (notEmpty(categoryType) && notEmpty(categoryType.getExtendId())) {
             @SuppressWarnings("unchecked")
-            List<SysExtendField> categoryTypeExtendList = (List<SysExtendField>) extendFieldService.getPage(
-                    categoryType.getExtendId(), null, null).getList();
-            Map<String, String> map = getExtentDataMap(entity.getTypeId(), categoryParamters.getExtendDataList(),
-                    categoryTypeExtendList);
+            List<SysExtendField> categoryTypeExtendList = (List<SysExtendField>) extendFieldService
+                    .getPage(categoryType.getExtendId(), null, null).getList();
+            Map<String, String> map = getSysExtentDataMap(categoryParamters.getExtendDataList(), categoryTypeExtendList);
             attribute.setData(getExtendString(map));
         } else {
             attribute.setData(null);
@@ -212,8 +211,8 @@ public class CmsCategoryAdminController extends AbstractController {
                 return TEMPLATE_ERROR;
             }
             logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                    LogLoginService.CHANNEL_WEB_MANAGER, "static.category", getIpAddress(request), getDate(), join(ids, ',')
-                            + ",pageSize:" + (empty(max) ? 1 : max)));
+                    LogLoginService.CHANNEL_WEB_MANAGER, "static.category", getIpAddress(request), getDate(),
+                    join(ids, ',') + ",pageSize:" + (empty(max) ? 1 : max)));
         }
         return TEMPLATE_DONE;
     }

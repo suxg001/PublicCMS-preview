@@ -27,7 +27,7 @@ public class CmsContentTagDao extends BaseDao<CmsContentTag> {
     }
 
     public int delete(Integer[] tagIds, Integer[] contentIds) {
-        if (empty(tagIds) || empty(contentIds)) {
+        if (notEmpty(tagIds) || notEmpty(contentIds)) {
             QueryHandler queryHandler = getDeleteQueryHandler("from CmsContentTag bean");
             if (notEmpty(tagIds)) {
                 queryHandler.condition("bean.tagId in (:tagIds)").setParameter("tagIds", tagIds);

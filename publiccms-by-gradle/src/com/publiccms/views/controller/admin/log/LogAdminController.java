@@ -15,6 +15,7 @@ import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysSite;
 import com.publiccms.logic.service.log.LogLoginService;
 import com.publiccms.logic.service.log.LogTaskService;
+import com.publiccms.logic.service.log.LogUploadService;
 
 @Controller
 public class LogAdminController extends AbstractController {
@@ -22,6 +23,8 @@ public class LogAdminController extends AbstractController {
     private LogLoginService logLoginService;
     @Autowired
     private LogTaskService logTaskService;
+    @Autowired
+    private LogUploadService logUploadService;
 
     @RequestMapping("logLogin/delete")
     public String logLoginDelete(Integer[] ids, HttpServletRequest request, HttpSession session) {
@@ -52,6 +55,17 @@ public class LogAdminController extends AbstractController {
             logTaskService.delete(site.getId(), ids);
             logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
                     LogLoginService.CHANNEL_WEB_MANAGER, "delete.logTask", getIpAddress(request), getDate(), join(ids, ',')));
+        }
+        return TEMPLATE_DONE;
+    }
+
+    @RequestMapping("logUpload/delete")
+    public String logUploadDelete(Integer[] ids, HttpServletRequest request, HttpSession session) {
+        SysSite site = getSite(request);
+        if (notEmpty(ids)) {
+            logUploadService.delete(site.getId(), ids);
+            logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
+                    LogLoginService.CHANNEL_WEB_MANAGER, "delete.logUpload", getIpAddress(request), getDate(), join(ids, ',')));
         }
         return TEMPLATE_DONE;
     }

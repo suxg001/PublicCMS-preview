@@ -1,7 +1,7 @@
 package com.publiccms.views.controller.admin.cms;
 
 import static com.publiccms.common.tools.ExtendUtils.getExtendString;
-import static com.publiccms.common.tools.ExtendUtils.getExtentDataMap;
+import static com.publiccms.common.tools.ExtendUtils.getSysExtentDataMap;
 import static com.sanluan.common.tools.LanguagesUtils.getMessage;
 import static com.sanluan.common.tools.MyStringUtils.removeHtmlTag;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
@@ -109,12 +109,11 @@ public class CmsContentAdminController extends AbstractController {
         SysSite site = getSite(request);
         SysUser user = getAdminFromSession(session);
         SysDept dept = sysDeptService.getEntity(user.getDeptId());
-        if (virifyNotEmpty("deptId", user.getDeptId(), model)
-                && virifyNotEmpty("deptId", dept, model)
-                && virifyCustom(
-                        "noright",
-                        !(dept.isOwnsAllCategory() || notEmpty(sysDeptCategoryService.getEntity(user.getDeptId(),
-                                entity.getCategoryId()))), model)) {
+        if (virifyNotEmpty("deptId", user.getDeptId(), model) && virifyNotEmpty("deptId", dept, model)
+                && virifyCustom("noright",
+                        !(dept.isOwnsAllCategory()
+                                || notEmpty(sysDeptCategoryService.getEntity(user.getDeptId(), entity.getCategoryId()))),
+                        model)) {
             return TEMPLATE_ERROR;
         }
         CmsCategoryModel categoryModel = categoryModelService.getEntity(entity.getModelId(), entity.getCategoryId());
@@ -171,8 +170,8 @@ public class CmsContentAdminController extends AbstractController {
             } else {
                 categoryService.updateContents(entity.getCategoryId(), 1);
             }
-            logOperateService.save(new LogOperate(site.getId(), user.getId(), LogLoginService.CHANNEL_WEB_MANAGER,
-                    "save.content", getIpAddress(request), now, entity.getId() + ":" + entity.getTitle()));
+            logOperateService.save(new LogOperate(site.getId(), user.getId(), LogLoginService.CHANNEL_WEB_MANAGER, "save.content",
+                    getIpAddress(request), now, entity.getId() + ":" + entity.getTitle()));
         }
         Integer[] tagIds = tagService.update(site.getId(), contentParamters.getTags());
         service.updateTagIds(entity.getId(), arrayToCommaDelimitedString(tagIds));// 更新保存标签
@@ -188,16 +187,16 @@ public class CmsContentAdminController extends AbstractController {
         Map<String, String> map = null;
         if (notEmpty(extendService.getEntity(cmsModel.getExtendId()))) {
             @SuppressWarnings("unchecked")
-            List<SysExtendField> modelExtendList = (List<SysExtendField>) extendFieldService.getPage(cmsModel.getExtendId(),
-                    null, null).getList();
-            map = getExtentDataMap(cmsModel.getExtendId(), contentParamters.getModelExtendDataList(), modelExtendList);
+            List<SysExtendField> modelExtendList = (List<SysExtendField>) extendFieldService
+                    .getPage(cmsModel.getExtendId(), null, null).getList();
+            map = getSysExtentDataMap(contentParamters.getModelExtendDataList(), modelExtendList);
         }
         if (notEmpty(extendService.getEntity(category.getExtendId()))) {
             @SuppressWarnings("unchecked")
-            List<SysExtendField> categoryExtendList = (List<SysExtendField>) extendFieldService.getPage(category.getExtendId(),
-                    null, null).getList();
-            Map<String, String> categoryMap = getExtentDataMap(entity.getCategoryId(),
-                    contentParamters.getCategoryExtendDataList(), categoryExtendList);
+            List<SysExtendField> categoryExtendList = (List<SysExtendField>) extendFieldService
+                    .getPage(category.getExtendId(), null, null).getList();
+            Map<String, String> categoryMap = getSysExtentDataMap(contentParamters.getCategoryExtendDataList(),
+                    categoryExtendList);
             if (notEmpty(map)) {
                 map.putAll(categoryMap);
             } else {
@@ -279,7 +278,8 @@ public class CmsContentAdminController extends AbstractController {
         CmsContent content = service.getEntity(entity.getContentId());
         CmsContent related = service.getEntity(entity.getRelatedContentId());
         SysSite site = getSite(request);
-        if (notEmpty(content) && notEmpty(related) && site.getId() == content.getSiteId() && site.getId() == related.getSiteId()) {
+        if (notEmpty(content) && notEmpty(related) && site.getId() == content.getSiteId()
+                && site.getId() == related.getSiteId()) {
             if (empty(entity.getTitle())) {
                 entity.setTitle(entity.getTitle());
             }
@@ -289,8 +289,8 @@ public class CmsContentAdminController extends AbstractController {
             cmsContentRelatedService.save(entity);
             publish(new Integer[] { entity.getContentId() }, request, session, model);
             logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                    LogLoginService.CHANNEL_WEB_MANAGER, "related.content", getIpAddress(request), getDate(), related.getId()
-                            + ":" + related.getTitle() + " to " + content.getId() + ":" + content.getTitle()));
+                    LogLoginService.CHANNEL_WEB_MANAGER, "related.content", getIpAddress(request), getDate(),
+                    related.getId() + ":" + related.getTitle() + " to " + content.getId() + ":" + content.getTitle()));
         }
         return TEMPLATE_DONE;
     }
@@ -314,14 +314,14 @@ public class CmsContentAdminController extends AbstractController {
                     if (sb.length() > 0) {
                         sb.append(",");
                     }
-                    sb.append(getMessage(request, "message.content.categoryModel.empty",
-                            entity.getId() + ":" + entity.getTitle(), categoryId + ":" + category.getName()));
+                    sb.append(getMessage(request, "message.content.categoryModel.empty", entity.getId() + ":" + entity.getTitle(),
+                            categoryId + ":" + category.getName()));
                 }
             }
             model.put("message", sb.toString());
             logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                    LogLoginService.CHANNEL_WEB_MANAGER, "move.content", getIpAddress(request), getDate(), join(ids, ',')
-                            + " to " + category.getId() + ":" + category.getName()));
+                    LogLoginService.CHANNEL_WEB_MANAGER, "move.content", getIpAddress(request), getDate(),
+                    join(ids, ',') + " to " + category.getId() + ":" + category.getName()));
         }
         return TEMPLATE_DONE;
     }

@@ -33,83 +33,82 @@ import com.sanluan.common.servlet.PageNotFoundException;
  */
 @Controller
 public class IndexController extends AbstractController {
-    @Autowired
-    private MetadataComponent metadataComponent;
-    @Autowired
-    private TemplateCacheComponent templateCacheComponent;
-    private UrlPathHelper urlPathHelper = new UrlPathHelper();
-    public final static String INTERFACE_NOT_FOUND = "interface_not_found";
-    public static final Map<String, String> NOT_FOUND_MAP = new HashMap<String, String>() {
-        private static final long serialVersionUID = 1L;
-        {
-            put("error", INTERFACE_NOT_FOUND);
-        }
-    };
+	@Autowired
+	private MetadataComponent metadataComponent;
+	@Autowired
+	private TemplateCacheComponent templateCacheComponent;
+	private UrlPathHelper urlPathHelper = new UrlPathHelper();
+	public final static String INTERFACE_NOT_FOUND = "interface_not_found";
+	public static final Map<String, String> NOT_FOUND_MAP = new HashMap<String, String>() {
+		private static final long serialVersionUID = 1L;
+		{
+			put("error", INTERFACE_NOT_FOUND);
+		}
+	};
 
-    /**
-     * 页面请求统一分发
-     * 
-     * @param request
-     * @param response
-     * @param model
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping({ SEPARATOR, "/**" })
-    public String page(HttpServletRequest request, HttpSession session, ModelMap model) throws PageNotFoundException {
-        String requestPath = urlPathHelper.getLookupPathForRequest(request);
-        if (SEPARATOR.equals(requestPath) || requestPath.endsWith(SEPARATOR)) {
-            requestPath += "index.html";
-        }
-        SysSite site = getSite(request);
-        String templatePath = siteComponent.getWebTemplateFilePath(site, requestPath);
-        CmsPageMetadata metadata = metadataComponent.getTemplateMetadata(templatePath);
-        if (notEmpty(metadata)) {
-            if (metadata.isUseDynamic()) {
-                SysDomain domain = getDomain(request);
-                if (metadata.isNeedLogin() && empty(getUserFromSession(session))) {
-                    return REDIRECT + domain.getLoginPath() + "?returnUrl="
-                            + getEncodePath(requestPath, request.getQueryString());
-                }
-                model.put("metadata", metadata);
-                if (notEmpty(metadata.getAcceptParamters())) {
-                    billingRequestParamtersToModel(request, metadata.getAcceptParamters(), model);
-                }
-                if (notEmpty(metadata.getCacheTime()) && 10 <= metadata.getCacheTime()) {
-                    return templateCacheComponent.getCachedPath(requestPath, siteComponent.getViewNamePreffix(site, domain)
-                            + requestPath, metadata.getCacheTime() * 1000, metadata.getAcceptParamters(), site, request, model);
-                }
-            } else {
-                throw new PageNotFoundException(requestPath);
-            }
-        }
-        return requestPath;
-    }
+	/**
+	 * 页面请求统一分发
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping({ SEPARATOR, "/**" })
+	public String page(HttpServletRequest request, HttpSession session, ModelMap model) throws PageNotFoundException {
+		String requestPath = urlPathHelper.getLookupPathForRequest(request);
+		if (SEPARATOR.equals(requestPath) || requestPath.endsWith(SEPARATOR)) {
+			requestPath += "index.html";
+		}
+		SysDomain domain = getDomain(request);
+		SysSite site = getSite(request);
+		String realRequestPath = siteComponent.getViewNamePreffix(site, domain) + requestPath;
+		String templatePath = siteComponent.getWebTemplateFilePath(site, realRequestPath);
+		CmsPageMetadata metadata = metadataComponent.getTemplateMetadata(templatePath);
+		if (metadata.isUseDynamic()) {
+			if (metadata.isNeedLogin() && empty(getUserFromSession(session))) {
+				return REDIRECT + domain.getLoginPath() + "?returnUrl="
+						+ getEncodePath(requestPath, request.getQueryString());
+			}
+			model.put("metadata", metadata);
+			if (notEmpty(metadata.getAcceptParamters())) {
+				billingRequestParamtersToModel(request, metadata.getAcceptParamters(), model);
+			}
+			if (notEmpty(metadata.getCacheTime()) && 10 <= metadata.getCacheTime()) {
+				return templateCacheComponent.getCachedPath(requestPath, realRequestPath,
+						metadata.getCacheTime() * 1000, metadata.getAcceptParamters(), site, request, model);
+			}
+		} else {
+			throw new PageNotFoundException(requestPath);
+		}
+		return requestPath;
+	}
 
-    private void billingRequestParamtersToModel(HttpServletRequest request, String acceptParamters, ModelMap model) {
-        for (String paramterName : split(acceptParamters, ",")) {
-            String[] values = request.getParameterValues(paramterName);
-            if (isNotEmpty(values)) {
-                if (1 < values.length) {
-                    model.put(paramterName, values);
-                } else {
-                    model.put(paramterName, values[0]);
-                }
-            }
-        }
-    }
+	/**
+	 * 接口请求统一分发
+	 * 
+	 * @param callback
+	 * @return
+	 */
+	@RequestMapping(value = { SEPARATOR, "/**" }, headers = "x-requested-with=XMLHttpRequest")
+	@ResponseBody
+	public MappingJacksonValue index(String callback) {
+		MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(NOT_FOUND_MAP);
+		mappingJacksonValue.setJsonpFunction(callback);
+		return mappingJacksonValue;
+	}
 
-    /**
-     * 接口请求统一分发
-     * 
-     * @param callback
-     * @return
-     */
-    @RequestMapping({ "*.json", "/**/*.json" })
-    @ResponseBody
-    public MappingJacksonValue index(String callback) {
-        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(NOT_FOUND_MAP);
-        mappingJacksonValue.setJsonpFunction(callback);
-        return mappingJacksonValue;
-    }
+	private void billingRequestParamtersToModel(HttpServletRequest request, String acceptParamters, ModelMap model) {
+		for (String paramterName : split(acceptParamters, ",")) {
+			String[] values = request.getParameterValues(paramterName);
+			if (isNotEmpty(values)) {
+				if (1 < values.length) {
+					model.put(paramterName, values);
+				} else {
+					model.put(paramterName, values[0]);
+				}
+			}
+		}
+	}
 }

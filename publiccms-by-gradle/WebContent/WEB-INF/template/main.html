@@ -282,76 +282,29 @@ echarts.init(document.getElementById('disk')).setOption({
 	</div>
 	<div class="divider"></div>
 </@_systemProperties>
-<@_version>
-	<div class="unit">
-		<p>
-			<label>FreeMarker:</label>
-			<a href="http://freemarker.org/" target="_blank">${.version}</a>
-			(<a href="http://freemarker.org/docs/app_license.html" target="_blank">Apache License2</a>)
-		</p>
-		<p>
-			<label>Spring Framework:</label>
-			<a href="http://projects.spring.io/spring-framework/" target="_blank">${spring}</a>
-			(<a href="https://github.com/spring-projects/spring-framework" target="_blank">Apache License2</a>)
-		</p>
-		<p>
-			<label>Hibernate:</label>
-			<a href="http://hibernate.org/orm/" target="_blank">${hibernate}</a>
-			(<a href="http://hibernate.org/community/license/" target="_blank">LGPL 2.1 License</a>)
-		</p>
-		<p>
-			<label>Hibernate Search:</label>
-			<a href="http://hibernate.org/search/" target="_blank">${hibernateSearch}</a>
-			(<a href="https://raw.githubusercontent.com/hibernate/hibernate-search/master/lgpl.txt" target="_blank">LGPL 2.1 License</a>)
-		</p>
-		<p>
-			<label>lucene:</label>
-			<a href="http://lucene.apache.org/" target="_blank">${lucene}</a>
-			(<a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License2</a>)
-		</p>
-		<p>
-			<label>Jquery:</label>
-			<a id="JQueryVersion" href="http://jquery.com/" target="_blank"></a>
-			(<a href="https://jquery.org/license/" target="_blank">The MIT License</a>)
-		</p>
-		<p>
-			<label>jUI:</label>
-			<a id="jUIVersion" href="http://jui.org/" target="_blank"></a>
-			(<a href="https://code.csdn.net/dwzteam/dwz_jui" target="_blank">Apache License2</a>)
-		</p>
-		<p>
-			<label>Font Awesome:</label>
-			<a href="http://fontawesome.io/3.2.1/icons/" target="_blank">3.2.1 </a>
-			(<a href="http://fontawesome.io/3.2.1/license/" target="_blank">SIL OFL 1.1</a>)
-		</p>
-		<p>
-			<label>Echarts:</label>
-			<a id="EchartsVersion" href="http://echarts.baidu.com/" target="_blank"></a>
-			(<a href="https://github.com/ecomfe/echarts/blob/master/LICENSE" target="_blank">License(BSD)</a>)
-		</p>
-		<p>
-			<label>UEditor:</label>
-			<a id="UEditorVersion" href="http://ueditor.baidu.com/website/" target="_blank"></a>
-			(<a href="http://opensource.org/licenses/MIT" target="_blank">The MIT License</a>)
-		</p>
-		<script>
-			$('#JQueryVersion').text(jQuery.fn.jquery);
-			$('#EchartsVersion').text(echarts.version);
-			$('#UEditorVersion').text(UE.version);
-			$('#jUIVersion').text(DWZ.version);
-		</script>
-	</div>
-</@_version>
 	<div class="divider"></div>
 </@_masterSite>
-	<@_version>
+<@_version>
 	<div class="unit">
-		<p>
+		<p id="cmsVersion">
 			<label>Public CMS:</label>
 			<a href="http://www.publiccms.com/" target="_blank">${cms}</a>
 			(<a href="http://opensource.org/licenses/MIT" target="_blank">The MIT License</a>)
 		</p>
+		<p>
+			<label>节点ID:</label>
+			${cluster}
+		</p>
+		<p>
+			<label>节点属性:</label>
+			${master?string('管理节点','[普通节点]')}
+		</p>
+	<@_masterSite>
+		<script>
+			$('#cmsVersion').append('[<em style="color:red">有新版本</em>]');
+		</script>
+	</@_masterSite>
 	</div>
 	<div class="divider"></div>
-	</@_version>
+</@_version>
 </div>

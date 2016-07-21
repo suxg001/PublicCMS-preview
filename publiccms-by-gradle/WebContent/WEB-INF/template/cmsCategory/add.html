@@ -77,7 +77,7 @@ function clickAddTagType(){
 <#if categoryType?has_content&&categoryType.extendId?has_content>
 	<#include "../include_page/extendData.html"/>
 	<@_sysExtendFieldList extendId=categoryType.extendId>
-		<@extendData 'extendDataList' page.list attribute/>
+		<@extendData 'extendDataList' page.list attribute!{}/>
 	</@_sysExtendFieldList>
 </#if>
 			</fieldset>

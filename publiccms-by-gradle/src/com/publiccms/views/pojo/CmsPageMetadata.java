@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.publiccms.entities.sys.SysExtendField;
 import com.sanluan.common.base.Base;
 
 public class CmsPageMetadata extends Base {
@@ -16,9 +15,13 @@ public class CmsPageMetadata extends Base {
     private String acceptParamters;
     private Integer cacheTime;
     private boolean allowContribute;
-    private List<SysExtendField> extendList;
+    private List<ExtendField> extendList;
     private List<ExtendData> extendDataList;
     private Map<String, String> extendData;
+
+    public CmsPageMetadata() {
+        this.useDynamic = true;
+    }
 
     public String getAlias() {
         return alias;
@@ -44,11 +47,11 @@ public class CmsPageMetadata extends Base {
         this.needLogin = needLogin;
     }
 
-    public List<SysExtendField> getExtendList() {
+    public List<ExtendField> getExtendList() {
         return extendList;
     }
 
-    public void setExtendList(List<SysExtendField> extendList) {
+    public void setExtendList(List<ExtendField> extendList) {
         this.extendList = extendList;
     }
 

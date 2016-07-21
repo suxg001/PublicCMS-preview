@@ -23,6 +23,11 @@ public class LogOperateListDirective extends AbstractTemplateDirective {
                 handler.getInteger("pageIndex", 1), handler.getInteger("count", 20));
         handler.put("page", page).render();
     }
+    
+    @Override
+    public boolean needAppToken() {
+        return true;
+    }
 
     @Autowired
     private LogOperateService service;

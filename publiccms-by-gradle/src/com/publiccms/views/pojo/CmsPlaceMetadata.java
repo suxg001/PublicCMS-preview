@@ -2,7 +2,6 @@ package com.publiccms.views.pojo;
 
 import java.util.List;
 
-import com.publiccms.entities.sys.SysExtendField;
 import com.sanluan.common.base.Base;
 
 public class CmsPlaceMetadata extends Base {
@@ -10,7 +9,7 @@ public class CmsPlaceMetadata extends Base {
     private Integer size;
     private Integer[] adminIds;
     private boolean allowContribute;
-    private List<SysExtendField> extendList;
+    private List<ExtendField> extendList;
 
     public String getAlias() {
         return alias;
@@ -36,11 +35,11 @@ public class CmsPlaceMetadata extends Base {
         this.allowContribute = allowContribute;
     }
 
-    public List<SysExtendField> getExtendList() {
+    public List<ExtendField> getExtendList() {
         return extendList;
     }
 
-    public void setExtendList(List<SysExtendField> extendList) {
+    public void setExtendList(List<ExtendField> extendList) {
         this.extendList = extendList;
     }
 

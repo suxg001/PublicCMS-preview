@@ -32,7 +32,7 @@ import com.sanluan.common.base.Base;
 @Component
 public class ScheduledTask extends Base {
     public static final String ID = "id";
-    public static final int TASK_STATUS_READY = 0, TASK_STATUS_RUNNING = 1, TASK_STATUS_PAUSE = 2, TASK_STATUS_ERROR = 3;
+    public static final int TASK_STATUS_READY = 0,  TASK_STATUS_RUNNING = 1,  TASK_STATUS_PAUSE = 2, TASK_STATUS_ERROR = 3;
 
     private SysTaskService sysTaskService;
     private Scheduler scheduler;
@@ -48,7 +48,7 @@ public class ScheduledTask extends Base {
         List<SysTask> sysTaskList = (List<SysTask>) sysTaskService.getPage(null, null, null, null).getList();
         for (SysTask sysTask : sysTaskList) {
             SysSite site = siteService.getEntity(sysTask.getSiteId());
-            if (TASK_STATUS_RUNNING == sysTask.getStatus() || TASK_STATUS_ERROR == sysTask.getStatus()) {
+            if (TASK_STATUS_ERROR == sysTask.getStatus()) {
                 sysTaskService.updateStatus(sysTask.getId(), TASK_STATUS_READY);
             }
             create(site, sysTask.getId(), sysTask.getCronExpression());

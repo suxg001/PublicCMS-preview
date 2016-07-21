@@ -21,6 +21,11 @@ public class SysUserTokenListDirective extends AbstractTemplateDirective {
                 handler.getString("orderType"), handler.getInteger("pageIndex", 1), handler.getInteger("count", 30));
         handler.put("page", page).render();
     }
+    
+    @Override
+    public boolean needAppToken() {
+        return true;
+    }
 
     @Autowired
     private SysUserTokenService service;

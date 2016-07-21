@@ -98,11 +98,12 @@ public class CmsCategoryService extends BaseService<CmsCategory> {
         }
     }
 
-    public void updateExtendId(Integer id, Integer extendId) {
+    public CmsCategory updateExtendId(Integer id, Integer extendId) {
         CmsCategory entity = getEntity(id);
         if (notEmpty(entity)) {
             entity.setExtendId(extendId);
         }
+        return entity;
     }
 
     public void updateParentId(int siteId, Serializable id, Integer parentId) {

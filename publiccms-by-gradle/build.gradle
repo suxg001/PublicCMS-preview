@@ -16,7 +16,7 @@ sourceSets{
     }
 }
 [compileJava]*.options*.encoding = 'UTF-8'
-version = 'V2016.0510'
+version = 'V2016.0710'
 sourceCompatibility = 1.7
 
 repositories {
@@ -25,11 +25,11 @@ repositories {
 }
 
 ext {
-    springVersion = '4.2.4.RELEASE'
+    springVersion = '4.3.1.RELEASE'
     hibernateVersion = '5.1.0.Final'
-    hibernateSearchVersion = '5.5.2.Final'
+    hibernateSearchVersion = '5.5.4.Final'
     freemarkerVersion = '2.3.23'
-    httpclientVersion = '4.5.1'
+    httpclientVersion = '4.5.2'
     jacksonVersion = '2.6.1'
 }
 

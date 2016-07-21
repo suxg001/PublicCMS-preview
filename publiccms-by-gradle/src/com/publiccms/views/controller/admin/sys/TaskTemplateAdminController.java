@@ -17,7 +17,6 @@ import com.publiccms.common.base.AbstractController;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysSite;
 import com.publiccms.logic.component.FileComponent;
-import com.publiccms.logic.component.TemplateCacheComponent;
 import com.publiccms.logic.component.TemplateComponent;
 import com.publiccms.logic.service.log.LogLoginService;
 
@@ -31,8 +30,6 @@ import com.publiccms.logic.service.log.LogLoginService;
 public class TaskTemplateAdminController extends AbstractController {
     @Autowired
     private TemplateComponent templateComponent;
-    @Autowired
-    private TemplateCacheComponent templateCacheComponent;
     @Autowired
     private FileComponent fileComponent;
 
@@ -50,7 +47,7 @@ public class TaskTemplateAdminController extends AbstractController {
         SysSite site = getSite(request);
         if (notEmpty(path)) {
             try {
-                String filePath = siteComponent.getWebTemplateFilePath(site, path);
+                String filePath = siteComponent.getTaskTemplateFilePath(site, path);
                 File templateFile = new File(filePath);
                 if (notEmpty(templateFile)) {
                     fileComponent.updateFile(templateFile, content);

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50090
 File Encoding         : 65001
 
-Date: 2016-05-10 11:11:49
+Date: 2016-07-10 11:11:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -638,6 +638,29 @@ CREATE TABLE `log_task` (
 
 -- ----------------------------
 -- Records of log_task
+
+-- ----------------------------
+-- Table structure for log_upload
+-- ----------------------------
+DROP TABLE IF EXISTS `log_upload`;
+CREATE TABLE `log_upload` (
+  `id` int(11) NOT NULL auto_increment,
+  `site_id` int(11) NOT NULL COMMENT '站点ID',
+  `user_id` int(11) NOT NULL COMMENT '用户ID',
+  `channel` varchar(50) NOT NULL COMMENT '操作取到',
+  `ip` varchar(64) default NULL COMMENT 'IP',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  `file_path` varchar(500) NOT NULL COMMENT '文件路径',
+  PRIMARY KEY  (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `create_date` (`create_date`),
+  KEY `ip` (`ip`),
+  KEY `site_id` (`site_id`),
+  KEY `channel` (`channel`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='上传日志';
+
+-- ----------------------------
+-- Records of log_upload
 -- ----------------------------
 
 -- ----------------------------
@@ -877,6 +900,40 @@ CREATE TABLE `sys_app_token` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for sys_cluster
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_cluster`;
+CREATE TABLE `sys_cluster` (
+  `uuid` varchar(40) NOT NULL COMMENT 'uuid',
+  `create_date` datetime NOT NULL COMMENT '创建时间',
+  `heartbeat_date` datetime NOT NULL COMMENT '心跳时间',
+  `master` tinyint(1) NOT NULL COMMENT '是否管理',
+  PRIMARY KEY  (`uuid`),
+  KEY `create_date` (`create_date`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='服务器集群';
+
+-- ----------------------------
+-- Records of sys_cluster
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_config
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_config`;
+CREATE TABLE `sys_config` (
+  `id` int(11) NOT NULL auto_increment COMMENT 'ID',
+  `site_id` int(11) NOT NULL COMMENT '站点ID',
+  `code` varchar(50) NOT NULL COMMENT '配置项编码',
+  `value` longtext NOT NULL COMMENT '值',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `site_id` (`site_id`,`code`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='站点配置';
+
+-- ----------------------------
+-- Records of sys_config
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for sys_dept
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dept`;
@@ -1080,6 +1137,7 @@ INSERT INTO `sys_moudle` VALUES ('25', '增加/修改', 'cmsCategory/add', 'cmsC
 INSERT INTO `sys_moudle` VALUES ('26', '删除', null, 'cmsCategory/delete', '24', '0');
 INSERT INTO `sys_moudle` VALUES ('27', '生成', 'cmsCategory/publishParameters', 'cmsCategory/publish', '24', '0');
 INSERT INTO `sys_moudle` VALUES ('28', '移动', 'cmsCategory/moveParameters', 'cmsCategory/move,cmsCategory/lookup', '24', '0');
+INSERT INTO `sys_moudle` VALUES ('29', '推荐', 'cmsCategory/push_page', 'cmsCategory/push_page_list,cmsPage/placeDataAdd,cmsPlace/save', '24', '0');
 INSERT INTO `sys_moudle` VALUES ('30', '<i class=\"icon-globe icon-large\"></i> 页面管理', 'cmsPage/placeList', 'sysUser/lookup,sysUser/lookup_content_list,cmsPage/placeDataList,cmsPage/placeDataAdd,cmsPlace/save,cmsTemplate/publishPlace,cmsPage/publishPlace,cmsPage/push_page,cmsPage/push_page_list', '4', '0');
 INSERT INTO `sys_moudle` VALUES ('31', '<i class=\"icon-road icon-large\"></i> 分类扩展', null, null, '3', '0');
 INSERT INTO `sys_moudle` VALUES ('32', '<i class=\"icon-road icon-large\"></i> 分类类型', 'cmsCategoryType/list', null, '31', '0');
@@ -1090,6 +1148,7 @@ INSERT INTO `sys_moudle` VALUES ('36', '增加/修改', 'cmsCategoryType/add', '
 INSERT INTO `sys_moudle` VALUES ('37', '删除', null, 'cmsCategoryType/delete', '32', '0');
 INSERT INTO `sys_moudle` VALUES ('38', '<i class=\"icon-code icon-large\"></i> 模板管理', null, null, '5', '0');
 INSERT INTO `sys_moudle` VALUES ('39', '<i class=\"icon-globe icon-large\"></i> 页面模板', 'cmsTemplate/list', 'cmsTemplate/directory', '38', '0');
+INSERT INTO `sys_moudle` VALUES ('40','修改模板元数据','cmsTemplate/metadata','cmsTemplate/saveMetadata','39','0');
 INSERT INTO `sys_moudle` VALUES ('41', '修改模板', 'cmsTemplate/metadata', 'cmsTemplate/saveMetadata,cmsTemplate/content,cmsTemplate/save,cmsTemplate/chipLookup', '39', '0');
 INSERT INTO `sys_moudle` VALUES ('42', '修改推荐位', 'cmsTemplate/placeList', 'cmsTemplate/placeMetadata,cmsTemplate/placeContent,cmsTemplate/placeForm,cmsTemplate/saveMetadata,cmsTemplate/createPlace', '39', '0');
 INSERT INTO `sys_moudle` VALUES ('43', '删除模板', null, 'cmsTemplate/delete', '39', '0');
@@ -1147,7 +1206,6 @@ INSERT INTO `sys_moudle` VALUES ('104', '刷新', null, 'cmsContent/refresh', '8
 INSERT INTO `sys_moudle` VALUES ('105', '生成', null, 'cmsContent/publish', '8', '0');
 INSERT INTO `sys_moudle` VALUES ('106', '推荐', 'cmsContent/push', 'cmsContent/push_content,cmsContent/push_content_list,cmsContent/push_to_content,cmsContent/push_page,cmsContent/push_page_list,cmsContent/push_to_place,cmsContent/related', '8', '0');
 INSERT INTO `sys_moudle` VALUES ('107', '推荐位数据列表', 'cmsPage/placeDataList', null, '29', '0');
-INSERT INTO `sys_moudle` VALUES ('29', '推荐', 'cmsCategory/push_page', 'cmsCategory/push_page_list,cmsPage/placeDataAdd,cmsPlace/save', '24', '0');
 
 -- ----------------------------
 -- Table structure for sys_role

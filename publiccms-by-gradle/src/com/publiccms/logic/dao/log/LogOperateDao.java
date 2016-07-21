@@ -48,9 +48,11 @@ public class LogOperateDao extends BaseDao<LogOperate> {
     }
 
     public int delete(Integer siteId, Date createDate) {
-        QueryHandler queryHandler = getDeleteQueryHandler("from LogOperate bean");
-        if (notEmpty(siteId)) {
-            queryHandler.condition("bean.siteId = :siteId").setParameter("siteId", siteId);
+        if (notEmpty(siteId) || notEmpty(createDate)) {
+            QueryHandler queryHandler = getDeleteQueryHandler("from LogOperate bean");
+            if (notEmpty(siteId)) {
+                queryHandler.condition("bean.siteId = :siteId").setParameter("siteId", siteId);
+            }
             if (notEmpty(createDate)) {
                 queryHandler.condition("bean.createDate <= :createDate").setParameter("createDate", createDate);
             }

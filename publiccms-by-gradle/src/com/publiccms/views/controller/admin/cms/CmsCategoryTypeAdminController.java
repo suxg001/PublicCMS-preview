@@ -73,7 +73,8 @@ public class CmsCategoryTypeAdminController extends AbstractController {
                             + ":" + entity.getName()));
         }
         if (empty(extendService.getEntity(entity.getExtendId()))) {
-            service.updateExtendId(entity.getId(), (Integer) extendService.save(new SysExtend("categoryType", entity.getId())));
+            entity = service.updateExtendId(entity.getId(),
+                    (Integer) extendService.save(new SysExtend("categoryType", entity.getId())));
         }
         extendFieldService.update(entity.getExtendId(), categoryTypeParamters.getCategoryExtends());// 修改或增加分类类型扩展字段
         return TEMPLATE_DONE;

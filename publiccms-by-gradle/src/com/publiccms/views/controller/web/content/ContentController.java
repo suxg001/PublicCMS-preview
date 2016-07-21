@@ -1,7 +1,7 @@
 package com.publiccms.views.controller.web.content;
 
 import static com.publiccms.common.tools.ExtendUtils.getExtendString;
-import static com.publiccms.common.tools.ExtendUtils.getExtentDataMap;
+import static com.publiccms.common.tools.ExtendUtils.getSysExtentDataMap;
 import static com.sanluan.common.tools.MyStringUtils.removeHtmlTag;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static org.apache.commons.lang3.ArrayUtils.addAll;
@@ -159,16 +159,16 @@ public class ContentController extends AbstractController {
         Map<String, String> map = null;
         if (notEmpty(extendService.getEntity(cmsModel.getExtendId()))) {
             @SuppressWarnings("unchecked")
-            List<SysExtendField> modelExtendList = (List<SysExtendField>) extendFieldService.getPage(cmsModel.getExtendId(),
-                    null, null).getList();
-            map = getExtentDataMap(cmsModel.getExtendId(), contentParamters.getModelExtendDataList(), modelExtendList);
+            List<SysExtendField> modelExtendList = (List<SysExtendField>) extendFieldService
+                    .getPage(cmsModel.getExtendId(), null, null).getList();
+            map = getSysExtentDataMap(contentParamters.getModelExtendDataList(), modelExtendList);
         }
         if (notEmpty(extendService.getEntity(category.getExtendId()))) {
             @SuppressWarnings("unchecked")
-            List<SysExtendField> categoryExtendList = (List<SysExtendField>) extendFieldService.getPage(category.getExtendId(),
-                    null, null).getList();
-            Map<String, String> categoryMap = getExtentDataMap(entity.getCategoryId(),
-                    contentParamters.getCategoryExtendDataList(), categoryExtendList);
+            List<SysExtendField> categoryExtendList = (List<SysExtendField>) extendFieldService
+                    .getPage(category.getExtendId(), null, null).getList();
+            Map<String, String> categoryMap = getSysExtentDataMap(contentParamters.getCategoryExtendDataList(),
+                    categoryExtendList);
             if (notEmpty(map)) {
                 map.putAll(categoryMap);
             } else {
@@ -220,40 +220,6 @@ public class ContentController extends AbstractController {
     }
 
     /**
-     * 内容点击统计
-     * 
-     * @param id
-     * @param callback
-     * @return
-     */
-    @RequestMapping("clicks")
-    @ResponseBody
-    public MappingJacksonValue clicks(Integer id, String callback, ModelMap model) {
-        CmsContentStatistics contentStatistics = statisticsComponent.clicks(id);
-        if (notEmpty(contentStatistics.getEntity())) {
-            model.addAttribute("clicks", contentStatistics.getEntity().getClicks() + contentStatistics.getClicks());
-        }
-        return getMappingJacksonValue(model, callback);
-    }
-
-    /**
-     * 内容分数统计
-     * 
-     * @param id
-     * @param callback
-     * @return
-     */
-    @RequestMapping("scores")
-    @ResponseBody
-    public MappingJacksonValue scores(Integer id, String callback, ModelMap model) {
-        CmsContentStatistics contentStatistics = statisticsComponent.scores(id);
-        if (notEmpty(contentStatistics.getEntity())) {
-            model.addAttribute("scores", contentStatistics.getEntity().getScores() + contentStatistics.getScores());
-        }
-        return getMappingJacksonValue(model, callback);
-    }
-
-    /**
      * 内容评论统计
      * 
      * @param id
@@ -269,4 +235,5 @@ public class ContentController extends AbstractController {
         }
         return getMappingJacksonValue(model, callback);
     }
+
 }

@@ -19,9 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 
+import com.publiccms.common.spi.Cacheable;
 import com.publiccms.entities.sys.SysSite;
 import com.sanluan.common.base.Base;
-import com.sanluan.common.base.Cacheable;
 import com.sanluan.common.tools.FreeMarkerUtils;
 
 import freemarker.core.DirectiveCallPlace;

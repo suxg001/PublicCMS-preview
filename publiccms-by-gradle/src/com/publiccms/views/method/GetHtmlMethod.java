@@ -12,6 +12,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -38,19 +39,24 @@ public class GetHtmlMethod extends BaseMethod {
     public Object exec(@SuppressWarnings("rawtypes") List arguments) throws TemplateModelException {
         String url = getString(0, arguments);
         TemplateHashModelEx paramters = getMap(1, arguments);
+        String body = getString(1, arguments);
         String html = null;
         if (notEmpty(url)) {
             CloseableHttpResponse response = null;
             try {
-                if (notEmpty(paramters)) {
+                if (notEmpty(paramters) || notEmpty(body)) {
                     HttpPost httppost = new HttpPost(url);
-                    List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-                    TemplateModelIterator it = paramters.keys().iterator();
-                    while (it.hasNext()) {
-                        String key = converString(it.next());
-                        nvps.add(new BasicNameValuePair(key, converString(paramters.get(key))));
+                    if (notEmpty(paramters)) {
+                        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+                        TemplateModelIterator it = paramters.keys().iterator();
+                        while (it.hasNext()) {
+                            String key = converString(it.next());
+                            nvps.add(new BasicNameValuePair(key, converString(paramters.get(key))));
+                        }
+                        httppost.setEntity(new UrlEncodedFormEntity(nvps, DEFAULT_CHARSET));
+                    } else {
+                        httppost.setEntity(new StringEntity(body, DEFAULT_CHARSET));
                     }
-                    httppost.setEntity(new UrlEncodedFormEntity(nvps, DEFAULT_CHARSET));
                     response = httpclient.execute(httppost);
                 } else {
                     response = httpclient.execute(new HttpGet(url));

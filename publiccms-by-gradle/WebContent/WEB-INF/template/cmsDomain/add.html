@@ -32,7 +32,7 @@ function refreshTemplatePath() {
 				<dd><input class="readonly" readonly="readonly" type="text" value="${(a.name)!}"/></dd>
 			</dl>
 			<dl class="nowrap">
-				<dt>模板跟目录:</dt>
+				<dt>模板根目录:</dt>
 				<dd>
 					<input name="path" type="text" size="50" maxlength="255" value="${(a.path)!}"/>
 					<a class="btnLook" href="cmsTemplate/directoryLookup.html?field=path" lookupGroup="">选择</a>
@@ -43,7 +43,7 @@ function refreshTemplatePath() {
 				<dd>
 					<input name="loginPath" type="text" size="50" maxlength="255" value="${(a.path)!}${(a.loginPath)!}"/>
 					<a class="btnLook" href="cmsTemplate/lookup.html?field=loginPath" lookupGroup="">选择</a>
-					<span class="info">留空则禁止使用该域名登陆,如果模板跟目录不为空,请保证登陆模板路径在模板跟目录下</span>
+					<span class="info">留空则禁止使用该域名登陆,如果模板根目录不为空,请保证登陆模板路径在模板根目录下</span>
 				</dd>
 			</dl>
 			<dl class="nowrap">
@@ -51,7 +51,7 @@ function refreshTemplatePath() {
 				<dd>
 					<input name="registerPath" type="text" size="50" maxlength="255" value="${(a.path)!}${(a.registerPath)!}"/>
 					<a class="btnLook" href="cmsTemplate/lookup.html?field=registerPath" lookupGroup="">选择</a>
-					<span class="info">留空则禁止使用该域名注册,如果模板跟目录不为空,请保证注册模板路径在模板跟目录下</span>
+					<span class="info">留空则禁止使用该域名注册,如果模板根目录不为空,请保证注册模板路径在模板根目录下</span>
 				</dd>
 			</dl>
 		</div>

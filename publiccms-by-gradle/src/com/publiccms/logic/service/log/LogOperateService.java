@@ -14,7 +14,6 @@ import com.sanluan.common.handler.PageHandler;
 @Service
 @Transactional
 public class LogOperateService extends BaseService<LogOperate> {
-    public static final String OPERATE_UPLOADFILE = "uploadfile";
 
     @Transactional(readOnly = true)
     public PageHandler getPage(Integer siteId, String channel, String operate, Integer userId, Date startCreateDate,

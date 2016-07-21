@@ -4,8 +4,8 @@
 		<input name="id" type="hidden" value="${id!}" />
 		<div class="pageFormContent" layoutH="57">
 			<dl>
-				<dt>ID:</dt>
-				<dd><input class="required" name="id" type="text" size="30" value="${(a.id)!}"/></dd>
+				<dt>标题:</dt>
+				<dd><input class="required" name="title" type="text" size="30" value="${(a.title)!}"/></dd>
 			</dl>
 			<dl>
 				<dt>开始日期:</dt>
@@ -22,12 +22,12 @@
 				</dd>
 			</dl>
 			<dl>
-				<dt>每天发放数量:</dt>
-				<dd><input class="required" name="dayCount" type="text" size="30" value="${(a.dayCount)!}"/></dd>
-			</dl>
-			<dl>
 				<dt>奖品总数:</dt>
 				<dd><input class="required" name="totalCount" type="text" size="30" value="${(a.totalCount)!}"/></dd>
+			</dl>
+			<dl>
+				<dt>每天发放数量:</dt>
+				<dd><input class="required" name="dayCount" type="text" size="30" value="${(a.dayCount)!}"/></dd>
 			</dl>
 			<dl>
 				<dt>剩余数量:</dt>
@@ -38,16 +38,8 @@
 				<dd><input class="required" name="lotteryCount" type="text" size="30" value="${(a.lotteryCount)!}"/></dd>
 			</dl>
 			<dl>
-				<dt>概率分子:</dt>
-				<dd><input class="required" name="fractions" type="text" size="30" value="${(a.fractions)!}"/></dd>
-			</dl>
-			<dl>
-				<dt>概率分母:</dt>
-				<dd><input class="required" name="numerator" type="text" size="30" value="${(a.numerator)!}"/></dd>
-			</dl>
-			<dl>
-				<dt>标题:</dt>
-				<dd><input class="required" name="title" type="text" size="30" value="${(a.title)!}"/></dd>
+				<dt>中奖概率:</dt>
+				<dd><input class="required" name="fractions" type="text" size="3" value="${(a.fractions)!}"/><label>/</label><input class="required" name="numerator" type="text" size="3" value="${(a.numerator)!}"/></dd>
 			</dl>
 			<dl>
 				<dt>描述:</dt>

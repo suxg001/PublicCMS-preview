@@ -1,9 +1,12 @@
 package com.publiccms.views.controller.web.page;
 
 import static com.publiccms.common.tools.ExtendUtils.getExtendString;
+import static com.publiccms.common.tools.ExtendUtils.getExtentDataMap;
 import static com.publiccms.logic.component.TemplateComponent.INCLUDE_DIRECTORY;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static org.apache.commons.lang3.ArrayUtils.contains;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,29 +54,31 @@ public class PlaceController extends AbstractController {
             String placePath = INCLUDE_DIRECTORY + entity.getPath();
             String filePath = siteComponent.getWebTemplateFilePath(site, placePath);
             CmsPlaceMetadata metadata = metadataComponent.getPlaceMetadata(filePath);
-            if (empty(getUserFromSession(session))
-                    || virifyCustom("contribute", empty(metadata) || !metadata.isAllowContribute() || !(metadata.getSize() > 0),
-                            model)) {
+            SysUser user = getUserFromSession(session);
+            if (empty(user) || virifyCustom("contribute",
+                    empty(metadata) || !metadata.isAllowContribute() || !(metadata.getSize() > 0), model)) {
                 return REDIRECT + returnUrl;
             }
             if (notEmpty(entity.getId())) {
                 CmsPlace oldEntity = service.getEntity(entity.getId());
                 if (empty(oldEntity) || virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)
-                        || virifyNotEquals("siteId", getUserFromSession(session).getId(), oldEntity.getUserId(), model)) {
+                        || virifyNotEquals("siteId", user.getId(), oldEntity.getUserId(), model)) {
                     return REDIRECT + returnUrl;
                 }
-                entity = service.update(entity.getId(), entity, new String[] { "id", "siteId", "type", "path", "createDate",
-                        "disabled" });
-                logOperateService.save(new LogOperate(site.getId(), getUserFromSession(session).getId(),
-                        LogLoginService.CHANNEL_WEB, "update.place", getIpAddress(request), getDate(), entity.getPath()));
+                entity = service.update(entity.getId(), entity,
+                        new String[] { "id", "siteId", "type", "path", "createDate", "userId", "disabled" });
+                logOperateService.save(new LogOperate(site.getId(), user.getId(), LogLoginService.CHANNEL_WEB, "update.place",
+                        getIpAddress(request), getDate(), entity.getPath()));
             } else {
                 entity.setSiteId(site.getId());
+                entity.setUserId(user.getId());
                 service.save(entity);
-                logOperateService.save(new LogOperate(site.getId(), getUserFromSession(session).getId(),
-                        LogLoginService.CHANNEL_WEB, "save.place", getIpAddress(request), getDate(), entity.getPath()));
+                logOperateService.save(new LogOperate(site.getId(), user.getId(), LogLoginService.CHANNEL_WEB, "save.place",
+                        getIpAddress(request), getDate(), entity.getPath()));
             }
-            String extentString = getExtendString(metadataComponent.getPlaceExtendDataMap(filePath,
-                    placeParamters.getExtendDataList()));
+            Map<String, String> map = getExtentDataMap(placeParamters.getExtendDataList(),
+                    metadataComponent.getPlaceMetadata(filePath).getExtendList());
+            String extentString = getExtendString(map);
             attributeService.updateAttribute(entity.getId(), extentString);
         }
         return REDIRECT + returnUrl;

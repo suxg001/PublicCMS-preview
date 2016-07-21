@@ -3,6 +3,7 @@ package com.publiccms.views.controller.admin;
 import static com.publiccms.logic.service.log.LogLoginService.CHANNEL_WEB_MANAGER;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static com.sanluan.common.tools.VerificationUtils.encode;
+import static org.apache.commons.lang3.StringUtils.trim;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,6 +36,8 @@ public class LoginAdminController extends AbstractController {
     public String login(String username, String password, String returnUrl, HttpServletRequest request, HttpSession session,
             ModelMap model) {
         SysSite site = getSite(request);
+        username = trim(username);
+        password = trim(password);
         if (virifyNotEmpty("username", username, model) || virifyNotEmpty("password", password, model)) {
             model.addAttribute("username", username);
             model.addAttribute("returnUrl", returnUrl);

@@ -18,7 +18,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -30,7 +29,6 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.publiccms.common.view.InitializeFreeMarkerView;
-import com.publiccms.logic.component.MailComponent;
 import com.publiccms.logic.component.SiteComponent;
 import com.publiccms.logic.component.TemplateComponent;
 import com.sanluan.common.base.Base;
@@ -79,8 +77,8 @@ public class ApplicationConfig extends Base {
                         database.setMaxPoolSize(Integer.parseInt(env.getProperty("cpool.maxPoolSize")));
                         database.setMaxIdleTime(Integer.parseInt(env.getProperty("cpool.maxIdleTime")));
                         database.setAcquireIncrement(Integer.parseInt(env.getProperty("cpool.acquireIncrement")));
-                        database.setMaxIdleTimeExcessConnections(Integer.parseInt(env
-                                .getProperty("cpool.maxIdleTimeExcessConnections")));
+                        database.setMaxIdleTimeExcessConnections(
+                                Integer.parseInt(env.getProperty("cpool.maxIdleTimeExcessConnections")));
                         put("default", database);
                     }
                 });
@@ -153,46 +151,6 @@ public class ApplicationConfig extends Base {
                 setBasenames(new String[] { "config.language.message", "config.language.plugin" });
                 setCacheSeconds(30000);
                 setUseCodeAsDefaultMessage(true);
-            }
-        };
-    }
-
-    /**
-     * 邮件发送组件
-     * 
-     * @return
-     */
-    @Bean
-    public MailComponent mailComponent() {
-        return new MailComponent() {
-            {
-                setFromAddress(env.getProperty("mail.smtp.username"));
-            }
-        };
-    }
-
-    /**
-     * 邮件发送服务实现
-     * 
-     * @return
-     */
-    @Bean
-    public JavaMailSenderImpl mailSender() {
-        return new JavaMailSenderImpl() {
-            {
-                setDefaultEncoding(env.getProperty("mail.smtp.defaultEncoding"));
-                setPort(env.getProperty("mail.smtp.port", Integer.class));
-                setHost(env.getProperty("mail.smtp.host"));
-                setUsername(env.getProperty("mail.smtp.username"));
-                setPassword(env.getProperty("mail.smtp.password"));
-
-                setJavaMailProperties(new Properties() {
-                    private static final long serialVersionUID = 1L;
-                    {
-                        setProperty("mail.smtp.auth", env.getProperty("mail.smtp.auth"));
-                        setProperty("mail.smtp.timeout", env.getProperty("mail.smtp.timeout"));
-                    }
-                });
             }
         };
     }

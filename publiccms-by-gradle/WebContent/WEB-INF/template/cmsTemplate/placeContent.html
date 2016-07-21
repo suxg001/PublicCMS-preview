@@ -10,14 +10,9 @@ function refreshcmsTemplatePlace(){
 <h2 class="contentTitle">
 	<a href="cmsTemplate/placeLookup.html" target="dialog" mask="true">推荐位</a>
  	<a href="cmsTemplate/ftlLookup.html" target="dialog" mask="true">模板片段</a>
-	<a href="cmsTemplate/metadata.html?path=${'/ftl/'?url}" target="navTab" rel="cmsTemplate/metadata">创建模板片段</a>
 	<#if (a.allowContribute)?has_content&&a.allowContribute>
 		<a href="cmsTemplate/placeForm.html?path=${path?html?url}" target="navTab" rel="cmsTemplate/placeForm">前台表单模板</a>
 	</#if>
-	<#if site.useSsi>
-		<a href="cmsTemplate/publishPlace.do?path=${(path?url!)}" target="ajaxTodo">发布</a>
-	</#if>
-	<a href="cmsTemplate/deletePlace.do?path=${path?html?url}&navTabId=cmsTemplate/placeList" title="确定要删除该模板吗?" target="ajaxTodo">删除推荐位</a>
  </h2>
 <div class="pageContent">
 	<form method="post" action="cmsTemplate/save.do?navTabId=cmsTemplate/placeList" class="pageForm required-validate" onsubmit="refreshcmsTemplatePlace();return validateCallback(this, navTabAjaxDone);">
@@ -40,9 +35,12 @@ function refreshcmsTemplatePlace(){
 		</div>
 		<div class="formBar">
 			<ul>
+				<#if site.useSsi>
+					<li><a class="button" href="cmsTemplate/publishPlace.do?path=${(path?url!)}" target="ajaxTodo"><span>发布</span></a></li>
+				</#if>
+				<li><a class="button" href="cmsTemplate/deletePlace.do?path=${path?html?url}&navTabId=cmsTemplate/placeList" title="确定要删除该模板吗?" target="ajaxTodo"><span>删除推荐位</span></a></li>
 				<li><a class="button" href="cmsTemplate/placeMetadata.html?path=${(path?url)!}" target="ajax" rel="cmsTemplatePlace"><span>推荐位元数据</span></a></li>
 				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
-				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
 			</ul>
 		</div>
 	</form>

@@ -21,11 +21,12 @@ public class SysEmailTokenDao extends BaseDao<SysEmailToken> {
     }
 
     public int delete(Date createDate) {
-        QueryHandler queryHandler = getDeleteQueryHandler("from SysEmailToken bean");
         if (notEmpty(createDate)) {
+            QueryHandler queryHandler = getDeleteQueryHandler("from SysEmailToken bean");
             queryHandler.condition("bean.createDate <= :createDate").setParameter("createDate", createDate);
+            return delete(queryHandler);
         }
-        return delete(queryHandler);
+        return 0;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.publiccms.views.controller.admin.sys;
 
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static com.sanluan.common.tools.VerificationUtils.encode;
+import static org.apache.commons.lang3.StringUtils.trim;
 import static org.springframework.util.StringUtils.arrayToCommaDelimitedString;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,10 @@ public class SysUserAdminController extends AbstractController {
     public String save(SysUser entity, String repassword, Integer[] roleIds, HttpServletRequest request, HttpSession session,
             ModelMap model) {
         SysSite site = getSite(request);
+        entity.setName(trim(entity.getName()));
+        entity.setNickName(trim(entity.getNickName()));
+        entity.setPassword(trim(repassword));
+        repassword = trim(entity.getNickName());
         if (virifyNotEmpty("username", entity.getName(), model) || virifyNotEmpty("nickname", entity.getNickName(), model)
                 || virifyNotUserName("username", entity.getName(), model)
                 || virifyNotNickName("nickname", entity.getNickName(), model)) {
@@ -69,8 +74,8 @@ public class SysUserAdminController extends AbstractController {
                     entity.setEmailChecked(false);
                 }
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id", "registeredDate", "siteId", "authToken", "lastLoginDate",
-                    "lastLoginIp", "loginCount", "disabled" });
+            entity = service.update(entity.getId(), entity, new String[] { "id", "registeredDate", "siteId", "authToken",
+                    "lastLoginDate", "lastLoginIp", "loginCount", "disabled" });
             if (notEmpty(entity)) {
                 roleUserService.dealRoleUsers(entity.getId(), roleIds);
                 logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),

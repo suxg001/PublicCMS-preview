@@ -9,10 +9,6 @@ function refreshCmsTemplate(){
 <h2 class="contentTitle">
 	<a href="cmsTemplate/placeLookup.html" target="dialog" mask="true">推荐位</a>
  	<a href="cmsTemplate/ftlLookup.html" target="dialog" mask="true">模板片段</a>
-<#if !path?has_content||!path?starts_with('/ftl/')>
-	<a href="cmsTemplate/metadata.html?path=${'/ftl/'?url}" target="navTab" rel="cmsTemplate/metadata">创建模板片段</a>
-</#if>
-	<a href="cmsTemplate/delete.do?path=${path?html?url}&navTabId=cmsTemplate/list" title="确定要删除该模板吗?" target="ajaxTodo">删除模板</a>
  </h2>
 <div class="pageContent">
 	<form method="post" action="cmsTemplate/save.do?navTabId=cmsTemplate/list" class="pageForm required-validate" onsubmit="refreshCmsTemplate();return validateCallback(this, navTabAjaxDone);">
@@ -35,11 +31,15 @@ function refreshCmsTemplate(){
 		</div>
 		<div class="formBar">
 			<ul>
-				<@_metadata path=path><#assign a=object/></@_metadata>
-				<li><a class="button" href="cmsTemplate/metadata.html?path=${(path?url)!}" target="navTab" rel="cmsTemplate/metadata"><span>${(a.alias)!(path?html)!}模板元数据</span></a></li>
-				<li><a class="button" href="cmsTemplate/placeList.html?path=${(path?url)!}" target="navTab" rel="cmsTemplate/placeList"><span>${(a.alias)!(path?html)!}推荐位管理</span></a></li>
+				<#if !path?starts_with('/ftl/')>
+					<li><a class="button" href="cmsTemplate/metadata.html?path=${'/ftl/'?url}" target="navTab" rel="cmsTemplate/metadata"><span>创建模板片段</span></a></li>
+				</#if>
+				<li><a class="button" href="cmsTemplate/delete.do?path=${path?html?url}&navTabId=cmsTemplate/list" title="确定要删除该模板吗?" target="ajaxTodo"><span>删除模板</span></a></li>
+				<li><a class="button" href="cmsTemplate/metadata.html?path=${(path?url)!}" target="navTab" rel="cmsTemplate/metadata"><span>模板元数据</span></a></li>
+				<#if !path?starts_with('/ftl/')>
+					<li><a class="button" href="cmsTemplate/placeList.html?path=${(path?url)!}" target="navTab" rel="cmsTemplate/placeList"><span>推荐位管理</span></a></li>
+				</#if>
 				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
-				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
 			</ul>
 		</div>
 	</form>

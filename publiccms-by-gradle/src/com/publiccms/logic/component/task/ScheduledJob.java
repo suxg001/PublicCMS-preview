@@ -58,8 +58,8 @@ public class ScheduledJob extends Base implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         SysTask task = sysTaskService.getEntity((Integer) context.getJobDetail().getJobDataMap().get(ScheduledTask.ID));
-        if (notEmpty(task) && ScheduledTask.TASK_STATUS_READY == task.getStatus()) {
-            sysTaskService.updateStatus(task.getId(), ScheduledTask.TASK_STATUS_RUNNING);
+        if (notEmpty(task) && ScheduledTask.TASK_STATUS_READY == task.getStatus()
+                && sysTaskService.updateStatusToRunning(task.getId())) {
             LogTask entity = new LogTask(task.getSiteId(), task.getId(), getDate(), false);
             logTaskService.save(entity);
             boolean success = false;

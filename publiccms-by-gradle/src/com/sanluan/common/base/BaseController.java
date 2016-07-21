@@ -76,7 +76,7 @@ public abstract class BaseController extends Base {
         if (null == value) {
             model.put(ERROR, "verify.notEmpty." + field);
             return true;
-        } else if (value <= specific) {
+        } else if (value >= specific) {
             model.put(ERROR, "verify.notGreaterThen." + field);
             return true;
         }
@@ -108,11 +108,11 @@ public abstract class BaseController extends Base {
      * @param model
      * @return
      */
-    protected static boolean virifyNotLessThen(String field, String value, int specific, Map<String, Object> model) {
+    protected static boolean virifyNotLessThen(String field, Integer value, int specific, Map<String, Object> model) {
         if (null == value) {
             model.put(ERROR, "verify.notEmpty." + field);
             return true;
-        } else if (value.length() < specific) {
+        } else if (value >= specific) {
             model.put(ERROR, "verify.notLessThen." + field);
             return true;
         }

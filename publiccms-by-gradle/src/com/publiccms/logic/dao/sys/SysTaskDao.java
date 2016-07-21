@@ -23,6 +23,15 @@ public class SysTaskDao extends BaseDao<SysTask> {
         return getPage(queryHandler, pageIndex, pageSize);
     }
 
+    public int updateStatusToRunning(Integer id) {
+        if (notEmpty(id)) {
+            QueryHandler queryHandler = getQueryHandler("update SysTask bean set bean.status = 1");
+            queryHandler.condition("bean.id = :id").setParameter("id", id);
+            return update(queryHandler);
+        }
+        return 0;
+    }
+
     @Override
     protected SysTask init(SysTask entity) {
         return entity;
