@@ -23,11 +23,13 @@ https://git.oschina.net/sanluan/PublicCMS-lib
 V2016.july更新：
 
 框架升级:
+
 1. Spring Framework升级到4.3.1
 1. Hibernate Search升级到5.5.4
 1. Hibernate ORM升级到4.5.2
 
 BUG修复:
+
 1. 分类扩展字段展示错误修复
 1. 内容推送到页面时标题乱码修复
 1. 域名管理错别字修改
@@ -37,6 +39,7 @@ BUG修复:
 1. 域名绑定子目录时元数据路径错误修复
 
 新增功能:
+
 1. 将文件上传日志拆分为独立的表
 1. 增加集群管理，任务计划集群环境处理
 1. 后台增加JSP视图解决方案
