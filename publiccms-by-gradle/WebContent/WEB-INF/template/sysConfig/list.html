@@ -1,0 +1,35 @@
+<h2 class="contentTitle">配置中心</h2>
+<div class="pageContent">
+	<div class="tabs" currentIndex="0" eventType="click">
+		<div class="tabsHeader">
+			<div class="tabsHeaderContent">
+			<#list getConfigCodeList()>
+				<ul>
+				<#items as a>
+					<li><a href="sysConfig/subCode.html?code=${a?html}" class="j-ajax"><span><@t.m 'config.'+a/></span></a></li>
+				</#items>
+				</ul>
+			<#else>
+				<ul>
+					<li><a href="javascript:;"><span>没有配置项</span></a></li>
+				</ul>
+			</#list>
+			</div>
+		</div>
+		<div class="tabsContent">
+			<#list getConfigCodeList() as a>
+				<div>
+					<#if a?is_first>
+						<#assign code=a/>
+						<#include "subcode.html"/>
+					</#if>
+				</div>
+			<#else>
+				<div>没有配置项</div>
+			</#list>
+		</div>
+		<div class="tabsFooter">
+			<div class="tabsFooterContent"></div>
+		</div>
+	</div>
+</div>

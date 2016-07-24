@@ -6,7 +6,7 @@
 	<input name="${name}[${index}].name" type="hidden" value="${extend.code}"/>
 	<#switch extend.inputType>
 		<#case 'number'>
-		<input name="${inputName}" <#if !customform>class="number<#if extend.required> required</#if>" </#if>type="text" size="30" value="${value!}"/>
+		<input name="${inputName}" <#if !customform>class="number<#if extend.required> required</#if>" </#if>type="text" size="5" value="${value!}"/>
 			<#break>
 		<#case 'file'>
 		<input name="${inputName}"  <#if !customform>class="readonly<#if extend.required> required</#if>" type="text" <#else>type="file" </#if>value="${value!}" readonly="readonly"/>
@@ -30,6 +30,22 @@
 			<#break>
 		<#case 'editor'>
 		<textarea name="${inputName}" <#if !customform>class="editor<#if extend.required> required</#if>" </#if>style="width: 100%;" rows="20">${value!}</textarea>
+			<#break>
+		<#case 'template'>
+		<input name="${inputName}" type="text" maxlength="255" size="40" value="${value!}"<#if !customform> class="<#if extend.required> required</#if>"</#if>/>
+		<a class="btnLook" href="cmsTemplate/lookup.html?field=${inputName}" lookupGroup="">选择模板</a>
+			<#break>
+		<#case 'boolean'>
+		<select class="combox" name="${inputName}"<#if !customform> class="<#if extend.required> required</#if>"</#if>>
+			<option value="true"${(value?has_content&&'true'=value)?then(' selected="true"','')}>是</option>
+			<option value="false"${(!value?has_content||'false'=value)?then(' selected="true"','')}>否</option>
+		</select>
+			<#break>
+		<#case 'user'>
+		<@_sysUser id=value><#assign user=object/></@_sysUser>
+		<input name="${inputName}" value="${value!}" type="hidden"/>
+		<input readonly="readonly" size="10" value="${(user.nickName)!}" type="text"<#if !customform> class="<#if extend.required> required</#if>"</#if>/>
+		<a class="btnLook" href="sysUser/lookup.html?field=${inputName}" width="920" warn="请选择用户" lookupGroup="">选择用户</a>
 			<#break>
 		<#case 'date'>
 		<input name="${inputName}" <#if !customform>class="date<#if extend.required> required</#if>" dateFmt="yyyy-MM-dd HH:mm:ss" </#if>type="text" size="20" value="${value!}"/>

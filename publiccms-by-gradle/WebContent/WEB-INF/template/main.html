@@ -67,14 +67,14 @@ var memoryChart={
 		unUsedMemory:[]
 	},
 	time:[],
-	toDecimal:function(number) {  
-        var value = parseFloat(number);  
-        if (isNaN(value)) {  
-            return 0;  
-        }  
-        value = Math.round(number*100)/100;  
-        return value;  
-    }  
+	toDecimal:function(number) {
+        var value = parseFloat(number);
+        if (isNaN(value)) {
+            return 0;
+        }
+        value = Math.round(number*100)/100;
+        return value;
+    }
 };
 memoryChart.time.push("${.now?string('hh:mm')}");
 memoryChart.data.freeMemory.push(memoryChart.toDecimal(${freeMemory}/1048576));
@@ -301,7 +301,11 @@ echarts.init(document.getElementById('disk')).setOption({
 		</p>
 	<@_masterSite>
 		<script>
-			$('#cmsVersion').append('[<em style="color:red">有新版本</em>]');
+			$.getJSON('http://cms.publiccms.com/api/directive/version?callback=?',function(data){
+				if($('#cmsVersion a').eq(0).text()===data.cms){
+					$('#cmsVersion a').eq(0).append('[<em style="color:red">有新版本</em>]');
+				}
+			});
 		</script>
 	</@_masterSite>
 	</div>

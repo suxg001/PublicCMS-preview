@@ -20,7 +20,7 @@ https://github.com/sanluan/PublicCMS-lib
 
 https://git.oschina.net/sanluan/PublicCMS-lib
 
-###V2016.july更新：
+###V2016.0801更新：
 
 框架升级:
 
@@ -56,6 +56,7 @@ BUG修复:
 1. 取消普通接口鉴权
 1. 接口测试页面合并为一个，增加需要鉴权等提示
 1. 取消文件列表缓存
+1. getPageDataAttribute改为getPlaceAttribute
 
 ###V2016.0510更新：
 

@@ -34,6 +34,7 @@ public class AdminInitializer extends AbstractAnnotationConfigDispatcherServletI
 
     @Override
     protected DispatcherServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
+        ApplicationConfig.webApplicationContext = servletAppContext;
         return new ErrorToNotFoundDispatcherServlet(servletAppContext);
     }
 

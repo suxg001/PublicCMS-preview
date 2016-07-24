@@ -924,10 +924,11 @@ CREATE TABLE `sys_config` (
   `id` int(11) NOT NULL auto_increment COMMENT 'ID',
   `site_id` int(11) NOT NULL COMMENT '站点ID',
   `code` varchar(50) NOT NULL COMMENT '配置项编码',
-  `value` longtext NOT NULL COMMENT '值',
+  `subcode` varchar(50) NOT NULL COMMENT '子编码',
+  `data` longtext NOT NULL COMMENT '值',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `site_id` (`site_id`,`code`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='站点配置';
+  UNIQUE KEY `site_id` (`site_id`,`code`,`subcode`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='站点配置' AUTO_INCREMENT=1 ;
 
 -- ----------------------------
 -- Records of sys_config

@@ -397,7 +397,7 @@ header .nav li{ float:left;padding:0 5px;line-height:34px;}
 .searchBar .subBar{ height:25px;position:absolute;bottom:2px;right:2px;}
 .searchBar .subBar ul{ float:right;}
 .searchBar .subBar li{ float:left;margin-left:5px;}
-.pageContent{ display:block;overflow:auto;position:relative;}
+.pageContent{ display:block;overflow:auto;position:relative;background-color:#fff;}
 
 .dateRange input{ width:72px;}
 .dateRange .limit{ text-align:center;width:15px;line-height:21px;}
@@ -434,7 +434,7 @@ fieldset legend:hover{ background-color:#dddddd;}
 
 /* Pages dialog */
 .dialog .pageHeader{ border-style:solid;border-width:1px;margin:0}
-.dialog .pageContent{ border-style:solid;border-width:0 1px;background-color:#fff}
+.dialog .pageContent{ border-style:solid;border-width:0 1px;}
 .dialog .pageFormContent, .dialog .viewInfo{ border-style:solid;border-width:1px 0 0 0;}
 .dialog .formBar{ border-style:solid;border-width:1px 0;}
 
@@ -522,7 +522,6 @@ a.btnAttach{ background-position:-183px 0}
 .viewInfo dl.nowrap dt{ }
 .viewInfo dl.nowrap dd{ width:auto;}
 .dialogContent .viewInfo{ background-color:#fff}
-.pageContent .panel{ clear:both;margin:5px}
 
 .sortDragPlaceholder{ border:1px dashed #ccc;}
 #printBox{ display:none}

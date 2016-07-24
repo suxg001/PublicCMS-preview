@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.publiccms.common.constants.CmsVersion;
 import com.publiccms.logic.service.log.LogLoginService;
 import com.publiccms.logic.service.log.LogOperateService;
 import com.publiccms.logic.service.log.LogTaskService;
@@ -39,9 +40,11 @@ public class ScheduledTaskComponent extends Base {
      */
     @Scheduled(fixedDelay = 60 * 1000L)
     public void clearAppToken() {
-        Date date = addMinutes(getDate(), -30);
-        appTokenService.delete(date);
-        sysEmailTokenService.delete(date);
+        if (CmsVersion.isMaster()) {
+            Date date = addMinutes(getDate(), -30);
+            appTokenService.delete(date);
+            sysEmailTokenService.delete(date);
+        }
     }
 
     /**
@@ -57,10 +60,12 @@ public class ScheduledTaskComponent extends Base {
      */
     @Scheduled(cron = "0 0 0 1 * ?")
     public void clearLog() {
-        Date date = addYears(getDate(), -2);
-        logLoginService.delete(null, date);
-        logOperateService.delete(null, date);
-        logTaskService.delete(null, date);
-        logUploadService.delete(null, date);
+        if (CmsVersion.isMaster()) {
+            Date date = addYears(getDate(), -2);
+            logLoginService.delete(null, date);
+            logOperateService.delete(null, date);
+            logTaskService.delete(null, date);
+            logUploadService.delete(null, date);
+        }
     }
 }

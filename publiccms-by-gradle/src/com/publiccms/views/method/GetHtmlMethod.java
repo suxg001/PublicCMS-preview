@@ -1,6 +1,7 @@
 package com.publiccms.views.method;
 
 import static com.sanluan.common.tools.TemplateModelUtils.converString;
+import static org.apache.http.util.EntityUtils.consume;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class GetHtmlMethod extends BaseMethod {
                 HttpEntity entity = response.getEntity();
                 if (notEmpty(entity)) {
                     html = EntityUtils.toString(entity, DEFAULT_CHARSET);
-                    EntityUtils.consume(entity);
+                    consume(entity);
                 }
             } catch (Exception e) {
                 log.error(e.getMessage());

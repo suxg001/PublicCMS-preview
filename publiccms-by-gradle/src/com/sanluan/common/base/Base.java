@@ -1,11 +1,13 @@
 package com.sanluan.common.base;
 
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.logging.LogFactory.getLog;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.logging.Log;
@@ -31,6 +33,22 @@ public abstract class Base {
 
     public static boolean notEmpty(Object var) {
         return null != var;
+    }
+
+    public static boolean notEmpty(List<?> var) {
+        return null != var && !var.isEmpty();
+    }
+
+    public static boolean notEmpty(Map<?, ?> var) {
+        return null != var && !var.isEmpty();
+    }
+
+    public static boolean empty(List<?> var) {
+        return null == var || var.isEmpty();
+    }
+
+    public static boolean empty(Map<?, ?> var) {
+        return null == var || var.isEmpty();
     }
 
     public static boolean empty(Object var) {

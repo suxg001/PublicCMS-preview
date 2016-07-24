@@ -2,6 +2,9 @@ package com.publiccms.views.controller.web;
 
 import static com.publiccms.common.constants.CommonConstants.getCookiesUser;
 import static com.publiccms.common.constants.CommonConstants.getCookiesUserSplit;
+import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_CODE;
+import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_LOGIN_PATH;
+import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_REGISTER_PATH;
 import static com.publiccms.logic.service.log.LogLoginService.CHANNEL_WEB;
 import static com.sanluan.common.tools.RequestUtils.addCookie;
 import static com.sanluan.common.tools.RequestUtils.getCookie;
@@ -9,7 +12,7 @@ import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static com.sanluan.common.tools.VerificationUtils.encode;
 import static org.apache.commons.lang3.StringUtils.trim;
 
-import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
@@ -26,18 +29,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.publiccms.common.base.AbstractController;
-import com.publiccms.common.spi.Configable;
 import com.publiccms.entities.log.LogLogin;
 import com.publiccms.entities.sys.SysDomain;
 import com.publiccms.entities.sys.SysSite;
 import com.publiccms.entities.sys.SysUser;
 import com.publiccms.entities.sys.SysUserToken;
+import com.publiccms.logic.component.ConfigComponent;
 import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysDomainService;
 import com.publiccms.logic.service.sys.SysUserService;
 import com.publiccms.logic.service.sys.SysUserTokenService;
-import com.publiccms.views.pojo.ExtendField;
-import com.sanluan.common.tools.LanguagesUtils;
 
 /**
  * 
@@ -45,10 +45,7 @@ import com.sanluan.common.tools.LanguagesUtils;
  *
  */
 @Controller
-public class LoginController extends AbstractController implements Configable {
-    public final String CONFIG_CODE = "login";
-    public final String CONFIG_LOGIN_PATH = "login_path";
-    public final String CONFIG_REGISTER_PATH = "register_path";
+public class LoginController extends AbstractController {
     @Autowired
     private SysUserService service;
     @Autowired
@@ -56,7 +53,7 @@ public class LoginController extends AbstractController implements Configable {
     @Autowired
     private LogLoginService logLoginService;
     @Autowired
-    private SysDomainService domainService;
+    private ConfigComponent configComponent;
 
     /**
      * @param username
@@ -76,11 +73,22 @@ public class LoginController extends AbstractController implements Configable {
         SysDomain domain = getDomain(request);
         username = trim(username);
         password = trim(password);
-        if (virifyNotEmpty("domain", domain, model) || virifyNotEmpty("loginPath", domain.getLoginPath(), model)
-                || virifyNotEmpty("username", username, model) || virifyNotEmpty("password", password, model)) {
+        if (empty(returnUrl)) {
+            returnUrl = site.getSitePath();
+        }
+        if (virifyNotEmpty("domain", domain.getId(), model)) {
+            return REDIRECT + returnUrl;
+        }
+
+        Map<String, String> config = configComponent.getConfigData(site.getId(), CONFIG_CODE, domain.getId().toString());
+        String loginPath = config.get(CONFIG_LOGIN_PATH);
+        if (virifyNotEmpty("loginPath", loginPath, model)) {
+            return REDIRECT + returnUrl;
+        }
+        if (virifyNotEmpty("username", username, model) || virifyNotEmpty("password", password, model)) {
             model.addAttribute("username", username);
             model.addAttribute("returnUrl", returnUrl);
-            return REDIRECT + domain.getLoginPath();
+            return REDIRECT + loginPath;
         }
         SysUser user;
         if (virifyNotEMail(username)) {
@@ -98,7 +106,7 @@ public class LoginController extends AbstractController implements Configable {
                 userId = user.getId();
             }
             logLoginService.save(new LogLogin(site.getId(), username, userId, ip, CHANNEL_WEB, false, getDate(), password));
-            return REDIRECT + domain.getLoginPath();
+            return REDIRECT + loginPath;
         }
         user.setPassword(null);
         setUserToSession(session, user);
@@ -149,20 +157,31 @@ public class LoginController extends AbstractController implements Configable {
     public String register(SysUser entity, String repassword, String returnUrl, HttpServletRequest request, HttpSession session,
             HttpServletResponse response, ModelMap model) {
         SysSite site = getSite(request);
+        if (empty(returnUrl)) {
+            returnUrl = site.getSitePath();
+        }
         SysDomain domain = getDomain(request);
         entity.setName(trim(entity.getName()));
         entity.setNickName(trim(entity.getNickName()));
         entity.setPassword(trim(entity.getPassword()));
         repassword = trim(repassword);
-        if (virifyNotEmpty("domain", domain, model) || virifyNotEmpty("registerPath", domain.getRegisterPath(), model)
-                || virifyNotEmpty("username", entity.getName(), model) || virifyNotEmpty("nickname", entity.getNickName(), model)
+        if (virifyNotEmpty("domain", domain.getId(), model)) {
+            return REDIRECT + returnUrl;
+        }
+
+        Map<String, String> config = configComponent.getConfigData(site.getId(), CONFIG_CODE, domain.getId().toString());
+        String registerPath = config.get(CONFIG_REGISTER_PATH);
+        if (virifyNotEmpty("registerPath", registerPath, model)) {
+            return REDIRECT + returnUrl;
+        }
+        if (virifyNotEmpty("username", entity.getName(), model) || virifyNotEmpty("nickname", entity.getNickName(), model)
                 || virifyNotEmpty("password", entity.getPassword(), model)
                 || virifyNotUserName("username", entity.getName(), model)
                 || virifyNotNickName("nickname", entity.getNickName(), model)
                 || virifyNotEquals("repassword", entity.getPassword(), repassword, model)
                 || virifyHasExist("username", service.findByName(site.getId(), entity.getName()), model)
                 || virifyHasExist("nickname", service.findByNickName(site.getId(), entity.getNickName()), model)) {
-            return REDIRECT + domain.getRegisterPath();
+            return REDIRECT + registerPath;
         }
         String ip = getIpAddress(request);
         entity.setPassword(encode(entity.getPassword()));
@@ -185,6 +204,10 @@ public class LoginController extends AbstractController implements Configable {
      */
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String logout(String returnUrl, HttpServletRequest request, HttpServletResponse response) {
+        SysSite site = getSite(request);
+        if (empty(returnUrl)) {
+            returnUrl = site.getSitePath();
+        }
         Cookie userCookie = getCookie(request.getCookies(), getCookiesUser());
         if (null != userCookie && notEmpty(userCookie.getValue())) {
             String value = userCookie.getValue();
@@ -196,11 +219,7 @@ public class LoginController extends AbstractController implements Configable {
             }
         }
         clearUserToSession(request.getContextPath(), request.getSession(), response);
-        if (notEmpty(returnUrl)) {
-            return REDIRECT + returnUrl;
-        }
-        SysDomain domain = getDomain(request);
-        return REDIRECT + domain.getLoginPath();
+        return REDIRECT + returnUrl;
     }
 
     protected boolean virifyNotEnablie(SysUser user, ModelMap model) {
@@ -209,29 +228,5 @@ public class LoginController extends AbstractController implements Configable {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public String getCode() {
-        return CONFIG_CODE;
-    }
-
-    @Override
-    public void registerExtendField(String subCode, HttpServletRequest request, List<ExtendField> extendFieldList) {
-        extendFieldList.add(
-                new ExtendField(false, LanguagesUtils.getMessage(request, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_LOGIN_PATH),
-                        null, CONFIG_LOGIN_PATH, "template", null));
-        extendFieldList.add(new ExtendField(false,
-                LanguagesUtils.getMessage(request, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_REGISTER_PATH), null,
-                CONFIG_REGISTER_PATH, "template", null));
-    }
-
-    @Override
-    public void registerSubCode(int siteId, List<String> subCodeList) {
-        @SuppressWarnings("unchecked")
-        List<SysDomain> list = (List<SysDomain>) domainService.getPage(siteId, null, null).getList();
-        for (SysDomain entity : list) {
-            subCodeList.add(entity.getId().toString());
-        }
     }
 }

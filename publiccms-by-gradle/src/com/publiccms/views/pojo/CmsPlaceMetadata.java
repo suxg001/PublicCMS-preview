@@ -2,8 +2,10 @@ package com.publiccms.views.pojo;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sanluan.common.base.Base;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CmsPlaceMetadata extends Base {
     private String alias;
     private Integer size;

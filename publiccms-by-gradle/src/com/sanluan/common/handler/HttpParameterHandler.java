@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.http.server.ServletServerHttpResponse;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.sanluan.common.base.BaseHandler;
 
@@ -140,5 +142,10 @@ public class HttpParameterHandler extends BaseHandler {
     @Override
     public Object getAttribute(String name) throws IOException, Exception {
         return request.getAttribute(name);
+    }
+
+    @Override
+    public Locale getLocale() throws Exception {
+        return RequestContextUtils.getLocale(request);
     }
 }

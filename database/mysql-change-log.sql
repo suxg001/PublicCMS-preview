@@ -38,10 +38,6 @@ delete from `sys_moudle`  where id = 29;
 INSERT INTO `sys_moudle` VALUES ('29', '推荐', 'cmsCategory/push_page', 'cmsCategory/push_page_list,cmsPage/placeDataAdd,cmsPlace/save', '24', '0');
 -- 20160519 --
 
---
--- 表的结构 `log_upload`
---
-
 CREATE TABLE IF NOT EXISTS `log_upload` (
   `id` bigint(11) NOT NULL auto_increment,
   `site_id` int(11) NOT NULL COMMENT '站点ID',
@@ -69,14 +65,19 @@ CREATE TABLE IF NOT EXISTS `sys_cluster` (
   KEY `create_date` (`create_date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='服务器集群' ;
 
+UPDATE  `public_cms`.`sys_moudle` SET  `parent_id` =  '30' WHERE  `sys_moudle`.`parent_id` =29;
+insert into `sys_moudle`(`id`,`name`,`url`,`authorized_url`,`parent_id`,`sort`) values ('40','修改模板元数据','cmsTemplate/metadata','cmsTemplate/saveMetadata','39','0');
+UPDATE  `public_cms`.`sys_moudle` SET  `url` =  'cmsTemplate/content',`authorized_url` =  'cmsTemplate/save,cmsTemplate/chipLookup' WHERE  `sys_moudle`.`id` =41;
+-- 20160723 --
+ALTER TABLE `sys_domain`  DROP `login_path`,  DROP `register_path`;
+UPDATE `sys_site` SET `site_path` = `dynamic_path` where `use_static`= 0;
+DROP TABLE IF EXISTS `sys_config`;
 CREATE TABLE IF NOT EXISTS `sys_config` (
   `id` int(11) NOT NULL auto_increment COMMENT 'ID',
   `site_id` int(11) NOT NULL COMMENT '站点ID',
   `code` varchar(50) NOT NULL COMMENT '配置项编码',
-  `value` longtext NOT NULL COMMENT '值',
+  `subcode` varchar(50) NOT NULL COMMENT '子编码',
+  `data` longtext NOT NULL COMMENT '值',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `site_id` (`site_id`,`code`)
+  UNIQUE KEY `site_id` (`site_id`,`code`,`subcode`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='站点配置' AUTO_INCREMENT=1 ;
-UPDATE  `public_cms`.`sys_moudle` SET  `parent_id` =  '30' WHERE  `sys_moudle`.`parent_id` =29;
-insert into `sys_moudle`(`id`,`name`,`url`,`authorized_url`,`parent_id`,`sort`) values ('40','修改模板元数据','cmsTemplate/metadata','cmsTemplate/saveMetadata','39','0');
-UPDATE  `public_cms`.`sys_moudle` SET  `url` =  'cmsTemplate/content',`authorized_url` =  'cmsTemplate/save,cmsTemplate/chipLookup' WHERE  `sys_moudle`.`id` =41;

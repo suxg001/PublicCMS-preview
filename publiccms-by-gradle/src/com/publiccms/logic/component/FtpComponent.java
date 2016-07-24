@@ -5,10 +5,9 @@ import static com.publiccms.logic.component.SiteComponent.STATIC_FILE_PATH_WEB;
 import static com.publiccms.logic.component.SiteComponent.TASK_FILE_PATH;
 import static com.publiccms.logic.component.SiteComponent.TEMPLATE_PATH;
 import static com.publiccms.logic.component.SiteComponent.getFullFileName;
+import static com.sanluan.common.tools.StreamUtils.write;
 import static com.sanluan.common.tools.VerificationUtils.encode;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +15,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -313,11 +311,11 @@ public class FtpComponent extends Base {
             }
         }
 
-        private void pirnt(String message){
+        private void pirnt(String message) {
             System.out.println(message);
             output.println(message);
         }
-        
+
         private boolean checkUsername(String command, String username) {
             if ("USER".equals(command)) {
                 user = server.getUser(username);
@@ -408,15 +406,7 @@ public class FtpComponent extends Base {
                     try {
                         if (type == State.TYPE_IMAGE) {
                             pirnt("150 Opening ASCII mode data connection for " + param);
-                            BufferedInputStream fin = new BufferedInputStream(new FileInputStream(file));
-                            PrintStream dataOutput = new PrintStream(transportSocket.getOutputStream(), true);
-                            byte[] buf = new byte[1024];
-                            int l = 0;
-                            while ((l = fin.read(buf, 0, 1024)) != -1) {
-                                dataOutput.write(buf, 0, l);
-                            }
-                            fin.close();
-                            dataOutput.close();
+                            write(new FileInputStream(file), transportSocket.getOutputStream());
                         } else {
                             pirnt("150 Opening ASCII mode data connection for " + param);
                             BufferedReader fin = new BufferedReader(new FileReader(file));
@@ -475,15 +465,7 @@ public class FtpComponent extends Base {
                 try {
                     if (type == State.TYPE_IMAGE) {
                         pirnt("150 Opening Binary mode data connection for " + param);
-                        BufferedOutputStream fout = new BufferedOutputStream(new FileOutputStream(getCurrentPath(param)));
-                        BufferedInputStream dataInput = new BufferedInputStream(transportSocket.getInputStream());
-                        byte[] buf = new byte[1024];
-                        int l = 0;
-                        while ((l = dataInput.read(buf, 0, 1024)) != -1) {
-                            fout.write(buf, 0, l);
-                        }
-                        dataInput.close();
-                        fout.close();
+                        write(transportSocket.getInputStream(), new FileOutputStream(getCurrentPath(param)));
                     } else {
                         pirnt("150 Opening ASCII mode data connection for " + param);
                         PrintWriter fout = new PrintWriter(new FileOutputStream(getCurrentPath(param)));
@@ -635,14 +617,11 @@ public class FtpComponent extends Base {
             String rightString = rightsb.toString();
             sb.append(rightString).append(rightString).append(rightString);
             Date fileModifiedDate = new Date(file.lastModified());
-            sb.append(BLANKSPACE)
-                    .append(file.isDirectory() ? 3 : 1)
-                    .append(" user group ")
-                    .append(String.valueOf(file.length()))
-                    .append(BLANKSPACE)
-                    .append(System.currentTimeMillis() - file.lastModified() > 183L * 24L * 60L * 60L * 1000L ? new SimpleDateFormat(
-                            LIST_DATE_FORMAT, Locale.ENGLISH).format(fileModifiedDate) : new SimpleDateFormat(LIST_DATE_FORMAT1,
-                            Locale.ENGLISH).format(fileModifiedDate)).append(BLANKSPACE);
+            sb.append(BLANKSPACE).append(file.isDirectory() ? 3 : 1).append(" user group ").append(String.valueOf(file.length()))
+                    .append(BLANKSPACE).append(System.currentTimeMillis() - file.lastModified() > 183L * 24L * 60L * 60L * 1000L
+                            ? new SimpleDateFormat(LIST_DATE_FORMAT, Locale.ENGLISH).format(fileModifiedDate)
+                            : new SimpleDateFormat(LIST_DATE_FORMAT1, Locale.ENGLISH).format(fileModifiedDate))
+                    .append(BLANKSPACE);
             sb.append(file.getName());
             return sb.toString();
         }

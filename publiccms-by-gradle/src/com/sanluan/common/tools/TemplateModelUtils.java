@@ -21,7 +21,7 @@ import freemarker.template.TemplateSequenceModel;
 
 /**
  * 
- * TemplateModelUtils 模板数据模型帮助类
+ * TemplateModelUtils 模板数据模型工具类
  *
  */
 public class TemplateModelUtils extends Base {

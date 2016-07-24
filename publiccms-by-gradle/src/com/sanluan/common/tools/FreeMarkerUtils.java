@@ -1,6 +1,7 @@
 package com.sanluan.common.tools;
 
 import static org.apache.commons.logging.LogFactory.getLog;
+import static org.springframework.ui.freemarker.FreeMarkerTemplateUtils.processTemplateIntoString;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,7 +13,6 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.springframework.ui.ModelMap;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import com.sanluan.common.base.Base;
 
@@ -22,6 +22,12 @@ import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
+/**
+ * FreeMarker工具类
+ * 
+ * @author kerneler
+ *
+ */
 public class FreeMarkerUtils extends Base {
     private final static Log log = getLog(FreeMarkerUtils.class);
 
@@ -117,7 +123,7 @@ public class FreeMarkerUtils extends Base {
     public static String makeStringByFile(String template, Configuration configuration, Map<String, Object> model)
             throws IOException, TemplateException {
         Template tpl = configuration.getTemplate(template);
-        return FreeMarkerTemplateUtils.processTemplateIntoString(tpl, model);
+        return processTemplateIntoString(tpl, model);
     }
 
     /**
@@ -131,6 +137,6 @@ public class FreeMarkerUtils extends Base {
     public static String makeStringByString(String templateContent, Configuration configuration, Map<String, Object> model)
             throws IOException, TemplateException {
         Template t = new Template(String.valueOf(templateContent.hashCode()), templateContent, configuration);
-        return FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+        return processTemplateIntoString(t, model);
     }
 }

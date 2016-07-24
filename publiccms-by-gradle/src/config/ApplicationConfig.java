@@ -24,6 +24,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
@@ -51,6 +52,7 @@ public class ApplicationConfig extends Base {
     @Autowired
     private SessionFactory sessionFactory;
     public static String basePath;
+    public static WebApplicationContext webApplicationContext;
 
     /**
      * 数据源
@@ -148,8 +150,8 @@ public class ApplicationConfig extends Base {
     public MessageSource messageSource() {
         return new ResourceBundleMessageSource() {
             {
-                setBasenames(new String[] { "config.language.message", "config.language.plugin" });
-                setCacheSeconds(30000);
+                setBasenames(new String[] { "config.language.message", "config.language.config", "config.language.plugin" });
+                setCacheSeconds(300);
                 setUseCodeAsDefaultMessage(true);
             }
         };

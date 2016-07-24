@@ -49,14 +49,15 @@ public class SysSiteAdminController extends AbstractController {
             HttpSession session, ModelMap model) {
         SysSite site = getSite(request);
         if (!entity.isUseStatic()) {
+            entity.setSitePath(entity.getDynamicPath());
             entity.setUseSsi(false);
         }
         if (notEmpty(entity.getId())) {
             entity = service.update(entity.getId(), entity, new String[] { "id" });
             if (notEmpty(entity)) {
-                logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                        LogLoginService.CHANNEL_WEB_MANAGER, "update.site", getIpAddress(request), getDate(), entity.getId()
-                                + ":" + entity.getName()));
+                logOperateService.save(
+                        new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,
+                                "update.site", getIpAddress(request), getDate(), entity.getId() + ":" + entity.getName()));
             }
         } else {
             if (virifyNotEmpty("userName", userName, model) || virifyNotUserName("password", password, model)) {
@@ -69,9 +70,9 @@ public class SysSiteAdminController extends AbstractController {
                     false, true, false, null, null, 0, getDate());
             userService.save(user);// 初始化用户
             roleUserService.save(new SysRoleUser(role.getId(), user.getId()));// 初始化角色用户映射
-            logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                    LogLoginService.CHANNEL_WEB_MANAGER, "save.site", getIpAddress(request), getDate(), entity.getId() + ":"
-                            + entity.getName()));
+            logOperateService
+                    .save(new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,
+                            "save.site", getIpAddress(request), getDate(), entity.getId() + ":" + entity.getName()));
         }
         siteComponent.clear();
         return TEMPLATE_DONE;

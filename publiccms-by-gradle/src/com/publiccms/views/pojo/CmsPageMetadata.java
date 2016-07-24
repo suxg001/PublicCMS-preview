@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sanluan.common.base.Base;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CmsPageMetadata extends Base {
     private String alias;
     private String publishPath;

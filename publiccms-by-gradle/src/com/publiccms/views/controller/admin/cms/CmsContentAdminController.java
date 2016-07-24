@@ -3,7 +3,7 @@ package com.publiccms.views.controller.admin.cms;
 import static com.publiccms.common.tools.ExtendUtils.getExtendString;
 import static com.publiccms.common.tools.ExtendUtils.getSysExtentDataMap;
 import static com.sanluan.common.tools.LanguagesUtils.getMessage;
-import static com.sanluan.common.tools.MyStringUtils.removeHtmlTag;
+import static com.sanluan.common.tools.HTMLUtils.removeHtmlTag;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static org.apache.commons.lang3.ArrayUtils.addAll;
 import static org.apache.commons.lang3.ArrayUtils.removeElements;
@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import static org.springframework.web.servlet.support.RequestContextUtils.getLocale;
 
 import com.publiccms.common.base.AbstractController;
 import com.publiccms.entities.cms.CmsCategory;
@@ -314,7 +315,7 @@ public class CmsContentAdminController extends AbstractController {
                     if (sb.length() > 0) {
                         sb.append(",");
                     }
-                    sb.append(getMessage(request, "message.content.categoryModel.empty", entity.getId() + ":" + entity.getTitle(),
+                    sb.append(getMessage(getLocale(request), "message.content.categoryModel.empty", entity.getId() + ":" + entity.getTitle(),
                             categoryId + ":" + category.getName()));
                 }
             }

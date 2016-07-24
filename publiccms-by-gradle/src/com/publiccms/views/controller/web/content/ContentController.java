@@ -2,7 +2,7 @@ package com.publiccms.views.controller.web.content;
 
 import static com.publiccms.common.tools.ExtendUtils.getExtendString;
 import static com.publiccms.common.tools.ExtendUtils.getSysExtentDataMap;
-import static com.sanluan.common.tools.MyStringUtils.removeHtmlTag;
+import static com.sanluan.common.tools.HTMLUtils.removeHtmlTag;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static org.apache.commons.lang3.ArrayUtils.addAll;
 

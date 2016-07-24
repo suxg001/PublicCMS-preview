@@ -5,6 +5,8 @@
 <div class="pageHeader">
 	<form id="pagerForm" onsubmit="return dwzSearch(this, 'dialog');" action="sysUser/lookup.html" method="post">
 		<#include "../include_page/paramters.html"/>
+		<input type="hidden" name="field" value="${field!'userId'}"/>
+		<input type="hidden" name="nickNameField" value="${nickNameField!'nickName'}"/>
 		<div class="searchBar">
 			<table class="searchContent">
 				<tr>
@@ -78,7 +80,7 @@
 			<#list page.list as a>
 			<tr target="sid" rel="${a.id}">
 				<td>
-					<a class="btnSelect" href="javascript:;" onclick="$.bringBack({userId:'${a.id}',nickName:'${a.nickName}'});return false;" title="选择">选择</a>
+					<a class="btnSelect" href="javascript:;" onclick="$.bringBack({${field!'userId'}:'${a.id}',${nickNameField!'nickName'}:'${a.nickName}'});return false;" title="选择">选择</a>
 				</td>
 				<td>${a.name}</td>
 				<td>${a.nickName}${(a.superuserAccess)?then('[<font color="red">超级管理员</font>]','')}</td>

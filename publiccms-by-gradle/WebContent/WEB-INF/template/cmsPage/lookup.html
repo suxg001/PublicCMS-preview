@@ -32,27 +32,27 @@
 </#macro>
 <#macro pageTree filepath=''>
 	<@_templateList path=filepath>
-		<@_metadata dir=filepath><#local metaDataMap=object/></@_metadata>
+		<@_metadata dir=filepath><#local metadataMap=object/></@_metadata>
 		<#list list as a>
 			<#local path=filepath+'/'+a.fileName>
 			<#if 'ftl'!=a.fileName>
 				<li>
 				<#if a.directory>
 					<a href="javascript:;" onclick="return false;">
-						${a.fileName} ${(metaDataMap[a.fileName].alias)?has_content?then('('+metaDataMap[a.fileName].alias+')','')}
+						${a.fileName} ${(metadataMap[a.fileName].alias)?has_content?then('('+metadataMap[a.fileName].alias+')','')}
 					</a>
 					<ul>
 						<@pageTree path/>
 					</ul>
 				<#else>
-					<#if site.useStatic&&(metaDataMap[a.fileName].publishPath)?has_content>
-						<a href="javascript" onclick="$.bringBack({itemType:'page',title:'${(metaDataMap[a.fileName].alias)!}',url:'${site.sitePath+metaDataMap[a.fileName].publishPath}'});return false;">
-							[静态页面] ${a.fileName} ${(metaDataMap[a.fileName].alias)?has_content?then('('+metaDataMap[a.fileName].alias+')','')}
+					<#if site.useStatic&&(metadataMap[a.fileName].publishPath)?has_content>
+						<a href="javascript" onclick="$.bringBack({itemType:'page',title:'${(metadataMap[a.fileName].alias)!}',url:'${site.sitePath+metadataMap[a.fileName].publishPath}'});return false;">
+							[静态页面] ${a.fileName} ${(metadataMap[a.fileName].alias)?has_content?then('('+metadataMap[a.fileName].alias+')','')}
 						</a>
 					</#if>
-					<#if (metaDataMap[a.fileName].useDynamic)?has_content&&metaDataMap[a.fileName].useDynamic>
-						<a href="javascript" onclick="$.bringBack({itemType:'page',title:'${(metaDataMap[a.fileName].alias)!}',url:'${site.dynamicPath+path}'});return false;">
-							[动态页面] ${a.fileName} ${(metaDataMap[a.fileName].alias)?has_content?then('('+metaDataMap[a.fileName].alias+')','')}
+					<#if (metadataMap[a.fileName].useDynamic)?has_content&&metadataMap[a.fileName].useDynamic>
+						<a href="javascript" onclick="$.bringBack({itemType:'page',title:'${(metadataMap[a.fileName].alias)!}',url:'${site.dynamicPath+path}<#if (metadataMap[a.fileName].acceptParamters)?has_content><#list metadataMap[a.fileName].acceptParamters?split(',') as a><#if a?is_first>?<#else>#</#if>${a}=</#list></#if>'});return false;">
+							[动态页面] ${a.fileName} ${(metadataMap[a.fileName].alias)?has_content?then('('+metadataMap[a.fileName].alias+')','')}
 						</a>
 					</#if>
 				</#if>
@@ -73,7 +73,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="tabsContent">
+	<div class="tabsContent" layoutH="38">
 		<div>
 			<div class="pageContent">
 				<div class="unitBox" layoutH="38" style="float:left; display:block; overflow:auto; width:180px;border-right:solid 1px #CCC;">
@@ -102,7 +102,7 @@
 		</div>
 		<div>
 			<div class="pageContent">
-				<div class="unitBox" layoutH="38" style="display:block; overflow:auto;">
+				<div class="unitBox"  layoutH="38" style="display:block; overflow:auto;">
 					<ul class="tree expand">
 						<@pageTree/>
 					</ul>

@@ -19,7 +19,7 @@
 	<p><label>图片:</label><input name="cover" type="text" size="60" value=""/></p>
 	<#include "../include_page/extendData.html"/>
 	<#assign extendList=(a.extendList)![]/>
-	<#assign extendValues=getPageDataAttribute((a.id)!)!{}/>
+	<#assign extendValues=getPlaceAttribute((a.id)!)!{}/>
 	<@extendData 'extendDataList' extendList extendValues true/>
 </form></textarea>
 			<#else>
