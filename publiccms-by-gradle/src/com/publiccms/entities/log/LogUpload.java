@@ -33,7 +33,7 @@ public class LogUpload implements java.io.Serializable {
     @MyColumn(title = "站点", condition = true)
     private int siteId;
     @MyColumn(title = "用户", condition = true)
-    private int userId;
+    private long userId;
     @MyColumn(title = "渠道", condition = true)
     private String channel;
     @MyColumn(title = "是否图片", condition = true)
@@ -48,7 +48,7 @@ public class LogUpload implements java.io.Serializable {
     public LogUpload() {
     }
 
-    public LogUpload(int siteId, int userId, String channel, Date createDate, String filePath) {
+    public LogUpload(int siteId, long userId, String channel, Date createDate, String filePath) {
         this.siteId = siteId;
         this.userId = userId;
         this.channel = channel;
@@ -56,7 +56,7 @@ public class LogUpload implements java.io.Serializable {
         this.filePath = filePath;
     }
 
-    public LogUpload(int siteId, int userId, String channel, String ip, Date createDate, String filePath) {
+    public LogUpload(int siteId, long userId, String channel, String ip, Date createDate, String filePath) {
         this.siteId = siteId;
         this.userId = userId;
         this.channel = channel;
@@ -86,11 +86,11 @@ public class LogUpload implements java.io.Serializable {
     }
 
     @Column(name = "user_id", nullable = false)
-    public int getUserId() {
+    public long getUserId() {
         return this.userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

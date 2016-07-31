@@ -23,11 +23,11 @@ public class ContentListDirective extends AbstractAppV1Directive {
         Date endPublishDate = handler.getDate("endPublishDate");
         Integer categoryId = handler.getInteger("categoryId");
         Boolean containChild = handler.getBoolean("containChild");
-        Integer parentId = handler.getInteger("parentId");
+        Long parentId = handler.getLong("parentId");
         Boolean onlyUrl = handler.getBoolean("onlyUrl");
         Boolean hasImages = handler.getBoolean("hasImages");
         Boolean hasFiles = handler.getBoolean("hasFiles");
-        Integer authorId = handler.getInteger("authorId");
+        Long authorId = handler.getLong("authorId");
         Integer pageIndex = handler.getInteger("pageIndex", 1);
         Integer count = handler.getInteger("count", 30);
         Date now = getDate();

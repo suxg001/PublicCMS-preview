@@ -8,7 +8,7 @@ import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static org.apache.commons.lang3.ArrayUtils.addAll;
 import static org.apache.commons.lang3.ArrayUtils.removeElements;
 import static org.apache.commons.lang3.StringUtils.join;
-import static org.springframework.util.StringUtils.arrayToCommaDelimitedString;
+import static org.springframework.util.StringUtils.arrayToDelimitedString;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -161,7 +161,7 @@ public class CmsContentAdminController extends AbstractController {
                 logOperateService.save(new LogOperate(site.getId(), user.getId(), LogLoginService.CHANNEL_WEB_MANAGER,
                         "update.content", getIpAddress(request), now, entity.getId() + ":" + entity.getTitle()));
             }
-            contentTagService.delete(null, new Integer[] { entity.getId() });
+            contentTagService.delete(null, new Long[] { entity.getId() });
         } else {
             entity.setSiteId(site.getId());
             entity.setUserId(user.getId());
@@ -174,8 +174,8 @@ public class CmsContentAdminController extends AbstractController {
             logOperateService.save(new LogOperate(site.getId(), user.getId(), LogLoginService.CHANNEL_WEB_MANAGER, "save.content",
                     getIpAddress(request), now, entity.getId() + ":" + entity.getTitle()));
         }
-        Integer[] tagIds = tagService.update(site.getId(), contentParamters.getTags());
-        service.updateTagIds(entity.getId(), arrayToCommaDelimitedString(tagIds));// 更新保存标签
+        Long[] tagIds = tagService.update(site.getId(), contentParamters.getTags());
+        service.updateTagIds(entity.getId(), arrayToDelimitedString(tagIds,BLANK_SPACE));// 更新保存标签
         if (entity.isHasImages() || entity.isHasFiles()) {
             contentFileService.update(entity.getId(), user.getId(), entity.isHasFiles() ? contentParamters.getFiles() : null,
                     entity.isHasImages() ? contentParamters.getImages() : null);// 更新保存图集，附件
@@ -225,17 +225,17 @@ public class CmsContentAdminController extends AbstractController {
      * @return
      */
     @RequestMapping("check")
-    public String check(Integer[] ids, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public String check(Long[] ids, HttpServletRequest request, HttpSession session, ModelMap model) {
         if (notEmpty(ids)) {
             SysSite site = getSite(request);
-            Integer userId = getAdminFromSession(session).getId();
+            Long userId = getAdminFromSession(session).getId();
             List<CmsContent> entityList = service.check(site.getId(), userId, ids);
             Set<Integer> categoryIdSet = new HashSet<Integer>();
             for (CmsContent entity : entityList) {
                 if (notEmpty(entity) && site.getId() == entity.getSiteId()) {
                     contentTagService.update(entity.getId(), entity.getTagIds());
                     if (notEmpty(entity.getParentId())) {
-                        publish(new Integer[] { entity.getParentId() }, request, session, model);
+                        publish(new Long[] { entity.getParentId() }, request, session, model);
                     }
                     categoryIdSet.add(entity.getCategoryId());
                 }
@@ -257,7 +257,7 @@ public class CmsContentAdminController extends AbstractController {
      * @return
      */
     @RequestMapping("refresh")
-    public String refresh(Integer[] ids, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public String refresh(Long[] ids, HttpServletRequest request, HttpSession session, ModelMap model) {
         if (notEmpty(ids)) {
             SysSite site = getSite(request);
             service.refresh(site.getId(), ids);
@@ -288,7 +288,7 @@ public class CmsContentAdminController extends AbstractController {
                 entity.setDescription(entity.getDescription());
             }
             cmsContentRelatedService.save(entity);
-            publish(new Integer[] { entity.getContentId() }, request, session, model);
+            publish(new Long[] { entity.getContentId() }, request, session, model);
             logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
                     LogLoginService.CHANNEL_WEB_MANAGER, "related.content", getIpAddress(request), getDate(),
                     related.getId() + ":" + related.getTitle() + " to " + content.getId() + ":" + content.getTitle()));
@@ -313,7 +313,7 @@ public class CmsContentAdminController extends AbstractController {
             for (CmsContent entity : service.getEntitys(ids)) {
                 if (!move(site, entity, categoryId)) {
                     if (sb.length() > 0) {
-                        sb.append(",");
+                        sb.append(COMMA_DELIMITED);
                     }
                     sb.append(getMessage(getLocale(request), "message.content.categoryModel.empty", entity.getId() + ":" + entity.getTitle(),
                             categoryId + ":" + category.getName()));
@@ -352,7 +352,7 @@ public class CmsContentAdminController extends AbstractController {
      * @return
      */
     @RequestMapping("publish")
-    public String publish(Integer[] ids, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public String publish(Long[] ids, HttpServletRequest request, HttpSession session, ModelMap model) {
         SysSite site = getSite(request);
         if (notEmpty(ids)) {
             for (CmsContent entity : service.getEntitys(ids)) {
@@ -377,7 +377,7 @@ public class CmsContentAdminController extends AbstractController {
      * @return
      */
     @RequestMapping("delete")
-    public String delete(Integer[] ids, HttpServletRequest request, HttpSession session) {
+    public String delete(Long[] ids, HttpServletRequest request, HttpSession session) {
         SysSite site = getSite(request);
         if (notEmpty(ids)) {
             for (CmsContent entity : service.getEntitys(ids)) {

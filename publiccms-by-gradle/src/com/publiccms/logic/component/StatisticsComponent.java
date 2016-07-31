@@ -12,29 +12,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.publiccms.common.spi.Cacheable;
+import com.publiccms.entities.cms.CmsWord;
 import com.publiccms.logic.service.cms.CmsContentRelatedService;
 import com.publiccms.logic.service.cms.CmsContentService;
 import com.publiccms.logic.service.cms.CmsPlaceService;
+import com.publiccms.logic.service.cms.CmsTagService;
+import com.publiccms.logic.service.cms.CmsWordService;
 import com.publiccms.views.pojo.CmsContentRelatedStatistics;
 import com.publiccms.views.pojo.CmsContentStatistics;
 import com.publiccms.views.pojo.CmsPlaceStatistics;
+import com.publiccms.views.pojo.CmsTagStatistics;
+import com.publiccms.views.pojo.CmsWordStatistics;
 import com.sanluan.common.base.Base;
 
 @Component
 public class StatisticsComponent extends Base implements Cacheable {
-    private static List<Integer> contentCachedlist = synchronizedList(new ArrayList<Integer>());
-    private static Map<Integer, CmsContentStatistics> cachedMap = synchronizedMap(new HashMap<Integer, CmsContentStatistics>());
-    private static List<Integer> placeCachedlist = synchronizedList(new ArrayList<Integer>());
-    private static Map<Integer, CmsPlaceStatistics> placeCachedMap = synchronizedMap(new HashMap<Integer, CmsPlaceStatistics>());
-    private static List<Integer> relatedCachedlist = synchronizedList(new ArrayList<Integer>());
-    private static Map<Integer, CmsContentRelatedStatistics> relatedCachedMap = synchronizedMap(
-            new HashMap<Integer, CmsContentRelatedStatistics>());
+    private static List<Long> contentCachedlist = synchronizedList(new ArrayList<Long>());
+    private static Map<Long, CmsContentStatistics> cachedMap = synchronizedMap(new HashMap<Long, CmsContentStatistics>());
+    private static List<Long> placeCachedlist = synchronizedList(new ArrayList<Long>());
+    private static Map<Long, CmsPlaceStatistics> placeCachedMap = synchronizedMap(new HashMap<Long, CmsPlaceStatistics>());
+    private static List<Long> relatedCachedlist = synchronizedList(new ArrayList<Long>());
+    private static Map<Long, CmsContentRelatedStatistics> relatedCachedMap = synchronizedMap(
+            new HashMap<Long, CmsContentRelatedStatistics>());
+    private static List<Long> wordCachedlist = synchronizedList(new ArrayList<Long>());
+    private static Map<Long, CmsWordStatistics> wordCachedMap = synchronizedMap(new HashMap<Long, CmsWordStatistics>());
+    private static List<Long> tagCachedlist = synchronizedList(new ArrayList<Long>());
+    private static Map<Long, CmsTagStatistics> tagCachedMap = synchronizedMap(new HashMap<Long, CmsTagStatistics>());
     @Autowired
     private CmsContentService contentService;
     @Autowired
     private CmsContentRelatedService contentRelatedService;
     @Autowired
     private CmsPlaceService placeService;
+    @Autowired
+    private CmsWordService wordService;
+    @Autowired
+    private CmsTagService tagService;
 
     private void clearCache(int size) {
         if (size < contentCachedlist.size()) {
@@ -66,7 +79,27 @@ public class StatisticsComponent extends Base implements Cacheable {
         }
     }
 
-    public CmsContentRelatedStatistics relatedClicks(Integer id) {
+    private void clearWordCache(int size) {
+        if (size < wordCachedlist.size()) {
+            List<CmsWordStatistics> list = new ArrayList<CmsWordStatistics>();
+            for (int i = 0; i < size / 10; i++) {
+                list.add(wordCachedMap.remove(wordCachedlist.remove(0)));
+            }
+            wordService.updateStatistics(list);
+        }
+    }
+
+    private void clearTagCache(int size) {
+        if (size < tagCachedlist.size()) {
+            List<CmsTagStatistics> list = new ArrayList<CmsTagStatistics>();
+            for (int i = 0; i < size / 10; i++) {
+                list.add(tagCachedMap.remove(tagCachedlist.remove(0)));
+            }
+            tagService.updateStatistics(list);
+        }
+    }
+
+    public CmsContentRelatedStatistics relatedClicks(Long id) {
         if (notEmpty(id)) {
             CmsContentRelatedStatistics contentRelatedStatistics = relatedCachedMap.get(id);
             if (empty(contentRelatedStatistics)) {
@@ -83,7 +116,50 @@ public class StatisticsComponent extends Base implements Cacheable {
         }
     }
 
-    public CmsPlaceStatistics placeClicks(Integer id) {
+    public CmsTagStatistics searchTag(Long id) {
+        if (notEmpty(id)) {
+            CmsTagStatistics tagStatistics = tagCachedMap.get(id);
+            if (empty(tagStatistics)) {
+                clearTagCache(100);
+                tagStatistics = new CmsTagStatistics(id, 1, tagService.getEntity(id));
+                tagCachedlist.add(id);
+            } else {
+                tagStatistics.setSearchCounts(tagStatistics.getSearchCounts() + 1);
+            }
+            tagCachedMap.put(id, tagStatistics);
+            return tagStatistics;
+        } else {
+            return null;
+        }
+    }
+
+    public CmsWordStatistics search(int siteId, String word) {
+        if (notEmpty(word)) {
+            CmsWord entity = wordService.getEntity(siteId, word);
+            if (empty(entity)) {
+                entity = new CmsWord();
+                entity.setName(word);
+                entity.setSiteId(siteId);
+                entity.setHidden(true);
+                wordService.save(entity);
+            }
+            long id = entity.getId();
+            CmsWordStatistics wordStatistics = wordCachedMap.get(id);
+            if (empty(wordStatistics)) {
+                clearWordCache(100);
+                wordStatistics = new CmsWordStatistics(entity.getId(), 1, entity);
+                wordCachedlist.add(id);
+            } else {
+                wordStatistics.setSearchCounts(wordStatistics.getSearchCounts() + 1);
+            }
+            wordCachedMap.put(id, wordStatistics);
+            return wordStatistics;
+        } else {
+            return null;
+        }
+    }
+
+    public CmsPlaceStatistics placeClicks(Long id) {
         if (notEmpty(id)) {
             CmsPlaceStatistics placeStatistics = placeCachedMap.get(id);
             if (empty(placeStatistics)) {
@@ -100,7 +176,7 @@ public class StatisticsComponent extends Base implements Cacheable {
         }
     }
 
-    public CmsContentStatistics clicks(Integer id) {
+    public CmsContentStatistics clicks(Long id) {
         if (notEmpty(id)) {
             CmsContentStatistics contentStatistics = cachedMap.get(id);
             if (empty(contentStatistics)) {
@@ -117,7 +193,7 @@ public class StatisticsComponent extends Base implements Cacheable {
         }
     }
 
-    public CmsContentStatistics comments(Integer id) {
+    public CmsContentStatistics comments(Long id) {
         if (notEmpty(id)) {
             CmsContentStatistics contentStatistics = cachedMap.get(id);
             if (empty(contentStatistics)) {
@@ -134,7 +210,7 @@ public class StatisticsComponent extends Base implements Cacheable {
         }
     }
 
-    public CmsContentStatistics scores(Integer id) {
+    public CmsContentStatistics scores(Long id) {
         if (notEmpty(id)) {
             CmsContentStatistics contentStatistics = cachedMap.get(id);
             if (empty(contentStatistics)) {
@@ -159,6 +235,12 @@ public class StatisticsComponent extends Base implements Cacheable {
         contentRelatedService.updateStatistics(relatedCachedMap.values());
         relatedCachedlist.clear();
         relatedCachedMap.clear();
+        wordService.updateStatistics(wordCachedMap.values());
+        wordCachedlist.clear();
+        wordCachedMap.clear();
+        tagService.updateStatistics(tagCachedMap.values());
+        tagCachedlist.clear();
+        tagCachedMap.clear();
         contentService.updateStatistics(cachedMap.values());
         contentCachedlist.clear();
         cachedMap.clear();

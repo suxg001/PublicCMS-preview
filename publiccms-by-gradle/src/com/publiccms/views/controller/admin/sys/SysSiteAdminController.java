@@ -85,7 +85,7 @@ public class SysSiteAdminController extends AbstractController {
         if (notEmpty(entity)) {
             service.delete(id);
             SysSite site = getSite(request);
-            int userId = getAdminFromSession(session).getId();
+            Long userId = getAdminFromSession(session).getId();
             Date now = getDate();
             String ip = getIpAddress(request);
             for (SysDomain domain : (List<SysDomain>) domainService.getPage(entity.getId(), null, null).getList()) {

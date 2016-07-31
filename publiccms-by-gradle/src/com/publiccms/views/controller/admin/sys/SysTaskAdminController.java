@@ -38,6 +38,7 @@ public class SysTaskAdminController extends AbstractController {
             if (empty(oldEntity) || virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
+            entity.setUpdateDate(getDate());
             entity = service.update(entity.getId(), entity, new String[] { "id", "siteId" });
             if (notEmpty(entity)) {
                 logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),

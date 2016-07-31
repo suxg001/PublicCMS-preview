@@ -82,4 +82,5 @@ public class SysDomain implements java.io.Serializable {
     public void setPath(String path) {
         this.path = path;
     }
+
 }

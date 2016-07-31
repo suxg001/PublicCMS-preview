@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.ui.ModelMap;
+
 /**
  * 
  * BaseController
@@ -146,6 +148,21 @@ public abstract class BaseController extends Base {
         }
         return false;
     }
+    
+    /**
+     * @param field
+     * @param value
+     * @param value2
+     * @param model
+     * @return
+     */
+    protected boolean virifyEquals(String field, Long value, Long value2, ModelMap model) {
+        if (notEmpty(value) && value.equals(value2)) {
+            model.addAttribute(ERROR, "verify.equals." + field);
+            return true;
+        }
+        return false;
+    }
 
     /**
      * @param field
@@ -170,6 +187,21 @@ public abstract class BaseController extends Base {
      * @return
      */
     protected static boolean virifyNotEquals(String field, Integer value1, Integer value2, Map<String, Object> model) {
+        if (notEmpty(value1) && !value1.equals(value2)) {
+            model.put(ERROR, "verify.notEquals." + field);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * @param field
+     * @param value1
+     * @param value2
+     * @param model
+     * @return
+     */
+    protected static boolean virifyNotEquals(String field, Long value1, Long value2, Map<String, Object> model) {
         if (notEmpty(value1) && !value1.equals(value2)) {
             model.put(ERROR, "verify.notEquals." + field);
             return true;

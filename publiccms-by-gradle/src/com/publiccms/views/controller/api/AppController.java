@@ -143,10 +143,10 @@ public class AppController extends AbstractController {
             appMap.put(version, actionMap);
             appList.put(version, actionList);
             if (0 != directives.length()) {
-                directives.append(",");
+                directives.append(COMMA_DELIMITED);
             }
             directives.append(directiveName);
-            directives.append(" ");
+            directives.append(BLANK_SPACE);
             directives.append(version);
             size++;
 

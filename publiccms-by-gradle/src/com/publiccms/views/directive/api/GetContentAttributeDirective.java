@@ -22,7 +22,7 @@ public class GetContentAttributeDirective extends AbstractAppV1Directive {
 
     @Override
     public void execute(RenderHandler handler, SysApp app, SysUser user) throws IOException, Exception {
-        Integer id = handler.getInteger("id");
+        Long id = handler.getLong("id");
         CmsContentAttribute entity = service.getEntity(id);
         if (notEmpty(entity)) {
             Map<String, String> map = getExtendMap(entity.getData());

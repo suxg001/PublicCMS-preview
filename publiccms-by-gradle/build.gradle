@@ -25,7 +25,7 @@ repositories {
 }
 
 ext {
-    springVersion = '4.3.1.RELEASE'
+    springVersion = '4.3.2.RELEASE'
     hibernateVersion = '5.1.0.Final'
     hibernateSearchVersion = '5.5.4.Final'
     freemarkerVersion = '2.3.23'

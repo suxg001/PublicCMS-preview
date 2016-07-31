@@ -10,7 +10,7 @@
 			<ul class="searchContent">
 				<#if sysSite?has_content>
 					<li>
-						<label>站点:</label>${sysSite.name}
+						<label>站点:</label>${sysSite.name?html}
 					</li>
 				</#if>
 			</ul>
@@ -45,9 +45,9 @@
 			<tr target="sid" rel="${a.id}">
 				<td>${a.id!}</td>
 				<td>${a.siteId!}</td>
-				<td>${(siteMap[a.siteId?string].name)!}</td>
-				<td>${a.name!}</td>
-				<td>${a.path!}</td>
+				<td>${(siteMap[a.siteId?string].name?html)!}</td>
+				<td>${(a.name?html)!}</td>
+				<td>${(a.path?html)!}</td>
 			</tr>
 			</#list>
 		</tbody>

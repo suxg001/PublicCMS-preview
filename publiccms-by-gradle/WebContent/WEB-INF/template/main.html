@@ -40,13 +40,13 @@
 	<div class="divider"></div>
 	<div class="unit">
 		<p>
-			<label>静态站点地址:</label><a href="${site.sitePath}" target="_blank">${site.sitePath}</a>
+			<label>静态站点地址:</label><a href="${(site.sitePath?html)!}" target="_blank">${(site.sitePath?html)!}</a>
 		</p>
 		<p>
-			<label>动态站点地址:</label><a href="${site.dynamicPath}" target="_blank">${site.dynamicPath}</a>
+			<label>动态站点地址:</label><a href="${(site.dynamicPath?html)!}" target="_blank">${(site.dynamicPath?html)!}</a>
 		</p>
 		<p>
-			<label>资源文件地址:</label><a href="${site.resourcePath}" target="_blank">${site.resourcePath}</a>
+			<label>资源文件地址:</label><a href="${(site.resourcePath?html)!}" target="_blank">${(site.resourcePath?html)!}</a>
 		</p>
 	</div>
 	<div class="divider"></div>
@@ -67,14 +67,14 @@ var memoryChart={
 		unUsedMemory:[]
 	},
 	time:[],
-	toDecimal:function(number) {
-        var value = parseFloat(number);
-        if (isNaN(value)) {
-            return 0;
-        }
-        value = Math.round(number*100)/100;
-        return value;
-    }
+	toDecimal:function(number) {  
+        var value = parseFloat(number);  
+        if (isNaN(value)) {  
+            return 0;  
+        }  
+        value = Math.round(number*100)/100;  
+        return value;  
+    }  
 };
 memoryChart.time.push("${.now?string('hh:mm')}");
 memoryChart.data.freeMemory.push(memoryChart.toDecimal(${freeMemory}/1048576));
@@ -291,6 +291,7 @@ echarts.init(document.getElementById('disk')).setOption({
 			<a href="http://www.publiccms.com/" target="_blank">${cms}</a>
 			(<a href="http://opensource.org/licenses/MIT" target="_blank">The MIT License</a>)
 		</p>
+	<@_masterSite>
 		<p>
 			<label>节点ID:</label>
 			${cluster}
@@ -299,10 +300,9 @@ echarts.init(document.getElementById('disk')).setOption({
 			<label>节点属性:</label>
 			${master?string('管理节点','[普通节点]')}
 		</p>
-	<@_masterSite>
 		<script>
-			$.getJSON('http://cms.publiccms.com/api/directive/version?callback=?',function(data){
-				if($('#cmsVersion a').eq(0).text()===data.cms){
+			$.getJSON('http://127.0.0.1:8080/cms/api/directive/version?callback=?',function(data){
+				if($('#cmsVersion a').eq(0).text()!==data.cms){
 					$('#cmsVersion a').eq(0).append('[<em style="color:red">有新版本</em>]');
 				}
 			});

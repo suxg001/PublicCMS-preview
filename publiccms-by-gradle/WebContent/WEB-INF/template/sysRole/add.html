@@ -8,7 +8,7 @@
 			<dl class="nowrap">
 				<dt>名称:</dt>
 				<dd>
-					<input class="required" name="name" type="text" maxlength="20" size="20" value="${(a.name)!}"/>
+					<input class="required" name="name" type="text" maxlength="20" size="20" value="${(a.name?html)!}"/>
 				</dd>
 			</dl>
 			<dl class="nowrap">
@@ -23,7 +23,7 @@
 			<ul>
 				<#list page.list as a>
 					<li>
-						<a tname="moudleIds" tvalue="${a.id}">${a.name}</a>
+						<a tname="moudleIds" tvalue="${a.id}">${a.attached!} ${a.name}</a>
 						<@moudleTree a.id/>
 					</li>
 				</#list>

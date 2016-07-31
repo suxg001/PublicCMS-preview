@@ -12,7 +12,7 @@
 				<dl class="nowrap">
 					<dt>模型名称:</dt>
 					<dd>
-						<input class="required" name="name" type="text" maxlength="20" size="20" value="${(a.name)!}"/>
+						<input class="required" name="name" type="text" maxlength="20" size="20" value="${(a.name?html)!}"/>
 						<label>
 							<input name="onlyUrl" type="checkbox" onclick="if($(this).is(':checked')){$('.onlyUrl').hide();$('.onlyUrl input[type=text]',navTab.getCurrentPanel()).val('');}else{$('.onlyUrl').show();}"/>
 							链接
@@ -26,7 +26,7 @@
 				<dl class="onlyUrl nowrap">
 					<dt>默认模板路径:</dt>
 					<dd>
-						<input name="templatePath" type="text" maxlength="200" size="30" value="${(a.templatePath)!}"/>
+						<input name="templatePath" type="text" maxlength="200" size="30" value="${(a.templatePath?html)!}"/>
 						<a class="btnLook" href="cmsTemplate/lookup.html?field=templatePath" lookupGroup="">选择默认静态化模板路径</a>
 						<span class="info">
 							静态化过程以分类与模型映射模板路径为准，此处选择仅为简化后面操作，

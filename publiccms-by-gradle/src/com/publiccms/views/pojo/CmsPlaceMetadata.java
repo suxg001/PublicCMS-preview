@@ -3,11 +3,15 @@ package com.publiccms.views.pojo;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sanluan.common.base.Base;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CmsPlaceMetadata extends Base {
-    private String alias;
+public class CmsPlaceMetadata implements java.io.Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+	private String alias;
     private Integer size;
     private Integer[] adminIds;
     private boolean allowContribute;

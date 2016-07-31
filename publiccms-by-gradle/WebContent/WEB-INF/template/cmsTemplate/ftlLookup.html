@@ -10,8 +10,8 @@
 					<@chipTree path prefix suffix/>
 				</ul>
 			<#else>
-				<a href="javascript:;" onclick="cmsTemplateEditor.replaceSelection('${(prefix+path+suffix)?html?js_string} ${(metaDataMap[a.fileName].alias)?has_content?then('<#-- '+metaDataMap[a.fileName].alias+' -->','')?html}');$.pdialog.closeCurrent();return false;">
-					${a.fileName} ${(metaDataMap[a.fileName].alias)?has_content?then('('+metaDataMap[a.fileName].alias+')','')}
+				<a href="javascript:;" onclick="${editor!'cmsTemplateEditor'}.replaceSelection('${(prefix+path+suffix)?html?js_string} ${(metaDataMap[a.fileName].alias)?has_content?then('<#-- '+metaDataMap[a.fileName].alias+' -->','')?html?js_string}');$.pdialog.closeCurrent();return false;">
+					${a.fileName} ${(metaDataMap[a.fileName].alias)?has_content?then('('+metaDataMap[a.fileName].alias?html+')','')}
 				</a>
 			</#if>
 			</li>

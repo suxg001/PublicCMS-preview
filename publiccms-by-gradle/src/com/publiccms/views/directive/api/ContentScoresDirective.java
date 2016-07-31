@@ -21,7 +21,7 @@ public class ContentScoresDirective extends AbstractAppV1Directive {
 
     @Override
     public void execute(RenderHandler handler, SysApp app, SysUser user) throws IOException, Exception {
-        Integer id = handler.getInteger("id");
+        Long id = handler.getLong("id");
         CmsContentStatistics contentStatistics = statisticsComponent.scores(id);
         if (notEmpty(contentStatistics) && notEmpty(contentStatistics.getEntity())) {
             handler.put("scores", contentStatistics.getEntity().getScores() + contentStatistics.getScores()).render();

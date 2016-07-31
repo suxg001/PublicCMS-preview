@@ -13,23 +13,23 @@
 				<dt>父部门:</dt>
 				<dd>
 					<input name="parentId" type="hidden" value="${parentId!}"/>
-					<input name="parentName" readonly="readonly" type="text" size="10" value="${parentName!}"/>
+					<input name="parentName" readonly="readonly" type="text" size="10" value="${(parentName?html)!}"/>
 					<a class="btnLook" href="sysDept/lookup.html" lookupGroup="">选择</a>
 				</dd>
 			</dl>
 			<dl class="nowrap">
 				<dt>名称:</dt>
-				<dd><input class="required" name="name" type="text" size="30" value="${(a.name)!}"/></dd>
+				<dd><input class="required" name="name" type="text" size="30" value="${(a.name?html)!}"/></dd>
 			</dl>
 			<dl class="nowrap">
 				<dt>描述:</dt>
-				<dd><textarea name="description" maxlength="300" style="width: 100%;" rows="5">${(a.description)!}</textarea></dd>
+				<dd><textarea name="description" maxlength="300" style="width: 100%;" rows="5">${(a.description?html)!}</textarea></dd>
 			</dl>
 			<dl class="nowrap">
 				<dt>负责人:</dt>
 				<dd>
 					<input name="userId" value="${userId!}" type="hidden"/>
-					<input name="nickName" readonly="readonly" size="10" value="${(user.nickName)!}" type="text"/>
+					<input name="nickName" readonly="readonly" size="10" value="${(user.nickName?html)!}" type="text"/>
 					<a class="btnLook" href="sysUser/lookup.html" width="920" warn="请选择用户" lookupGroup="">选择用户</a>	
 				</dd>
 			</dl>
@@ -45,7 +45,7 @@
 	<@_categoryList parentId=parentId>
 		<#list page.list as a>
 			<li>
-				<a tname="categoryIds" tvalue="${a.id}">${a.name}</a>
+				<a tname="categoryIds" tvalue="${a.id}">${a.name?html}</a>
 			<#if a.childIds?has_content>
 				<ul>
 					<@categoryTree a.id/>

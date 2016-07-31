@@ -1,4 +1,6 @@
+<#if tagId?has_content>
 <@_tag id=tagId><#assign tagName=object.name/></@_tag>
+</#if>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -22,17 +24,26 @@
 						<input type="submit" value="搜索"/>
 						<input type="button" onclick="$('.search form').attr('action','facetSearch.html').submit();" value="高级搜索"/>
 				</form>
-				<#if tagId?has_content>
-						标签:${tagName}
+				<#if tagName?has_content>
+						标签:${tagName!}
 				</#if>
 			</div>
 <@import path="/ftl/tools.ftl" namespace="t"/>
 <#if word?has_content||tagId?has_content>
 		<@_search word=word tagId=tagId pageIndex=page count=10>
-			<#list page.list as a>
-				<@include path="/ftl/search-list.ftl"/>
-			</#list>
-			<@include path="/ftl/search-page.ftl"/>
+			<#if page.totalCount gt 0>
+				<#list page.list as a>
+					<@include path="/ftl/search-list.ftl"/>
+				</#list>
+				<@include path="/ftl/search-page.ftl"/>
+			<#else>
+				<@_wordList count=10>
+					热门搜索词：
+					<#list page.list as a>
+			<a href="search.html?word=${a.name?html}">${a.name?html}</a>
+					</#list>
+				</@_wordList>
+			</#if>
 		</@_search>
 </#if>
 		</div>

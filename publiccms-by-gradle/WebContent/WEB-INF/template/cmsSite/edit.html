@@ -5,27 +5,27 @@
 			<dl class="nowrap">
 				<dt>名称:</dt>
 				<dd>
-					<input class="required" name="name" type="text" maxlength="255" size="30" value="${(a.name)!}"/>
+					<input class="required" name="name" type="text" maxlength="255" size="30" value="${(a.name?html)!}"/>
 				</dd>
 			</dl>
 			<dl class="nowrap">
 				<dt>静态站点地址:</dt>
 				<dd>
-					<input class="required" name="sitePath" type="text" maxlength="255" size="60" value="${(a.sitePath)!}"/>
+					<input class="required" name="sitePath" type="text" maxlength="255" size="60" value="${(a.sitePath?html)!}"/>
 					<span class="info">该地址用于静态站点访问</span>
 				</dd>
 			</dl>
 			<dl class="nowrap">
 				<dt>动态站点地址:</dt>
 				<dd>
-					<input class="required" name="dynamicPath" type="text" maxlength="255" size="60" value="${(a.dynamicPath)!}"/>
+					<input class="required" name="dynamicPath" type="text" maxlength="255" size="60" value="${(a.dynamicPath?html)!}"/>
 					<span class="info">该地址用于动态站点访问</span>
 				</dd>
 			</dl>
 			<dl class="nowrap">
 				<dt>资源站点地址:</dt>
 				<dd>
-					<input class="required" name="resourcePath" type="text" maxlength="255" size="60" value="${(a.resourcePath)!}"/>
+					<input class="required" name="resourcePath" type="text" maxlength="255" size="60" value="${(a.resourcePath?html)!}"/>
 					<span class="info">该地址用于资源站点访问</span>
 				</dd>
 			</dl>

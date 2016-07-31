@@ -177,7 +177,7 @@ public class SiteComponent extends Base implements Cacheable {
     }
 
     public void setSiteMasters(String siteMasters) {
-        String[] masters = siteMasters.split(",");
+        String[] masters = siteMasters.split(COMMA_DELIMITED);
         for (String master : masters) {
             Integer id;
             try {

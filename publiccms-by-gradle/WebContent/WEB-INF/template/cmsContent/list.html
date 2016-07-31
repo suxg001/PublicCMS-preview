@@ -53,7 +53,7 @@
 		<div class="panelBar">
 			<ul class="toolBar">
 				<#if parent?has_content>
-					<li><a href="cmsContent/list.html?parentId=${(parent.parentId)!}&categoryId=${(parent.categoryId)!}" target="navTab" rel="cmsContent/list"><i class="icon-circle-arrow-up icon-large"></i> 返回上一级</a></li>
+					<li><a href="cmsContent/list.html?parentId=${(parent.parentId)!}&categoryId=${categoryId!}" target="navTab" rel="cmsContent/list"><i class="icon-circle-arrow-up icon-large"></i> 返回上一级</a></li>
 					<li class="line">line</li>
 				</#if>
 <#if authorizedMap['cmsContent/add']>
@@ -131,20 +131,20 @@
 				<tr target="sid" rel="${a.id}">
 					<td><input name="ids" value="${a.id}" type="checkbox"></td>
 					<td>${a.id}</td>
-					<td>${(a.copied?then('[转载]',''))!}<a href="${a.url!}" target="_blank">${a.title!}</a></td>
+					<td>${(a.copied?then('[转载]',''))!}<a href="${a.url!}" target="_blank">${(a.title?html)!}</a></td>
 					<td>
 						<a href="cmsContent/list.html?userId=${a.userId}" target="navTab" rel="cmsContent/list">
-							${(userMap[a.userId?string].nickName)!}
+							${(userMap[a.userId?string].nickName?html)!}
 						</a>
 					</td>
 					<td>
 						<a href="cmsContent/list.html?categoryId=${a.categoryId}&parentId=${(parent.parentId)!}" target="navTab" rel="cmsContent/list">
-							${(categoryMap[a.categoryId?string].name)!}
+							${(categoryMap[a.categoryId?string].name?html)!}
 						</a>
 					</td>
 					<td>
 						<a href="cmsContent/list.html?modelId=${a.modelId}&categoryId=${categoryId!}&parentId=${(parent.parentId)!}" target="navTab" rel="cmsContent/list">
-							${(modelMap[a.modelId?string].name)!}
+							${(modelMap[a.modelId?string].name?html)!}
 						</a>
 					</td>
 					<td>${a.scores!}</td>
@@ -158,7 +158,7 @@
 					</td>
 					<td>
 						<#if modelMap[a.modelId?string].hasChild>
-							<a href="cmsContent/list.html?parentId=${a.id}&categoryId=${a.categoryId}" target="navTab" rel="cmsContent/list">子内容管理</a>
+							<a href="cmsContent/list.html?parentId=${a.id}&categoryId=${categoryId!}" target="navTab" rel="cmsContent/list">子内容管理</a>
 						</#if>
 						<#if 1=a.status>
 							<#if authorizedMap['cmsContent/push']>

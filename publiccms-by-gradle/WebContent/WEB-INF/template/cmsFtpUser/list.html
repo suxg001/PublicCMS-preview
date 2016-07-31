@@ -5,7 +5,7 @@
 			<ul class="searchContent">
 				<li>
 					<label>用户名:</label>
-					<input type="text" name="name" value="${name!}" />
+					<input type="text" name="name" value="${name?html!}" />
 				</li>
 			</ul>
 			<div class="subBar">
@@ -39,8 +39,8 @@
 			<#list page.list as a>
 			<tr target="sid" rel="${a.id}">
 				<td>${a.id!}</td>
-				<td>${a.name!}</td>
-				<td>${a.path!}</td>
+				<td>${(a.name?html)!}</td>
+				<td>${(a.path?html)!}</td>
 			</tr>
 			</#list>
 		</tbody>

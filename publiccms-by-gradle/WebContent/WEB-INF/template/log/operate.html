@@ -66,10 +66,10 @@
 			<tr target="sid" rel="${a.id}">
 				<td><input name="ids" value="${a.id}" type="checkbox"></td>
 				<td>${a.userId!}</td>
-				<td>${(userMap[a.userId?string].nickName)!}</td>
+				<td>${(userMap[a.userId?string].nickName?html)!}</td>
 				<td><@t.m 'operate.'+a.operate/></td>
 				<td>${a.createDate!}</td>
-				<td>${a.content!}</td>
+				<td>${(a.content?html)!}</td>
 			</tr>
 			</#list>
 		</tbody>

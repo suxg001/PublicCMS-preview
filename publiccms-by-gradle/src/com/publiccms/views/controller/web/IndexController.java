@@ -69,7 +69,7 @@ public class IndexController extends AbstractController {
         SysDomain domain = getDomain(request);
         SysSite site = getSite(request);
         String realRequestPath = siteComponent.getViewNamePreffix(site, domain) + requestPath;
-        String templatePath = siteComponent.getWebTemplateFilePath(site, realRequestPath);
+        String templatePath = siteComponent.getWebTemplateFilePath()+ realRequestPath;
         CmsPageMetadata metadata = metadataComponent.getTemplateMetadata(templatePath);
         if (metadata.isUseDynamic()) {
             if (metadata.isNeedLogin() && notEmpty(domain.getId()) && empty(getUserFromSession(session))) {
@@ -110,7 +110,7 @@ public class IndexController extends AbstractController {
     }
 
     private void billingRequestParamtersToModel(HttpServletRequest request, String acceptParamters, ModelMap model) {
-        for (String paramterName : split(acceptParamters, ",")) {
+        for (String paramterName : split(acceptParamters, COMMA_DELIMITED)) {
             String[] values = request.getParameterValues(paramterName);
             if (isNotEmpty(values)) {
                 if (1 < values.length) {

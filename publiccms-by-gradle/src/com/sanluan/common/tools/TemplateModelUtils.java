@@ -96,7 +96,11 @@ public class TemplateModelUtils extends Base {
             } else if (model instanceof TemplateScalarModel) {
                 String s = ((TemplateScalarModel) model).getAsString();
                 if (notEmpty(s)) {
-                    return Integer.parseInt(s);
+                    try {
+                        return Integer.parseInt(s);
+                    } catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
             }
         }
@@ -118,7 +122,11 @@ public class TemplateModelUtils extends Base {
             } else if (model instanceof TemplateScalarModel) {
                 String s = ((TemplateScalarModel) model).getAsString();
                 if (notEmpty(s)) {
-                    return Short.parseShort(s);
+                    try {
+                        return Short.parseShort(s);
+                    } catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
             }
         }
@@ -140,7 +148,11 @@ public class TemplateModelUtils extends Base {
             } else if (model instanceof TemplateScalarModel) {
                 String s = ((TemplateScalarModel) model).getAsString();
                 if (notEmpty(s)) {
-                    return Long.parseLong(s);
+                    try {
+                        return Long.parseLong(s);
+                    } catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
             }
         }
@@ -162,7 +174,11 @@ public class TemplateModelUtils extends Base {
             } else if (model instanceof TemplateScalarModel) {
                 String s = ((TemplateScalarModel) model).getAsString();
                 if (notEmpty(s)) {
-                    return Double.parseDouble(s);
+                    try {
+                        return Double.parseDouble(s);
+                    } catch (NumberFormatException e) {
+                        return null;
+                    }
                 }
             }
         }
@@ -185,7 +201,11 @@ public class TemplateModelUtils extends Base {
         }
         String str = converString(model);
         if (notEmpty(str)) {
-            return split(str, ',');
+            if (0 <= str.indexOf(COMMA_DELIMITED)) {
+                return split(str, ',');
+            } else {
+                return split(str, ' ');
+            }
         }
         return null;
     }

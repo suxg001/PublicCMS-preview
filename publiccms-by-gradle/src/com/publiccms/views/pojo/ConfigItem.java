@@ -1,7 +1,12 @@
 package com.publiccms.views.pojo;
 
-public class ConfigItem {
-    private String code;
+public class ConfigItem implements java.io.Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+	private String code;
     private String description;
 
     public ConfigItem(String code, String description) {

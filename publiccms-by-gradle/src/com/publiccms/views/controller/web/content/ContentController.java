@@ -192,7 +192,7 @@ public class ContentController extends AbstractController {
      * @return
      */
     @RequestMapping("related/redirect")
-    public void relatedRedirect(Integer id, HttpServletRequest request, HttpServletResponse response) {
+    public void relatedRedirect(Long id, HttpServletRequest request, HttpServletResponse response) {
         CmsContentRelatedStatistics contentRelatedStatistics = statisticsComponent.relatedClicks(id);
         SysSite site = getSite(request);
         if (notEmpty(contentRelatedStatistics.getEntity())) {
@@ -209,7 +209,7 @@ public class ContentController extends AbstractController {
      * @return
      */
     @RequestMapping("redirect")
-    public void redirect(Integer id, HttpServletRequest request, HttpServletResponse response) {
+    public void redirect(Long id, HttpServletRequest request, HttpServletResponse response) {
         CmsContentStatistics contentStatistics = statisticsComponent.clicks(id);
         SysSite site = getSite(request);
         if (notEmpty(contentStatistics.getEntity()) && site.getId() == contentStatistics.getEntity().getSiteId()) {
@@ -228,7 +228,7 @@ public class ContentController extends AbstractController {
      */
     @RequestMapping("comments")
     @ResponseBody
-    public MappingJacksonValue comments(Integer id, String callback, ModelMap model) {
+    public MappingJacksonValue comments(Long id, String callback, ModelMap model) {
         CmsContentStatistics contentStatistics = statisticsComponent.comments(id);
         if (notEmpty(contentStatistics.getEntity())) {
             model.addAttribute("comments", contentStatistics.getEntity().getComments() + contentStatistics.getComments());

@@ -27,7 +27,7 @@ public class SysAppClientAdminController extends AbstractController {
     private SysAppClientService service;
 
     @RequestMapping(value = "enable", method = RequestMethod.POST)
-    public String enable(Integer id, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public String enable(Long id, HttpServletRequest request, HttpSession session, ModelMap model) {
         SysAppClient entity = service.getEntity(id);
         if (notEmpty(entity.getId())) {
             SysSite site = getSite(request);
@@ -43,7 +43,7 @@ public class SysAppClientAdminController extends AbstractController {
     }
 
     @RequestMapping(value = "disable", method = RequestMethod.POST)
-    public String disable(Integer id, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public String disable(Long id, HttpServletRequest request, HttpSession session, ModelMap model) {
         SysAppClient entity = service.getEntity(id);
         if (notEmpty(entity)) {
             SysSite site = getSite(request);

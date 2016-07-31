@@ -59,7 +59,7 @@ public class CmsPlaceAdminController extends AbstractController {
         if (notEmpty(entity) && notEmpty(entity.getPath())) {
             entity.setPath(entity.getPath().replace("//", SEPARATOR));
             SysSite site = getSite(request);
-            int userId = getAdminFromSession(session).getId();
+            Long userId = getAdminFromSession(session).getId();
             if (empty(entity.getItemType()) || empty(entity.getItemId())) {
                 entity.setItemType(ITEM_TYPE_CUSTOM);
                 entity.setItemId(null);
@@ -100,7 +100,7 @@ public class CmsPlaceAdminController extends AbstractController {
      * @return
      */
     @RequestMapping("refresh")
-    public String refresh(Integer[] ids, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public String refresh(Long[] ids, HttpServletRequest request, HttpSession session, ModelMap model) {
         if (notEmpty(ids)) {
             SysSite site = getSite(request);
             service.refresh(site.getId(), ids);
@@ -118,7 +118,7 @@ public class CmsPlaceAdminController extends AbstractController {
      * @return
      */
     @RequestMapping("check")
-    public String check(Integer[] ids, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public String check(Long[] ids, HttpServletRequest request, HttpSession session, ModelMap model) {
         if (notEmpty(ids)) {
             SysSite site = getSite(request);
             service.check(site.getId(), ids);
@@ -154,7 +154,7 @@ public class CmsPlaceAdminController extends AbstractController {
      * @return
      */
     @RequestMapping("delete")
-    public String delete(Integer[] ids, HttpServletRequest request, HttpSession session) {
+    public String delete(Long[] ids, HttpServletRequest request, HttpSession session) {
         if (notEmpty(ids)) {
             SysSite site = getSite(request);
             service.delete(site.getId(), ids);

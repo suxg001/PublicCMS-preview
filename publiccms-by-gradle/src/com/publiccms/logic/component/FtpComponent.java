@@ -44,7 +44,6 @@ public class FtpComponent extends Base {
     public static final String DATE_FORMAT = "yyyyMMddHHmmss";
     public static final String LIST_DATE_FORMAT = "MMM dd HH:mm";
     public static final String LIST_DATE_FORMAT1 = "MMM dd yyyy";
-    public static final String BLANKSPACE = " ";
     public static final String ROOT = SEPARATOR;
     public static final String[] VIRTUAL_FILE_PATHS = { STATIC_FILE_PATH_WEB, STATIC_FILE_PATH_RESOURCE, TASK_FILE_PATH,
             TEMPLATE_PATH };
@@ -150,7 +149,7 @@ public class FtpComponent extends Base {
                 while (flag && null != (inputString = input.readLine())) {
                     String command;
                     String param = BLANK;
-                    int index = inputString.indexOf(BLANKSPACE);
+                    int index = inputString.indexOf(BLANK_SPACE);
                     if (-1 == index) {
                         command = inputString.toUpperCase();
                     } else {
@@ -361,9 +360,9 @@ public class FtpComponent extends Base {
                 String str = BLANK;
                 byte[] arrayOfByte = inetAddress.getAddress();
                 for (int i = 0; i < arrayOfByte.length; ++i) {
-                    str = str + (arrayOfByte[i] & 0xFF) + ",";
+                    str = str + (arrayOfByte[i] & 0xFF) + COMMA_DELIMITED;
                 }
-                str = str + (transportServerSocket.getLocalPort() >>> 8 & 0xFF) + ","
+                str = str + (transportServerSocket.getLocalPort() >>> 8 & 0xFF) + COMMA_DELIMITED
                         + (transportServerSocket.getLocalPort() & 0xFF);
                 pirnt("227  entering passive mode (" + str + ")");
                 output.flush();
@@ -380,7 +379,7 @@ public class FtpComponent extends Base {
             int[] a = new int[6];
             int j = 0;
             try {
-                while ((p2 = param.indexOf(",", p1)) != -1) {
+                while ((p2 = param.indexOf(COMMA_DELIMITED, p1)) != -1) {
                     a[j] = Integer.parseInt(param.substring(p1, p2));
                     p2 = p2 + 1;
                     p1 = p2;
@@ -617,11 +616,11 @@ public class FtpComponent extends Base {
             String rightString = rightsb.toString();
             sb.append(rightString).append(rightString).append(rightString);
             Date fileModifiedDate = new Date(file.lastModified());
-            sb.append(BLANKSPACE).append(file.isDirectory() ? 3 : 1).append(" user group ").append(String.valueOf(file.length()))
-                    .append(BLANKSPACE).append(System.currentTimeMillis() - file.lastModified() > 183L * 24L * 60L * 60L * 1000L
+            sb.append(BLANK_SPACE).append(file.isDirectory() ? 3 : 1).append(" user group ").append(String.valueOf(file.length()))
+                    .append(BLANK_SPACE).append(System.currentTimeMillis() - file.lastModified() > 183L * 24L * 60L * 60L * 1000L
                             ? new SimpleDateFormat(LIST_DATE_FORMAT, Locale.ENGLISH).format(fileModifiedDate)
                             : new SimpleDateFormat(LIST_DATE_FORMAT1, Locale.ENGLISH).format(fileModifiedDate))
-                    .append(BLANKSPACE);
+                    .append(BLANK_SPACE);
             sb.append(file.getName());
             return sb.toString();
         }

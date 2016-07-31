@@ -11,7 +11,7 @@ import com.sanluan.common.handler.QueryHandler;
 
 @Repository
 public class SysEmailTokenDao extends BaseDao<SysEmailToken> {
-    public PageHandler getPage(Integer userId, Integer pageIndex, Integer pageSize) {
+    public PageHandler getPage(Long userId, Integer pageIndex, Integer pageSize) {
         QueryHandler queryHandler = getQueryHandler("from SysEmailToken bean");
         if (notEmpty(userId)) {
             queryHandler.condition("bean.userId = :userId").setParameter("userId", userId);

@@ -24,7 +24,7 @@ public abstract class AbstractAppV1Directive extends AbstractAppDirective implem
     public final static String REQUIRED_PARAMTER = "required_paramter:";
     private SysUser getUser(RenderHandler handler) throws Exception {
         String authToken = handler.getString("authToken");
-        Integer authUserId = handler.getInteger("authUserId");
+        Long authUserId = handler.getLong("authUserId");
         if (notEmpty(authToken) && notEmpty(authUserId)) {
             SysUserToken sysUserToken = sysUserTokenService.getEntity(authToken);
             if (notEmpty(sysUserToken) && sysUserToken.getUserId() == authUserId) {

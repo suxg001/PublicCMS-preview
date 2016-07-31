@@ -49,7 +49,7 @@ public class LoginAdminController extends AbstractController {
                 || virifyNotAdmin(user, model)) {
             model.addAttribute("username", username);
             model.addAttribute("returnUrl", returnUrl);
-            Integer userId = null;
+            Long userId = null;
             if (notEmpty(user)) {
                 userId = user.getId();
             }

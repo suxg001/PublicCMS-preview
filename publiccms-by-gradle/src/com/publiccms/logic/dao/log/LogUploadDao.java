@@ -11,7 +11,7 @@ import com.sanluan.common.handler.QueryHandler;
 
 @Repository
 public class LogUploadDao extends BaseDao<LogUpload> {
-    public PageHandler getPage(Integer siteId, Integer userId, String channel, Boolean image, String filePath, String orderType,
+    public PageHandler getPage(Integer siteId, Long userId, String channel, Boolean image, String filePath, String orderType,
             Integer pageIndex, Integer pageSize) {
         QueryHandler queryHandler = getQueryHandler("from LogUpload bean");
         if (notEmpty(siteId)) {

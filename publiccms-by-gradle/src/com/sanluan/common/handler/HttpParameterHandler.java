@@ -104,7 +104,7 @@ public class HttpParameterHandler extends BaseHandler {
     @Override
     protected String[] getStringArrayWithoutRegrister(String name) {
         String[] values = request.getParameterValues(name);
-        if (notEmpty(values) && 1 == values.length && 0 <= values[0].indexOf(",")) {
+        if (notEmpty(values) && 1 == values.length && 0 <= values[0].indexOf(COMMA_DELIMITED)) {
             return split(values[0], ',');
         }
         return values;

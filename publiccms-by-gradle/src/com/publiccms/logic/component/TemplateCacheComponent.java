@@ -71,7 +71,7 @@ public class TemplateCacheComponent extends Base implements Cacheable {
     private String getRequestParamtersString(HttpServletRequest request, String acceptParamters) {
         StringBuilder sb = new StringBuilder();
         sb.append("/default.html");
-        for (String paramterName : split(acceptParamters, ",")) {
+        for (String paramterName : split(acceptParamters, COMMA_DELIMITED)) {
             String[] values = request.getParameterValues(paramterName);
             if (isNotEmpty(values)) {
                 for (int i = 0; i < values.length; i++) {

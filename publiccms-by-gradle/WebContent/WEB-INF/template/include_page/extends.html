@@ -20,19 +20,19 @@
 					<@extendsFieldType name+'['+extend?index+'].inputType' extend.inputType/>
 				</td>
 				<td>
-					<input type="text" name="${name}[${extend?index}].name" value="${extend.name}" size="10" class="required" maxlength="20"/>
+					<input type="text" name="${name}[${extend?index}].name" value="${extend.name?html}" size="10" class="required" maxlength="20"/>
 				</td>
 				<td>
-					<input type="text" name="${name}[${extend?index}].code" value="${extend.code}" size="20" class="required alphanumeric"/>
+					<input type="text" name="${name}[${extend?index}].code" value="${extend.code?html}" size="20" class="required alphanumeric"/>
 				</td>
 				<td>
 					<input type="checkbox" name="${name}[${extend?index}].required" ${extend.required?then(' checked="true"','')}/>
 				</td>
 				<td>
-					<input type="text" name="${name}[${extend?index}].defaultValue" value="${extend.defaultValue!}" size="12"/>
+					<input type="text" name="${name}[${extend?index}].defaultValue" value="${(extend.defaultValue?html)!}" size="12"/>
 				</td>
 				<td>
-					<input type="text" name="${name}[${extend?index}].description" value="${extend.description!}" rows="2" cols="40" maxlength="100"/>
+					<input type="text" name="${name}[${extend?index}].description" value="${(extend.description?html)!}" rows="2" cols="40" maxlength="100"/>
 				</td>
 				<td>
 					<a href="javascript:void(0)" class="btnDel ">删除</a>

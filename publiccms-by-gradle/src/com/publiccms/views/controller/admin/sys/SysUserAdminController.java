@@ -104,7 +104,7 @@ public class SysUserAdminController extends AbstractController {
     }
 
     @RequestMapping(value = "enable", method = RequestMethod.POST)
-    public String enable(Integer id, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public String enable(Long id, HttpServletRequest request, HttpSession session, ModelMap model) {
         if (virifyEquals("admin.operate", getAdminFromSession(session).getId(), id, model)) {
             return TEMPLATE_ERROR;
         }
@@ -123,7 +123,7 @@ public class SysUserAdminController extends AbstractController {
     }
 
     @RequestMapping(value = "disable", method = RequestMethod.POST)
-    public String disable(Integer id, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public String disable(Long id, HttpServletRequest request, HttpSession session, ModelMap model) {
         if (virifyEquals("admin.operate", getAdminFromSession(session).getId(), id, model)) {
             return TEMPLATE_ERROR;
         }
@@ -140,13 +140,4 @@ public class SysUserAdminController extends AbstractController {
         }
         return TEMPLATE_DONE;
     }
-
-    protected boolean virifyEquals(String field, Integer value, Integer value2, ModelMap model) {
-        if (notEmpty(value) && value.equals(value2)) {
-            model.addAttribute(ERROR, "verify.equals." + field);
-            return true;
-        }
-        return false;
-    }
-
 }

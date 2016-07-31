@@ -24,7 +24,7 @@ public class GetPlaceAttributeMethod extends BaseMethod {
     @SuppressWarnings("unchecked")
     @Override
     public Object exec(@SuppressWarnings("rawtypes") List arguments) throws TemplateModelException {
-        Integer id = getInteger(0, arguments);
+        Long id = getLong(0, arguments);
         if (notEmpty(id)) {
             CmsPlaceAttribute entity = service.getEntity(id);
             if (notEmpty(entity)) {

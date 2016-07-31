@@ -21,7 +21,7 @@ function clickAddTagType(){
 					<dt>父分类:</dt>
 					<dd>
 						<input name="parentId" type="hidden" value="${parentId!}" />
-						<input name="categoryName" readonly="readonly" type="text" size="10" value="${(category.name)!}"/>
+						<input name="categoryName" readonly="readonly" type="text" size="10" value="${(category.name?html)!}"/>
 						<a class="btnLook" href="cmsCategory/lookup.html?categoryId=${parentId!}" lookupGroup="">选择</a>
 					</dd>
 				</dl>
@@ -36,7 +36,8 @@ function clickAddTagType(){
 				<dl class="nowrap">
 					<dt>名称:</dt>
 					<dd>
-						<input class="required" name="name" type="text" maxlength="50" size="30" value="${(a.name)!}"/>
+						<input class="required" name="name" type="text" maxlength="50" size="30" value="${(a.name?html)!}"/>
+						<label><input name="onlyUrl" type="checkbox" onclick="if($(this).is(':checked')){$('.onlyUrl').hide();$('.onlyUrl input[type=text]',navTab.getCurrentPanel()).val('');}else{$('.onlyUrl').show();}"/>外链</label>
 						<label><input name="allowContribute" type="checkbox"${(a?has_content&&a.allowContribute)?then(' checked="checked"','')}/>允许投稿</label>
 						<label><input name="hidden" type="checkbox"${(a?has_content&&a.hidden)?then(' checked="checked"','')}/>隐藏</label>
 					</dd>
@@ -49,7 +50,7 @@ function clickAddTagType(){
 				<#assign typeIds=(a.tagTypeIds)!''/>
 				<@tagTypes typeIds/>
 			<#if site.useStatic>
-				<dl class="nowrap">
+				<dl class="nowrap onlyUrl">
 					<dt>静态化模板路径:</dt>
 					<dd>
 						<input name="templatePath" type="text" maxlength="255" size="40" value="${(a.templatePath)!}"/>
@@ -61,16 +62,16 @@ function clickAddTagType(){
 				<dl class="nowrap">
 					<dt>分类页面访问路径:</dt>
 					<dd>
-						<input class="required" name="path" type="text" maxlength="500" size="80" value="${(a.path)!(category.path)!}"/>
+						<input class="required" name="path" type="text" maxlength="500" size="80" value="${(a.path?html)!(category.path?html)!}"/>
 						<a class="btnLook" href="cmsCategory/categoryPath.html" width="920" lookupGroup="">选择路径</a>
 					</dd>
 				</dl>
 				<div class="divider"></div>
-				<dl>
+				<dl class="onlyUrl">
 					<dt>每页数据:</dt>
 					<dd><input class="required digits" name="pageSize" type="number" size="4" value="${(a.pageSize)!(category.pageSize)!20}"/></dd>
 				</dl>
-				<dl>
+				<dl class="onlyUrl">
 					<dt>排序:</dt>
 					<dd><input class="required digits" name="sort" type="number" size="4" value="${(a.sort)!0}"/></dd>
 				</dl>
@@ -81,23 +82,23 @@ function clickAddTagType(){
 	</@_sysExtendFieldList>
 </#if>
 			</fieldset>
-			<fieldset>
+			<fieldset class="onlyUrl">
 				<legend>SEO优化</legend>
 				<dl class="nowrap">
 					<dt>标题:</dt>
-					<dd><input name="title" type="text" maxlength="80" size="30" value="${(attribute.title)!}"/></dd>
+					<dd><input name="title" type="text" maxlength="80" size="30" value="${(attribute.title?html)!}"/></dd>
 				</dl>
 				<dl class="nowrap">
 					<dt>关键词:</dt>
 					<dd>
-						<textarea name="keywords" maxlength="100" style="width: 80%;" rows="2">${(attribute.keywords)!}</textarea>
+						<textarea name="keywords" maxlength="100" style="width: 80%;" rows="2">${(attribute.keywords?html)!}</textarea>
 						<span class="info">请填写与分类内容相关的关键词，多个关键词应该使用逗号分开，最好保持在10个以下</span>
 					</dd>
 				</dl>
 				<dl class="nowrap">
 					<dt>描述:</dt>
 					<dd>
-						<textarea name="description" maxlength="300" style="width: 80%;" rows="2">${(attribute.description)!}</textarea>
+						<textarea name="description" maxlength="300" style="width: 80%;" rows="2">${(attribute.description?html)!}</textarea>
 						<span class="info">请填写与分类内容相关的描述，字数控制应该70-100个汉字或者140-200个英文字符</span>
 					</dd>
 				</dl>
@@ -130,7 +131,7 @@ function clickAddTagType(){
 					</dt>
 				<#if site.useStatic>
 					<dd<#if a.onlyUrl> style="display:none"</#if>>
-						<label>静态化模板路径:</label><input name="templatePath_${a.id}" type="text" maxlength="200" size="30" value="${(a.templatePath)!}"/>
+						<label>静态化模板路径:</label><input name="templatePath_${a.id}" type="text" maxlength="200" size="30" value="${(a.templatePath?html)!}"/>
 						<a class="btnLook" href="cmsTemplate/lookup.html?field=templatePath_${a.id}" lookupGroup="">选择</a>
 						<@childModel a/>
 					</dd>
@@ -141,7 +142,7 @@ function clickAddTagType(){
 				<dl class="nowrap categoryModelContentPath">
 					<dt>内容页面访问路径:</dt>
 					<dd>
-						<input name="contentPath" type="text" maxlength="500" size="80" value="${(a.contentPath)!(category.contentPath)!}"/>
+						<input name="contentPath" type="text" maxlength="500" size="80" value="${(a.contentPath?html)!(category.contentPath?html)!}"/>
 						<a class="btnLook" href="cmsCategory/contentPath.html" width="920" lookupGroup="">选择路径</a>
 					</dd>
 				</dl>
@@ -149,7 +150,7 @@ function clickAddTagType(){
 function checkCategoryModel(){
 	$('.categoryModelContentPath',navTab.getCurrentPanel()).hide().find('input[name=contentPath]').removeClass("required");
 	$('.categoryModel dl',navTab.getCurrentPanel()).each(function(){
-		if($(this).find('input[type=checkbox]').is(':checked')){
+		if($(this).find('input[type=checkbox]').is(':checked')&&$(this).find('dd').is(":visible")){
 			$('.categoryModelContentPath',navTab.getCurrentPanel()).show().find('input[name=contentPath]').addClass("required");
 			return ;
 		}
@@ -166,6 +167,9 @@ checkCategoryModel();
 				$('input[name=templatePath_${a.modelId}]',navTab.getCurrentPanel()).val('${(a.templatePath)!}');
 		</#list>
 	</@_categoryModelList>
+</#if>
+<#if a?has_content&&a.onlyUrl>
+$('input[name=onlyUrl]',navTab.getCurrentPanel()).click(); 
 </#if>
 			</script>
 <#if a?has_content&&a.extendId?has_content>

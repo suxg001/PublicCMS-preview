@@ -2,9 +2,12 @@ package com.publiccms.views.pojo;
 
 import java.util.List;
 
-import com.sanluan.common.base.Base;
+public class SysConfigParamters implements java.io.Serializable {
 
-public class SysConfigParamters extends Base {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private List<ExtendData> extendDataList;
 
     public List<ExtendData> getExtendDataList() {

@@ -27,7 +27,7 @@ public class LogAdminController extends AbstractController {
     private LogUploadService logUploadService;
 
     @RequestMapping("logLogin/delete")
-    public String logLoginDelete(Integer[] ids, HttpServletRequest request, HttpSession session) {
+    public String logLoginDelete(Long[] ids, HttpServletRequest request, HttpSession session) {
         SysSite site = getSite(request);
         if (notEmpty(ids)) {
             logLoginService.delete(site.getId(), ids);
@@ -38,7 +38,7 @@ public class LogAdminController extends AbstractController {
     }
 
     @RequestMapping("logOperate/delete")
-    public String logOperateDelete(Integer[] ids, HttpServletRequest request, HttpSession session) {
+    public String logOperateDelete(Long[] ids, HttpServletRequest request, HttpSession session) {
         SysSite site = getSite(request);
         if (notEmpty(ids)) {
             logOperateService.delete(site.getId(), ids);
@@ -49,7 +49,7 @@ public class LogAdminController extends AbstractController {
     }
 
     @RequestMapping("logTask/delete")
-    public String logTaskDelete(Integer[] ids, HttpServletRequest request, HttpSession session) {
+    public String logTaskDelete(Long[] ids, HttpServletRequest request, HttpSession session) {
         SysSite site = getSite(request);
         if (notEmpty(ids)) {
             logTaskService.delete(site.getId(), ids);
@@ -60,7 +60,7 @@ public class LogAdminController extends AbstractController {
     }
 
     @RequestMapping("logUpload/delete")
-    public String logUploadDelete(Integer[] ids, HttpServletRequest request, HttpSession session) {
+    public String logUploadDelete(Long[] ids, HttpServletRequest request, HttpSession session) {
         SysSite site = getSite(request);
         if (notEmpty(ids)) {
             logUploadService.delete(site.getId(), ids);

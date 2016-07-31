@@ -10,7 +10,7 @@
 			<dl class="nowrap">
 				<dt>用户名:</dt>
 				<dd>
-					<input class="required" name="name" type="text" maxlength="20" size="20" value="${(a.name)!}"/>
+					<input class="required" name="name" type="text" maxlength="20" size="20" value="${(a.name?html)!}"/>
 					<label><input name="superuserAccess" type="checkbox" onclick="if($(this).is(':checked')){$('.superuserAccess').show();}else{$('.superuserAccess').hide();}"/>管理员</label>
 				</dd>
 			</dl>
@@ -18,7 +18,7 @@
 				<dt>所属部门:</dt>
 				<dd>
 					<input name="deptId" type="hidden" value="${(dept.id)!}"/>
-					<input readonly="readonly" name="deptName" type="text" size="10" value="${(dept.name)!}"/>
+					<input readonly="readonly" name="deptName" type="text" size="10" value="${(dept.name?html)!}"/>
 					<a class="btnLook" href="sysDept/lookup.html" width="920" warn="请选择部门" lookupGroup="">选择部门</a>
 				</dd>
 			</dl>
@@ -35,18 +35,18 @@
 			</dl>
 			<dl class="nowrap">
 				<dt>用户昵称:</dt>
-				<dd><input class="required" name="nickName" type="text" size="20" maxlength="30" value="${(a.nickName)!}"/></dd>
+				<dd><input class="required" name="nickName" type="text" size="20" maxlength="30" value="${(a.nickName?html)!}"/></dd>
 			</dl>
 			<dl class="nowrap">
 				<dt>邮箱:</dt>
-				<dd><input name="email" type="text" size="30" maxlength="50" value="${(a.email)!}"/></dd>
+				<dd><input name="email" type="text" size="30" maxlength="50" value="${(a.email?html)!}"/></dd>
 			</dl>
 			<fieldset class="superuserAccess" style="display:none">
 				<legend><i class="icon-user-md icon-large"></i> 角色</legend>
 				<ul class="tree treeCheck expand">
 			<@_sysRoleList parentId=parentId>
 				<#list page.list as a>
-					<li><a tname="roleIds" tvalue="${a.id}">${a.name}</a></li>
+					<li><a tname="roleIds" tvalue="${a.id}">${a.name?html}</a></li>
 				</#list>
 			</@_sysRoleList>
 				</ul>

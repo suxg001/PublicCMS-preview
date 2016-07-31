@@ -84,15 +84,15 @@
 			<tr target="sid" rel="${a.id}">
 				<td><input name="ids" value="${a.id}" type="checkbox"></td>
 				<td>${a.id}</td>
-				<td>${(a.copied?then('[转载]',''))!}<a href="${a.url!}" target="_blank">${a.title!}</a></td>
+				<td>${(a.copied?then('[转载]',''))!}<a href="${a.url!}" target="_blank">${(a.title?html)!}</a></td>
 				<td>
 					<a href="myself/contentList.html?categoryId=${a.categoryId}&navTabId=myself/contentList" target="navTab" rel="myself/contentList" title="我的内容">
-						${(categoryMap[a.categoryId?string].name)!}
+						${(categoryMap[a.categoryId?string].name?html)!}
 					</a>
 				</td>
 				<td>
 					<a href="myself/contentList.html?modelId=${a.modelId}&navTabId=myself/contentList" target="navTab" rel="myself/contentList" title="我的内容">
-						${(modelMap[a.modelId?string].name)!}
+						${(modelMap[a.modelId?string].name?html)!}
 					</a>
 				</td>
 				<td>${a.scores!}</td>

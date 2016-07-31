@@ -91,7 +91,7 @@ public class PlaceController extends AbstractController {
      * @return
      */
     @RequestMapping("delete")
-    public void delete(Integer id, HttpServletRequest request, HttpSession session) {
+    public void delete(Long id, HttpServletRequest request, HttpSession session) {
         CmsPlace entity = service.getEntity(id);
         SysSite site = getSite(request);
         SysUser user = getUserFromSession(session);
@@ -113,7 +113,7 @@ public class PlaceController extends AbstractController {
      * @return
      */
     @RequestMapping("check")
-    public void check(Integer id, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public void check(Long id, HttpServletRequest request, HttpSession session, ModelMap model) {
         CmsPlace entity = service.getEntity(id);
         SysSite site = getSite(request);
         SysUser user = getUserFromSession(session);
@@ -134,7 +134,7 @@ public class PlaceController extends AbstractController {
      * @return
      */
     @RequestMapping("redirect")
-    public void clicks(Integer id, HttpServletRequest request, HttpServletResponse response) {
+    public void clicks(Long id, HttpServletRequest request, HttpServletResponse response) {
         SysSite site = getSite(request);
         CmsPlaceStatistics placeStatistics = statisticsComponent.placeClicks(id);
         if (notEmpty(placeStatistics.getEntity()) && site.getId() == placeStatistics.getEntity().getSiteId()) {

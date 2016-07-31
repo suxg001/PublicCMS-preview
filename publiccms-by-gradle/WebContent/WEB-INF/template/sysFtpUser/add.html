@@ -8,13 +8,13 @@
 				<dt>站点:</dt>
 				<dd>
 					<input name="siteId" type="hidden" value="${site.id}" />
-					${(site.name)!}
+					${(site.name?html)!}
 				</dd>
 			</dl>
 			<dl class="nowrap">
 				<dt>用户名:</dt>
 				<dd>
-					<input class="required" name="name" type="text" size="30" value="${(a.name)!admin.name+.now?string('yyyyMM')}"/>
+					<input class="required" name="name" type="text" size="30" value="${(a.name?html)!admin.name?html+site.id}"/>
 				</dd>
 			</dl>
 			<dl class="nowrap">
@@ -27,7 +27,7 @@
 			<dl class="nowrap">
 				<dt>路径:</dt>
 				<dd>
-					<input class="required" name="path" type="text" size="30" value="${(a.path)!}"/>
+					<input class="required" name="path" type="text" size="30" value="${(a.path?html)!}"/>
 				</dd>
 			</dl>
 		</div>

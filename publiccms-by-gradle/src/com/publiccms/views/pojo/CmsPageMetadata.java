@@ -9,104 +9,109 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sanluan.common.base.Base;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CmsPageMetadata extends Base {
-    private String alias;
-    private String publishPath;
-    private boolean useDynamic;
-    private boolean needLogin;
-    private String acceptParamters;
-    private Integer cacheTime;
-    private boolean allowContribute;
-    private List<ExtendField> extendList;
-    private List<ExtendData> extendDataList;
-    private Map<String, String> extendData;
+public class CmsPageMetadata extends Base implements java.io.Serializable {
 
-    public CmsPageMetadata() {
-        this.useDynamic = true;
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String alias;
+	private String publishPath;
+	private boolean useDynamic;
+	private boolean needLogin;
+	private String acceptParamters;
+	private Integer cacheTime;
+	private boolean allowContribute;
+	private List<ExtendField> extendList;
+	private List<ExtendData> extendDataList;
+	private Map<String, String> extendData;
 
-    public String getAlias() {
-        return alias;
-    }
+	public CmsPageMetadata() {
+		this.useDynamic = true;
+	}
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
+	public String getAlias() {
+		return alias;
+	}
 
-    public String getPublishPath() {
-        return publishPath;
-    }
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
 
-    public void setPublishPath(String publishPath) {
-        this.publishPath = publishPath;
-    }
+	public String getPublishPath() {
+		return publishPath;
+	}
 
-    public boolean isNeedLogin() {
-        return needLogin;
-    }
+	public void setPublishPath(String publishPath) {
+		this.publishPath = publishPath;
+	}
 
-    public void setNeedLogin(boolean needLogin) {
-        this.needLogin = needLogin;
-    }
+	public boolean isNeedLogin() {
+		return needLogin;
+	}
 
-    public List<ExtendField> getExtendList() {
-        return extendList;
-    }
+	public void setNeedLogin(boolean needLogin) {
+		this.needLogin = needLogin;
+	}
 
-    public void setExtendList(List<ExtendField> extendList) {
-        this.extendList = extendList;
-    }
+	public List<ExtendField> getExtendList() {
+		return extendList;
+	}
 
-    public boolean isAllowContribute() {
-        return allowContribute;
-    }
+	public void setExtendList(List<ExtendField> extendList) {
+		this.extendList = extendList;
+	}
 
-    public void setAllowContribute(boolean allowContribute) {
-        this.allowContribute = allowContribute;
-    }
+	public boolean isAllowContribute() {
+		return allowContribute;
+	}
 
-    @JsonIgnore
-    public Map<String, String> getExtendData() {
-        if (empty(extendData)) {
-            extendData = new HashMap<String, String>();
-            if (Base.notEmpty(extendDataList)) {
-                for (ExtendData extend : extendDataList) {
-                    extendData.put(extend.getName(), extend.getValue());
-                }
-            }
-        }
-        return extendData;
-    }
+	public void setAllowContribute(boolean allowContribute) {
+		this.allowContribute = allowContribute;
+	}
 
-    public List<ExtendData> getExtendDataList() {
-        return extendDataList;
-    }
+	@JsonIgnore
+	public Map<String, String> getExtendData() {
+		if (empty(extendData)) {
+			extendData = new HashMap<String, String>();
+			if (Base.notEmpty(extendDataList)) {
+				for (ExtendData extend : extendDataList) {
+					extendData.put(extend.getName(), extend.getValue());
+				}
+			}
+		}
+		return extendData;
+	}
 
-    public void setExtendDataList(List<ExtendData> extendDataList) {
-        this.extendDataList = extendDataList;
-    }
+	public List<ExtendData> getExtendDataList() {
+		return extendDataList;
+	}
 
-    public Integer getCacheTime() {
-        return cacheTime;
-    }
+	public void setExtendDataList(List<ExtendData> extendDataList) {
+		this.extendDataList = extendDataList;
+	}
 
-    public void setCacheTime(Integer cacheTime) {
-        this.cacheTime = cacheTime;
-    }
+	public Integer getCacheTime() {
+		return cacheTime;
+	}
 
-    public String getAcceptParamters() {
-        return acceptParamters;
-    }
+	public void setCacheTime(Integer cacheTime) {
+		this.cacheTime = cacheTime;
+	}
 
-    public void setAcceptParamters(String acceptParamters) {
-        this.acceptParamters = acceptParamters;
-    }
+	public String getAcceptParamters() {
+		return acceptParamters;
+	}
 
-    public boolean isUseDynamic() {
-        return useDynamic;
-    }
+	public void setAcceptParamters(String acceptParamters) {
+		this.acceptParamters = acceptParamters;
+	}
 
-    public void setUseDynamic(boolean useDynamic) {
-        this.useDynamic = useDynamic;
-    }
+	public boolean isUseDynamic() {
+		return useDynamic;
+	}
+
+	public void setUseDynamic(boolean useDynamic) {
+		this.useDynamic = useDynamic;
+	}
 }

@@ -22,7 +22,7 @@ import freemarker.template.TemplateException;
 public class CreateContentFileDirective extends AbstractTemplateDirective {
     @Override
     public void execute(RenderHandler handler) throws IOException, Exception {
-        Integer id = handler.getInteger("id");
+        Long id = handler.getLong("id");
         String templatePath = handler.getString("templatePath");
         String filePath = handler.getString("filePath");
         Integer pageIndex = handler.getInteger("pageIndex");

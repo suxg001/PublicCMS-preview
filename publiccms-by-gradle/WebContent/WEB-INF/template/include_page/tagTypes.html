@@ -39,7 +39,7 @@ function reIndexTagType(){
 }
 	<@_tagType ids=typeIds>
 		<#list map?keys as k>
-		addTagType('${k}','${map[k].name}');
+		addTagType('${k}','${map[k].name?html?js_string}');
 		</#list>
 	</@_tagType>
 </script>

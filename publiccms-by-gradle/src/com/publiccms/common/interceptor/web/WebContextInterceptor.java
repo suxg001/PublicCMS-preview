@@ -55,7 +55,7 @@ public class WebContextInterceptor extends BaseInterceptor {
                     String[] userData = value.split(getCookiesUserSplit());
                     if (userData.length > 1) {
                         try {
-                            Integer userId = Integer.parseInt(userData[0]);
+                            Long userId = Long.parseLong(userData[0]);
                             SysUserToken userToken = sysUserTokenService.getEntity(userData[1]);
                             if (null != userToken && userId == userToken.getUserId() && CHANNEL_WEB.equals(userToken.getChannel())
                                     && null != (user = sysUserService.getEntity(userId)) && !user.isDisabled()) {

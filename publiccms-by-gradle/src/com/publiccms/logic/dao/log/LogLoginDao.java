@@ -11,7 +11,7 @@ import com.sanluan.common.handler.QueryHandler;
 
 @Repository
 public class LogLoginDao extends BaseDao<LogLogin> {
-    public PageHandler getPage(Integer siteId, Integer userId, Date startCreateDate, Date endCreateDate, String channel,
+    public PageHandler getPage(Integer siteId, Long userId, Date startCreateDate, Date endCreateDate, String channel,
             Boolean result, String name, String ip, String orderType, Integer pageIndex, Integer pageSize) {
         QueryHandler queryHandler = getQueryHandler("from LogLogin bean");
         if (notEmpty(siteId)) {

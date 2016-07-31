@@ -17,6 +17,8 @@ public abstract class Base {
     public static final String DEFAULT_CHARSET = "UTF-8";
     public static final String SEPARATOR = "/";
     public static final String BLANK = "";
+    public static final String BLANK_SPACE = " ";
+    public static final String COMMA_DELIMITED = ",";
     protected final Log log = getLog(getClass());
 
     public static Date getDate() {

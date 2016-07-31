@@ -52,7 +52,7 @@
 			<tr target="sid" rel="${a.id}">
 				<td><input name="ids" value="${a.id}" type="checkbox"></td>
 				<td>${a.id!}</td>
-				<td><a href="${a.url!}" target="_blank">${a.name!}${(a.disabled?then("[已删除]",''))!}</a></td>
+				<td><a href="${a.url!}" target="_blank">${(a.name?html)!}${(a.disabled?then("[已删除]",''))!}</a></td>
 				<td>${a.code!}</td>
 				<td>${a.path!}</td>
 				<td>${a.contentPath!}</td>

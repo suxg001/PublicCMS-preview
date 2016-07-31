@@ -11,7 +11,7 @@ import com.sanluan.common.handler.QueryHandler;
 
 @Repository
 public class LogOperateDao extends BaseDao<LogOperate> {
-    public PageHandler getPage(Integer siteId, String channel, String operate, Integer userId, Date startCreateDate,
+    public PageHandler getPage(Integer siteId, String channel, String operate, Long userId, Date startCreateDate,
             Date endCreateDate, String content, String ip, String orderType, Integer pageIndex, Integer pageSize) {
         QueryHandler queryHandler = getQueryHandler("from LogOperate bean");
         if (notEmpty(siteId)) {

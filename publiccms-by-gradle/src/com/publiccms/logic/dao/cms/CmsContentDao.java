@@ -1,5 +1,7 @@
 package com.publiccms.logic.dao.cms;
 
+import java.io.Serializable;
+
 // Generated 2015-5-8 16:50:23 by com.sanluan.common.source.SourceMaker
 
 import java.util.Date;
@@ -64,7 +66,7 @@ public class CmsContentDao extends BaseDao<CmsContent> {
         return 0;
     }
 
-    public void index(int siteId, Integer[] ids) {
+    public void index(int siteId, Serializable[] ids) {
         for (CmsContent entity : getEntitys(ids)) {
             if (siteId == entity.getSiteId()) {
                 index(entity);
@@ -73,8 +75,8 @@ public class CmsContentDao extends BaseDao<CmsContent> {
     }
 
     public PageHandler getPage(Integer siteId, Integer[] status, Integer categoryId, Integer[] categoryIds, Boolean disabled,
-            Integer[] modelId, Integer parentId, Boolean emptyParent, Boolean onlyUrl, Boolean hasImages, Boolean hasFiles,
-            String title, Integer userId, Integer checkUserId, Date startPublishDate, Date endPublishDate, String orderField,
+            Integer[] modelId, Long parentId, Boolean emptyParent, Boolean onlyUrl, Boolean hasImages, Boolean hasFiles,
+            String title, Long userId, Long checkUserId, Date startPublishDate, Date endPublishDate, String orderField,
             String orderType, Integer pageIndex, Integer pageSize) {
         QueryHandler queryHandler = getQueryHandler("from CmsContent bean");
         if (notEmpty(siteId)) {
