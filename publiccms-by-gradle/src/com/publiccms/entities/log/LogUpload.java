@@ -38,6 +38,8 @@ public class LogUpload implements java.io.Serializable {
     private String channel;
     @MyColumn(title = "是否图片", condition = true)
     private boolean image;
+    @MyColumn(title = "站点", order = true)
+    private long fileSize;
     @MyColumn(title = "IP")
     private String ip;
     @MyColumn(title = "操作日期", order = true)
@@ -48,18 +50,23 @@ public class LogUpload implements java.io.Serializable {
     public LogUpload() {
     }
 
-    public LogUpload(int siteId, long userId, String channel, Date createDate, String filePath) {
+    public LogUpload(int siteId, long userId, String channel, boolean image, long fileSize, Date createDate, String filePath) {
         this.siteId = siteId;
         this.userId = userId;
         this.channel = channel;
+        this.image = image;
+        this.fileSize = fileSize;
         this.createDate = createDate;
         this.filePath = filePath;
     }
 
-    public LogUpload(int siteId, long userId, String channel, String ip, Date createDate, String filePath) {
+    public LogUpload(int siteId, long userId, String channel, boolean image, long fileSize, String ip, Date createDate,
+            String filePath) {
         this.siteId = siteId;
         this.userId = userId;
         this.channel = channel;
+        this.image = image;
+        this.fileSize = fileSize;
         this.ip = ip;
         this.createDate = createDate;
         this.filePath = filePath;
@@ -110,6 +117,15 @@ public class LogUpload implements java.io.Serializable {
 
     public void setImage(boolean image) {
         this.image = image;
+    }
+
+    @Column(name = "file_size", nullable = false)
+    public long getFileSize() {
+        return this.fileSize;
+    }
+
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
     }
 
     @Column(name = "ip", length = 64)

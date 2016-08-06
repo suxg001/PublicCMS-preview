@@ -6,18 +6,15 @@ import static com.sanluan.common.tools.RequestUtils.getEncodePath;
 import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.split;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UrlPathHelper;
 
 import com.publiccms.common.base.AbstractController;
@@ -43,13 +40,6 @@ public class IndexController extends AbstractController {
     @Autowired
     private ConfigComponent configComponent;
     private UrlPathHelper urlPathHelper = new UrlPathHelper();
-    public final static String INTERFACE_NOT_FOUND = "interface_not_found";
-    public static final Map<String, String> NOT_FOUND_MAP = new HashMap<String, String>() {
-        private static final long serialVersionUID = 1L;
-        {
-            put("error", INTERFACE_NOT_FOUND);
-        }
-    };
 
     /**
      * 页面请求统一分发
@@ -93,20 +83,6 @@ public class IndexController extends AbstractController {
             throw new PageNotFoundException(requestPath);
         }
         return requestPath;
-    }
-
-    /**
-     * 接口请求统一分发
-     * 
-     * @param callback
-     * @return
-     */
-    @RequestMapping(value = { SEPARATOR, "/**" }, headers = "x-requested-with=XMLHttpRequest")
-    @ResponseBody
-    public MappingJacksonValue index(String callback) {
-        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(NOT_FOUND_MAP);
-        mappingJacksonValue.setJsonpFunction(callback);
-        return mappingJacksonValue;
     }
 
     private void billingRequestParamtersToModel(HttpServletRequest request, String acceptParamters, ModelMap model) {

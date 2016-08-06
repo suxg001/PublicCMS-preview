@@ -1,4 +1,4 @@
-package com.publiccms.views.directive.api;
+package com.publiccms.views.api;
 
 //Generated 2015-5-10 17:54:56 by com.sanluan.common.source.SourceMaker
 
@@ -15,16 +15,16 @@ import com.publiccms.views.pojo.CmsContentStatistics;
 import com.sanluan.common.handler.RenderHandler;
 
 @Component
-public class ContentScoresDirective extends AbstractAppV1Directive {
+public class ContentClickDirective extends AbstractAppV1Directive {
     @Autowired
     private StatisticsComponent statisticsComponent;
 
     @Override
     public void execute(RenderHandler handler, SysApp app, SysUser user) throws IOException, Exception {
         Long id = handler.getLong("id");
-        CmsContentStatistics contentStatistics = statisticsComponent.scores(id);
+        CmsContentStatistics contentStatistics = statisticsComponent.clicks(id);
         if (notEmpty(contentStatistics) && notEmpty(contentStatistics.getEntity())) {
-            handler.put("scores", contentStatistics.getEntity().getScores() + contentStatistics.getScores()).render();
+            handler.put("clicks", contentStatistics.getEntity().getClicks() + contentStatistics.getClicks()).render();
         } else {
             handler.put("error", REQUIRED_PARAMTER + "id").render();
         }

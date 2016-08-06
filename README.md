@@ -64,6 +64,7 @@ BUG修复:
 1. getPageDataAttribute改为getPlaceAttribute
 1. 将内容、用户、标签等数据ID改为long存储
 1. 后台模板安全性提升
+1. UI修改
 
 ###V2016.0510更新：
 

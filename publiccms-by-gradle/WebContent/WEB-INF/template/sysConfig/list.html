@@ -6,12 +6,12 @@
 			<#list getConfigCodeList()>
 				<ul>
 				<#items as a>
-					<li><a href="sysConfig/subCode.html?code=${a?html}" class="j-ajax"><span><@t.m 'config.'+a/></span></a></li>
+					<li><a href="sysConfig/subcode.html?code=${a?html}" class="j-ajax"><@t.m 'config.'+a/></a></li>
 				</#items>
 				</ul>
 			<#else>
 				<ul>
-					<li><a href="javascript:;"><span>没有配置项</span></a></li>
+					<li><a href="javascript:;">没有配置项</a></li>
 				</ul>
 			</#list>
 			</div>
@@ -27,9 +27,6 @@
 			<#else>
 				<div>没有配置项</div>
 			</#list>
-		</div>
-		<div class="tabsFooter">
-			<div class="tabsFooterContent"></div>
 		</div>
 	</div>
 </div>

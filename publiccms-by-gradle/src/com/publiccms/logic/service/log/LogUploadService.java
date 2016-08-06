@@ -20,9 +20,9 @@ import com.sanluan.common.handler.PageHandler;
 public class LogUploadService extends BaseService<LogUpload> {
 
     @Transactional(readOnly = true)
-    public PageHandler getPage(Integer siteId, Long userId, String channel, Boolean image, String filePath, String orderType,
-            Integer pageIndex, Integer pageSize) {
-        return dao.getPage(siteId, userId, channel, image, filePath, orderType, pageIndex, pageSize);
+    public PageHandler getPage(Integer siteId, Long userId, String channel, Boolean image, String filePath, String orderField,
+            String orderType, Integer pageIndex, Integer pageSize) {
+        return dao.getPage(siteId, userId, channel, image, filePath, orderField, orderType, pageIndex, pageSize);
     }
 
     public int delete(Integer siteId, Date createDate) {

@@ -651,6 +651,7 @@ CREATE TABLE `log_upload` (
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
   `channel` varchar(50) NOT NULL COMMENT '操作取到',
   `image` tinyint(1) NOT NULL COMMENT '图片',
+  `file_size` BIGINT(20) NOT NULL COMMENT '文件大小',
   `ip` varchar(64) default NULL COMMENT 'IP',
   `create_date` datetime NOT NULL COMMENT '创建日期',
   `file_path` varchar(500) NOT NULL COMMENT '文件路径',
@@ -660,7 +661,8 @@ CREATE TABLE `log_upload` (
   KEY `ip` (`ip`),
   KEY `site_id` (`site_id`),
   KEY `channel` (`channel`),
-  KEY `image` (`image`)
+  KEY `image` (`image`),
+  KEY `file_size` (`file_size`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='上传日志' AUTO_INCREMENT=1 ;
 
 -- ----------------------------
@@ -1166,6 +1168,7 @@ INSERT INTO `sys_moudle` VALUES (51, '刷新推荐位数据', NULL, 'cmsPlace/re
 INSERT INTO `sys_moudle` VALUES (52, '审核推荐位数据', NULL, 'cmsPlace/check', NULL, 30, 0);
 INSERT INTO `sys_moudle` VALUES (53, '发布推荐位', NULL, 'cmsTemplate/publishPlace', NULL, 30, 0);
 INSERT INTO `sys_moudle` VALUES (54, '清空推荐位数据', NULL, 'cmsPlace/clear', NULL, 30, 0);
+INSERT INTO `sys_moudle` VALUES (60, '文件上传日志', 'log/upload', 'sysUser/lookup', '<i class=\"icon-list-alt icon-large\"></i>', 63, 0);
 INSERT INTO `sys_moudle` VALUES (61, '用户管理', NULL, NULL, '<i class=\"icon-user icon-large\"></i>', 5, 0);
 INSERT INTO `sys_moudle` VALUES (62, '系统维护', NULL, NULL, '<i class=\"icon-cogs icon-large\"></i>', 5, 0);
 INSERT INTO `sys_moudle` VALUES (63, '日志管理', NULL, NULL, '<i class=\"icon-list-alt icon-large\"></i>', 5, 0);

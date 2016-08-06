@@ -129,6 +129,7 @@ public class UserController extends AbstractController {
             try {
                 Map<String, Object> emailModel = new HashMap<String, Object>();
                 emailModel.put("user", user);
+                emailModel.put("site", site);
                 emailModel.put("email", email);
                 emailModel.put("authToken", sysEmailToken.getAuthToken());
                 if (emailComponent.sendHtml(site.getId(), email,

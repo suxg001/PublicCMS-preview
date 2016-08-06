@@ -2,7 +2,13 @@
 <div class="pageContent">
 	<form method="post" action="cmsDomain/save.do?callbackType=closeCurrent&navTabId=cmsDomain/list" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
 		<input name="id" type="hidden" value="${id!}" />
-		<div class="pageFormContent" layoutH="57">
+		<div class="formBar">
+			<ul>
+				<li><button type="submit" class="buttonActive">保存</button></li>
+				<li><button type="button" class="button close">取消</button>></div></li>
+			</ul>
+		</div>
+		<div class="pageFormContent" layoutH="56">
 			<dl class="nowrap">
 				<dt>域名:</dt>
 				<dd><input class="readonly" readonly="readonly" type="text" value="${(a.name?html)!}"/></dd>
@@ -14,12 +20,6 @@
 					<a class="btnLook" href="cmsTemplate/directoryLookup.html?field=path" lookupGroup="">选择</a>
 				</dd>
 			</dl>
-		</div>
-		<div class="formBar">
-			<ul>
-				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
-				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
-			</ul>
 		</div>
 	</form>
 </div>

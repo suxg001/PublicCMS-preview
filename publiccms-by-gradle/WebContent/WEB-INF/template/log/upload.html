@@ -14,8 +14,8 @@
 				<li>
 					<select class="combox" name="image">
 						<option value="">是否图片</option>
-						<option value="false"${(!image?has_content||'false'==image)?then(' selected="true"','')}>正常</option>
-						<option value="true"${image??&&'true'=image)?then(' selected="true"','')}>禁用</option>
+						<option value="false"${(image?has_content&&'false'=image)?then(' selected="true"','')}>文件</option>
+						<option value="true"${(image?has_content&&'true'=image)?then(' selected="true"','')}>图片</option>
 					</select>
 				</li>
 				<li>
@@ -26,7 +26,7 @@
 			<div class="subBar">
 				<ul>
 					<li>
-						<div class="buttonActive"><div class="buttonContent"><button type="submit">搜索</button></div></div>
+						<button type="submit" class="buttonActive">搜索</button>
 					</li>
 				</ul>
 			</div>
@@ -48,6 +48,7 @@
 				<th>用户昵称</th>
 				<th>渠道</th>
 				<th>是否图片</th>
+				<th orderField="fileSize" class="<#if orderField??&&'fileSize'==orderField><#if 'asc'=orderType>asc<#else>desc</#if><#else>order</#if>">文件大小</th>
 				<th>IP</th>
 				<th orderField="createDate" class="<#if orderField??&&'createDate'==orderField><#if 'asc'=orderType>asc<#else>desc</#if><#else>order</#if>">操作日期</th>
 				<th>文件路径</th>
@@ -62,9 +63,22 @@
 			<tr target="sid" rel="${a.id}">
 				<td><input name="ids" value="${a.id}" type="checkbox"></td>
 				<td>${a.userId!}</td>
-				<td>${(userMap[a.userId?string].nickName?html)!}</td>
-				<td>${a.channel!}</td>
-				<td>${a.image?then('是','否')}</td>
+				<td>
+					<a href="log/upload.html?userId=${a.userId!}" target="navTab" rel="log/upload">
+						${(userMap[a.userId?string].nickName?html)!}
+					</a>
+				</td>
+				<td>
+					<a href="log/upload.html?userId=${a.channel!}" target="navTab" rel="log/upload">
+						${a.channel!}
+					</a>
+				</td>
+				<td>
+					<a href="log/upload.html?image=${a.image?string}" target="navTab" rel="log/upload">
+						${a.image?then('是','否')}
+					</a>
+				</td>
+				<td>${a.fileSize!}</td>
 				<td>${a.ip!}</td>
 				<td>${a.createDate!}</td>
 				<td>${(a.filePath?html)!}</td>

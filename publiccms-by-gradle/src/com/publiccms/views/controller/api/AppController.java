@@ -1,6 +1,5 @@
 package com.publiccms.views.controller.api;
 
-import static com.publiccms.views.controller.web.IndexController.INTERFACE_NOT_FOUND;
 import static org.springframework.util.StringUtils.uncapitalize;
 
 import java.io.IOException;
@@ -44,6 +43,13 @@ public class AppController extends AbstractController {
         private static final long serialVersionUID = 1L;
         {
             put("error", VERSION_ERROR);
+        }
+    };
+    public final static String INTERFACE_NOT_FOUND = "interface_not_found";
+    public static final Map<String, String> NOT_FOUND_MAP = new HashMap<String, String>() {
+        private static final long serialVersionUID = 1L;
+        {
+            put("error", INTERFACE_NOT_FOUND);
         }
     };
 

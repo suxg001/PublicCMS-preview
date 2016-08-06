@@ -30,7 +30,8 @@ public class FileAdminController extends AbstractController {
     protected LogUploadService logUploadService;
 
     @RequestMapping(value = "doUpload", method = RequestMethod.POST)
-    public String upload(MultipartFile file, String field, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public String upload(MultipartFile file, String field, Boolean onlyImage, HttpServletRequest request, HttpSession session,
+            ModelMap model) {
         SysSite site = getSite(request);
         if (notEmpty(file) && !file.isEmpty()) {
             String fileName = fileComponent.getUploadFileName(fileComponent.getSuffix(file.getOriginalFilename()));
@@ -39,7 +40,7 @@ public class FileAdminController extends AbstractController {
                 model.put("field", field);
                 model.put(field, fileName);
                 logUploadService.save(new LogUpload(site.getId(), getAdminFromSession(session).getId(), CHANNEL_WEB_MANAGER,
-                        getIpAddress(request), getDate(), fileName));
+                        onlyImage, file.getSize(), getIpAddress(request), getDate(), fileName));
             } catch (IllegalStateException | IOException e) {
                 log.error(e.getMessage());
                 return "common/uploadResult";

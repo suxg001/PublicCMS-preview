@@ -11,8 +11,8 @@ import com.sanluan.common.handler.QueryHandler;
 
 @Repository
 public class LogUploadDao extends BaseDao<LogUpload> {
-    public PageHandler getPage(Integer siteId, Long userId, String channel, Boolean image, String filePath, String orderType,
-            Integer pageIndex, Integer pageSize) {
+    public PageHandler getPage(Integer siteId, Long userId, String channel, Boolean image, String filePath, String orderField,
+            String orderType, Integer pageIndex, Integer pageSize) {
         QueryHandler queryHandler = getQueryHandler("from LogUpload bean");
         if (notEmpty(siteId)) {
             queryHandler.condition("bean.siteId = :siteId").setParameter("siteId", siteId);
@@ -34,7 +34,19 @@ public class LogUploadDao extends BaseDao<LogUpload> {
         } else {
             orderType = "desc";
         }
-        queryHandler.order("bean.createDate " + orderType + ",bean.id " + orderType);
+        if (null == orderField) {
+            orderField = BLANK;
+        }
+        switch (orderField) {
+        case "createDate":
+            queryHandler.order("bean.createDate " + orderType);
+            break;
+        case "fileSize":
+            queryHandler.order("bean.fileSize " + orderType);
+            break;
+        default:
+            queryHandler.order("bean.id " + orderType);
+        }
         return getPage(queryHandler, pageIndex, pageSize);
     }
 

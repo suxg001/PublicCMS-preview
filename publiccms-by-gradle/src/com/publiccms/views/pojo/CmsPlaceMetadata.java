@@ -15,6 +15,8 @@ public class CmsPlaceMetadata implements java.io.Serializable {
     private Integer size;
     private Integer[] adminIds;
     private boolean allowContribute;
+    private boolean allowAnonymous;
+
     private List<ExtendField> extendList;
 
     public String getAlias() {
@@ -39,6 +41,14 @@ public class CmsPlaceMetadata implements java.io.Serializable {
 
     public void setAllowContribute(boolean allowContribute) {
         this.allowContribute = allowContribute;
+    }
+    
+    public boolean isAllowAnonymous() {
+        return allowAnonymous;
+    }
+
+    public void setAllowAnonymous(boolean allowAnonymous) {
+        this.allowAnonymous = allowAnonymous;
     }
 
     public List<ExtendField> getExtendList() {

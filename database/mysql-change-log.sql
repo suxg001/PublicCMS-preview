@@ -155,4 +155,6 @@ ALTER TABLE `sys_role_user` MODIFY COLUMN `user_id`  bigint NOT NULL COMMENT '�
 ALTER TABLE `home_message` MODIFY COLUMN `id`  bigint NOT NULL AUTO_INCREMENT FIRST ,MODIFY COLUMN `user_id`  bigint NOT NULL COMMENT '所属用户' AFTER `id`,MODIFY COLUMN `send_user_id`  bigint NOT NULL COMMENT '发送用户' AFTER `user_id`,MODIFY COLUMN `receive_user_id`  bigint NOT NULL COMMENT '接收用户' AFTER `send_user_id`,MODIFY COLUMN `message_id`  bigint NULL DEFAULT NULL COMMENT '关联消息' AFTER `receive_user_id`,MODIFY COLUMN `create_date`  datetime NOT NULL COMMENT '创建日期' AFTER `channel`;
 ALTER TABLE `cms_content` MODIFY COLUMN `user_id`  bigint NOT NULL COMMENT '发表用户' AFTER `title`, MODIFY COLUMN `check_user_id`  bigint NULL DEFAULT NULL COMMENT '审核用户' AFTER `user_id`;
 ALTER TABLE `sys_app_client` MODIFY COLUMN `id`  bigint NOT NULL AUTO_INCREMENT FIRST ,MODIFY COLUMN `user_id`  bigint NULL DEFAULT NULL COMMENT '绑定用户' AFTER `uuid`,MODIFY COLUMN `last_login_ip`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '上次登录IP' AFTER `last_login_date`;
-
+-- 20160806 --
+ALTER TABLE  `log_upload` ADD  `file_size` BIGINT NOT NULL COMMENT  '文件大小' AFTER  `image` ,ADD INDEX (  `file_size` );
+INSERT INTO `sys_moudle` VALUES (60, '文件上传日志', 'log/upload', 'sysUser/lookup', '<i class=\"icon-list-alt icon-large\"></i>', 63, 0);

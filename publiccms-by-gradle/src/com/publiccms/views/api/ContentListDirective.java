@@ -1,4 +1,4 @@
-package com.publiccms.views.directive.api;
+package com.publiccms.views.api;
 
 //Generated 2015-5-10 17:54:56 by com.sanluan.common.source.SourceMaker
 

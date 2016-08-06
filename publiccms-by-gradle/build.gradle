@@ -16,7 +16,7 @@ sourceSets{
     }
 }
 [compileJava]*.options*.encoding = 'UTF-8'
-version = 'V2016.0710'
+version = 'V2016.0801'
 sourceCompatibility = 1.7
 
 repositories {
@@ -47,22 +47,18 @@ dependencies {
             'org.apache.commons:commons-lang3:3.4',
 
             "org.springframework:spring-context-support:${springVersion}",
-            "org.springframework:spring-jdbc:${springVersion}",
             "org.springframework:spring-orm:${springVersion}",
             "org.springframework:spring-webmvc:${springVersion}",
 
-            "org.hibernate:hibernate-core:${hibernateVersion}",
             "org.hibernate:hibernate-ehcache:${hibernateVersion}",
             "org.hibernate:hibernate-search:${hibernateSearchVersion}",
 
             'c3p0:c3p0:0.9.1.2',
             'mysql:mysql-connector-java:5.1.35',
 
-            "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}",
             "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
             "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}",
 
-            "org.apache.httpcomponents:httpclient:${httpclientVersion}",
             "org.apache.httpcomponents:httpmime:${httpclientVersion}",
             "org.apache.httpcomponents:httpclient-cache:${httpclientVersion}",
 

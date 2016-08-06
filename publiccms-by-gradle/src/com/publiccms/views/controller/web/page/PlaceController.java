@@ -55,13 +55,13 @@ public class PlaceController extends AbstractController {
             String filePath = siteComponent.getWebTemplateFilePath(site, placePath);
             CmsPlaceMetadata metadata = metadataComponent.getPlaceMetadata(filePath);
             SysUser user = getUserFromSession(session);
-            if (empty(user) || virifyCustom("contribute",
+            if ((!metadata.isAllowAnonymous() && empty(user)) || virifyCustom("contribute",
                     empty(metadata) || !metadata.isAllowContribute() || !(metadata.getSize() > 0), model)) {
                 return REDIRECT + returnUrl;
             }
             if (notEmpty(entity.getId())) {
                 CmsPlace oldEntity = service.getEntity(entity.getId());
-                if (empty(oldEntity) || virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)
+                if (empty(oldEntity) || empty(user) || virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)
                         || virifyNotEquals("siteId", user.getId(), oldEntity.getUserId(), model)) {
                     return REDIRECT + returnUrl;
                 }
@@ -71,7 +71,9 @@ public class PlaceController extends AbstractController {
                         getIpAddress(request), getDate(), entity.getPath()));
             } else {
                 entity.setSiteId(site.getId());
-                entity.setUserId(user.getId());
+                if (notEmpty(user)) {
+                    entity.setUserId(user.getId());
+                }
                 service.save(entity);
                 logOperateService.save(new LogOperate(site.getId(), user.getId(), LogLoginService.CHANNEL_WEB, "save.place",
                         getIpAddress(request), getDate(), entity.getPath()));

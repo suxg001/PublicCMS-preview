@@ -1,7 +1,7 @@
 package com.publiccms.views.controller.api;
 
 import static com.publiccms.logic.component.SiteComponent.CONTEXT_SITE;
-import static com.publiccms.views.controller.web.IndexController.INTERFACE_NOT_FOUND;
+import static com.publiccms.views.controller.api.AppController.INTERFACE_NOT_FOUND;
 import static org.springframework.util.StringUtils.uncapitalize;
 
 import java.io.IOException;
@@ -52,7 +52,8 @@ public class DirectiveController extends AbstractController {
      * @param response
      */
     @RequestMapping("directive/{action}")
-    public void directive(@PathVariable String action, String callback, HttpServletRequest request, HttpServletResponse response) {
+    public void directive(@PathVariable String action, String callback, HttpServletRequest request,
+            HttpServletResponse response) {
         try {
             HttpDirective directive = actionMap.get(action);
             if (notEmpty(directive)) {

@@ -1,4 +1,4 @@
-package com.publiccms.views.directive.api;
+package com.publiccms.views.api;
 
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 

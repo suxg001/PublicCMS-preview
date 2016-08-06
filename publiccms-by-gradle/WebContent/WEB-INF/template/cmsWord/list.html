@@ -9,7 +9,7 @@
 				</li>
 				<li>
 					<select class="combox" name="hidden">
-						<option value=""${(!hidden?has_content)?then(' selected="true"','')}>前台展示</option>
+						<option value="">前台展示</option>
 						<option value="false"${(hidden??&&'false'=hidden)?then(' selected="true"','')}>显示</option>
 						<option value="true"${(hidden??&&'true'=hidden)?then(' selected="true"','')}>隐藏</option>
 					</select>
@@ -24,7 +24,7 @@
 			<div class="subBar">
 				<ul>
 					<li>
-						<div class="buttonActive"><div class="buttonContent"><button type="submit">搜索</button></div></div>
+						<button type="submit" class="buttonActive">搜索</button>
 					</li>
 				</ul>
 			</div>
