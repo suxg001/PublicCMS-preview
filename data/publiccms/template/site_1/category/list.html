@@ -30,17 +30,17 @@
 	<#list page.list as a>
 		<@include path="/ftl/data-list.ftl"/>
 	</#list>
-			<#if 1=pageIndex>
-				<div class="page">
-					<#if !page.lastPage>
-						<a href="${getPage(url,page.nextPage)}">查看更多</a>
-					<#else>
-						<span>查看更多</span>
-					</#if>
-				</div>
+	<#if 1=pageIndex>
+			<div class="page">
+			<#if !page.lastPage>
+				<a href="${getPage(url,page.nextPage)}">查看更多</a>
 			<#else>
-				<@include path="/ftl/category_page.ftl"/>
+				<span>查看更多</span>
 			</#if>
+			</div>
+		<#else>
+		<@include path="/ftl/category_page.ftl"/>
+	</#if>
 </@_contentList>
 		</div>
 		<aside>
@@ -58,6 +58,7 @@
 			</div>
 		</aside>
 	</div>
+	<div class="clearfix-before"></div>
 </main>
 <@_includePlace path="/index.html/6369e868-50b9-4245-9d39-fd440384a685.html"/> <#-- 尾部Footer -->
 </body>

@@ -26,6 +26,9 @@ https://git.oschina.net/sanluan/PublicCMS-lib
 
 1. Spring Framework升级到4.3.2
 1. Hibernate Search升级到5.5.4
+1. Hibernate升级到5.1.1
+1. FreeMarker升级到2.3.25-incubating
+1. Jackson升级到2.8.1
 
 BUG修复:
 

@@ -27,11 +27,11 @@ repositories {
 
 ext {
     springVersion = '4.3.2.RELEASE'
-    hibernateVersion = '5.1.0.Final'
+    hibernateVersion = '5.1.1.Final'
     hibernateSearchVersion = '5.5.4.Final'
-    freemarkerVersion = '2.3.23'
+    freemarkerVersion = '2.3.25-incubating'
     httpclientVersion = '4.5.2'
-    jacksonVersion = '2.6.1'
+    jacksonVersion = '2.8.1'
 }
 
 war{ baseName ='cms' }

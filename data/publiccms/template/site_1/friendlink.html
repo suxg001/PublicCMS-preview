@@ -27,7 +27,7 @@
 				<p class="message">提交成功，请在您的网站添加本站链接并等待审核通过</p>
 			</#if>
 		<#else>
-			<form method="post" action="//cms.publiccms.com/place/save.do" onsubmit="return check();">
+			<form method="post" action="${site.dynamicPath}place/save.do" onsubmit="return check();">
 				<input name="path" type="hidden" value="/index.html/cfdc226d-8abc-48ec-810d-f3941b175b20.html" />
 				<input name="returnUrl" type="hidden" value="${site.dynamicPath}friendlink.html?result=true" />
 				<p><label>友链标题:</label><input name="title" type="text" size="60" maxlength="60" value=""/></p>

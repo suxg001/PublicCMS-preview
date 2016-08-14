@@ -1,15 +1,14 @@
 <@_tag id=tagId><#assign tagName=object.name/></@_tag>
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
 	<title>高级搜索 - PublicCMS</title>
 	<meta name="keywords" content="高级搜索"/>
-	<meta name="description" content="高级搜索  ${word!tagName!}"/>
+	<meta name="description" content="高级搜索  ${(word?html)!tagName!}"/>
 	<@_includePlace path="/index.html/3f9a648b-7360-41b5-86e5-6b4b108268f1.html"/> <#-- 头部Header -->
 </head>
 <body>
 <@_includePlace path="/index.html/2ecdebcc-c087-4ed3-aecd-80f85ce6a6c6.html"/> <#-- 导航 -->
-<@include path="ftl/dynamic-user.ftl"/> <#-- 动态站点用户状态 -->
 <main>
 	<div class="container bread">
 		<a href="${site.sitePath!}">首页</a>
@@ -18,7 +17,7 @@
 		<div class="data-list left-content">
 			<div class="search">
 				<form action="facetSearch.html" method="get">
-						<input type="text" name="word" value="${word!tagName!}"/>
+						<input type="text" name="word" value="${(word?html)!tagName!}"/>
 						<input type="submit" value="搜索"/>
 				</form>
 				<#if tagId?has_content>
@@ -35,9 +34,9 @@
 			<@_category ids=(t.categoryIds)!><#assign categoryMap=map!/></@_category>
 				<div class="search-condition">
 					<label>分类:</label>
-						<a href="facetSearch.html?word=${(word?url)!}" ${(!categoryId?has_content)?then('style="font-weight:bold;"','')}>全部</a>
+						<a href="facetSearch.html?word=${(word?html?url)!}" ${(!categoryId?has_content)?then('style="font-weight:bold;"','')}>全部</a>
 						<#list categoryFacet?keys as k>
-						<a href="facetSearch.html?word=${(word?url)!}&categoryId=${k}" ${(k=categoryId!'')?then('style="font-weight:bold;"','')}>${categoryMap[k].name}(${categoryFacet[k]})</a>
+						<a href="facetSearch.html?word=${(word?html?url)!}&categoryId=${k}" ${(k=categoryId!'')?then('style="font-weight:bold;"','')}>${categoryMap[k].name}(${categoryFacet[k]})</a>
 						</#list>
 				</div>
 		</#if>
@@ -46,9 +45,9 @@
 			<@_model ids=(t.sidemodelIds)!><#assign modelMap=map!/></@_model>
 				<div class="search-condition">
 					<label>模型:</label>
-						<a href="facetSearch.html?word=${(word?url)!}&categoryId=${(categoryId?url)!}" ${(!modelId?has_content)?then('style="font-weight:bold;"','')}>全部</a>
+						<a href="facetSearch.html?word=${(word?html?url)!}&categoryId=${(categoryId?url)!}" ${(!modelId?has_content)?then('style="font-weight:bold;"','')}>全部</a>
 						<#list modelFacet?keys as k>
-						<a href="facetSearch.html?word=${(word?url)!}&modelId=${k}&categoryId=${(categoryId?url)!}" ${(k=modelId!'')?then('style="font-weight:bold;"','')}>${modelMap[k].name}(${modelFacet[k]})</a>
+						<a href="facetSearch.html?word=${(word?html?url)!}&modelId=${k}&categoryId=${(categoryId?url)!}" ${(k=modelId!'')?then('style="font-weight:bold;"','')}>${modelMap[k].name}(${modelFacet[k]})</a>
 						</#list>
 				</div>
 		</#if>
