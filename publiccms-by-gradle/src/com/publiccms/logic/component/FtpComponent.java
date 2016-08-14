@@ -202,8 +202,10 @@ public class FtpComponent extends Base {
                             pirnt("500 command not supported.");
                             break;
                         case "LIST": // 如果是文件名列出文件信息，如果是目录则列出文件列表
+                            listFiles(param, false);
+                            break;
                         case "NLST": // 列出指定目录内容
-                            listFiles(param);
+                            listFiles(param, true);
                             break;
                         case "MODE":
                             pirnt("500 command not supported.");
@@ -311,7 +313,6 @@ public class FtpComponent extends Base {
         }
 
         private void pirnt(String message) {
-            System.out.println(message);
             output.println(message);
         }
 
@@ -562,7 +563,7 @@ public class FtpComponent extends Base {
             }
         }
 
-        private void listFiles(String param) {
+        private void listFiles(String param, boolean nlist) {
             String path;
             if (empty(param) || param.startsWith("-")) {
                 path = getUserPath(null);
@@ -575,7 +576,11 @@ public class FtpComponent extends Base {
                 if (ROOT.equals(path)) {
                     for (String virtualPath : VIRTUAL_FILE_PATHS) {
                         File file = new File(rootPath + getSitePath(virtualPath));
-                        dout.println(getListString(file));
+                        if (nlist) {
+                            dout.println(file.getName());
+                        } else {
+                            dout.println(getListString(file));
+                        }
                     }
                 } else {
                     DirectoryStream<Path> stream = null;
@@ -616,8 +621,9 @@ public class FtpComponent extends Base {
             String rightString = rightsb.toString();
             sb.append(rightString).append(rightString).append(rightString);
             Date fileModifiedDate = new Date(file.lastModified());
-            sb.append(BLANK_SPACE).append(file.isDirectory() ? 3 : 1).append(" user group ").append(String.valueOf(file.length()))
-                    .append(BLANK_SPACE).append(System.currentTimeMillis() - file.lastModified() > 183L * 24L * 60L * 60L * 1000L
+            sb.append(BLANK_SPACE).append(file.isDirectory() ? 3 : 1).append(" user      group            ")
+                    .append(String.valueOf(file.length())).append(BLANK_SPACE)
+                    .append(System.currentTimeMillis() - file.lastModified() > 183L * 24L * 60L * 60L * 1000L
                             ? new SimpleDateFormat(LIST_DATE_FORMAT, Locale.ENGLISH).format(fileModifiedDate)
                             : new SimpleDateFormat(LIST_DATE_FORMAT1, Locale.ENGLISH).format(fileModifiedDate))
                     .append(BLANK_SPACE);

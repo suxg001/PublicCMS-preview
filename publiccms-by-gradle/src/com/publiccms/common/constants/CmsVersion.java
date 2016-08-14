@@ -7,7 +7,7 @@ public class CmsVersion {
     private static boolean master = false;
 
     public static final String getVersion() {
-        return "V2016.0801";
+        return "V2016.0814";
     }
 
     public static final String getClusterId() {

@@ -1,4 +1,4 @@
-<h2 class="contentTitle"><#if site.useStatic>使用静态化时，请您选择静态化路径，并配置分类模型映射模板路径。<#else>请选择内容路径</#if></h2>
+<h2 class="contentTitle"><#if site.useStatic>使用静态化时，请您选择静态化路径，并配置分类模型映射模板路径。使用动态路径时，请保持分类模型映射模板路径为空，并将模板设置为可动态访问，可接受参数:id。<#else>请选择内容路径</#if></h2>
 <div class="pageFormContent" layoutH="56">
 	<ul class="tree expand">
 		<li>
@@ -9,7 +9,7 @@
 			<a href="javascript:;" onclick="$.bringBack({contentPath:'${code?js_string}'});return false;">静态化路径:年/月-日/内容ID.html</a>
 		</#if>
 			<#assign code><#noparse>content.html?id=${content.id}</#noparse></#assign>
-			<a href="javascript:;" onclick="$.bringBack({contentPath:'${code?js_string}'});return false;">动态路径:content.html?id=内容ID</a>
+			<a href="javascript:;" onclick="$.bringBack({contentPath:'${code?js_string}'});return false;">动态路径:模板名.html?id=内容ID</a>
 		</li>
 	</ul>
 </div>

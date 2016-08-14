@@ -13,19 +13,19 @@ function clickAddTag(){
 	$('.tags .button').click();
 }
 </script>
-<div class="formBar">
-	<ul>
-		<li>
-			<label><input type="checkbox" name="draft" />保存为草稿</label>
-		</li>
-		<li><button type="submit" class="buttonActive">保存</button></li>
-		<li><button type="button" class="button close">取消</button></li>
-	</ul>
-</div>
-<div class="tabs">
-	<form method="post" action="cmsContent/save.do?callbackType=closeCurrent&navTabId=cmsContent/list" class="pageForm required-validate" onsubmit="clickAddTag(); return validateCallback(this,navTabAjaxDone);">
-		<input name="id" type="hidden" value="${id!}" />
-		<input name="parentId" type="hidden" value="${parentId!}" />
+<form method="post" action="cmsContent/save.do?callbackType=closeCurrent&navTabId=cmsContent/list" class="pageForm required-validate" onsubmit="clickAddTag(); return validateCallback(this,navTabAjaxDone);">
+	<input name="id" type="hidden" value="${id!}" />
+	<input name="parentId" type="hidden" value="${parentId!}" />
+	<div class="formBar">
+		<ul>
+			<li>
+				<label><input type="checkbox" name="draft" />保存为草稿</label>
+			</li>
+			<li><button type="submit" class="buttonActive">保存</button></li>
+			<li><button type="button" class="button close">取消</button></li>
+		</ul>
+	</div>
+	<div class="tabs">
 		<div class="tabsHeader">
 	        <div class="tabsHeaderContent">
 	            <ul>
@@ -137,12 +137,16 @@ function clickAddTag(){
 		<#include "../include_page/extendData.html"/>
 		<#if category?has_content&&category.extendId?has_content>
 			<@_sysExtendFieldList extendId=category.extendId>
-				<@extendData 'categoryExtendDataList' page.list (attribute!{})/>
+				<#assign extendList=page.list![]/>
+				<#assign extendValue=attribute!{}/>
+				<@extendData 'categoryExtendDataList' extendList extendValue/>
 			</@_sysExtendFieldList>
 		</#if>
 		<#if model?has_content&&model.extendId?has_content>
 			<@_sysExtendFieldList extendId=model.extendId>
-				<@extendData 'modelExtendDataList' page.list (attribute!{})/>
+				<#assign extendList=page.list![]/>
+				<#assign extendValue=attribute!{}/>
+				<@extendData 'modelExtendDataList' extendList extendValue/>
 			</@_sysExtendFieldList>
 		</#if>
 		<#if model?has_content&&(model.hasImages||model.hasFiles)>
@@ -170,5 +174,5 @@ function clickAddTag(){
 				<@related id!/>
 			</div>
 		</div>
-	</form>
-</div>
+	</div>
+</form>
