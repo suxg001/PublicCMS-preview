@@ -26,7 +26,6 @@ https://git.oschina.net/sanluan/PublicCMS-lib
 
 1. Spring Framework升级到4.3.2
 1. Hibernate Search升级到5.5.4
-1. Hibernate ORM升级到4.5.2
 
 BUG修复:
 
