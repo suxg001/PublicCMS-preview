@@ -405,14 +405,15 @@ public class TemplateComponent extends Base implements Cacheable {
 
 	private void copyConfig(Configuration source, Configuration target) {
 		target.setBooleanFormat(source.getBooleanFormat());
+		target.setDateTimeFormat(source.getDateTimeFormat());
 		target.setDateFormat(source.getDateFormat());
+		target.setTimeFormat(source.getTimeFormat());
 		target.setDefaultEncoding(source.getDefaultEncoding());
 		target.setURLEscapingCharset(source.getURLEscapingCharset());
 		target.setTemplateUpdateDelayMilliseconds(source.getTemplateUpdateDelayMilliseconds());
 		target.setLocale(source.getLocale());
 		target.setNewBuiltinClassResolver(source.getNewBuiltinClassResolver());
-		target.setDateFormat(source.getDateFormat());
-		target.setTimeFormat(source.getTimeFormat());
+		target.setNumberFormat(source.getNumberFormat());
 		target.setTemplateExceptionHandler(source.getTemplateExceptionHandler());
 	}
 

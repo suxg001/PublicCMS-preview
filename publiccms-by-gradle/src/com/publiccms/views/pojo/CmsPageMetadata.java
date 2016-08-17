@@ -27,7 +27,6 @@ public class CmsPageMetadata extends Base implements java.io.Serializable {
 	private Map<String, String> extendData;
 
 	public CmsPageMetadata() {
-		this.useDynamic = true;
 	}
 
 	public String getAlias() {
