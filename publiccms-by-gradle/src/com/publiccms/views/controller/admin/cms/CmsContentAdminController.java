@@ -305,7 +305,7 @@ public class CmsContentAdminController extends AbstractController {
      * @return
      */
     @RequestMapping("move")
-    public String move(Integer[] ids, Integer categoryId, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public String move(Long[] ids, Integer categoryId, HttpServletRequest request, HttpSession session, ModelMap model) {
         SysSite site = getSite(request);
         CmsCategory category = categoryService.getEntity(categoryId);
         if (notEmpty(ids) && notEmpty(category) && site.getId() == category.getSiteId()) {
