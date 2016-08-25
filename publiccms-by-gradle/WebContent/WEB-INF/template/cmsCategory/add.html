@@ -167,7 +167,7 @@ function checkCategoryModel(){
 	$('.categoryModel dl',navTab.getCurrentPanel()).each(function(){
 		if($(this).find('input[type=checkbox]').is(':checked')){
 			$('.categoryModelContent',navTab.getCurrentPanel()).show();
-			if($(this).find('dd').is(":visible")){
+			if(0 == $(this).find('dd').length || $(this).find('dd').is(":visible")){
 				$('.categoryModelContentPath',navTab.getCurrentPanel()).show().find('input[name=contentPath]').addClass("required");
 				return ;
 			}
