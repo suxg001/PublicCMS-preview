@@ -1,12 +1,9 @@
-<#if tagId?has_content>
-<@_tag id=tagId><#assign tagName=object.name/></@_tag>
-</#if>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 	<title>搜索 - PublicCMS</title>
 	<meta name="keywords" content="搜索"/>
-	<meta name="description" content="搜索  ${(word?html)!tagName!}"/>
+	<meta name="description" content="搜索  ${(word?html)!}"/>
 	<@_includePlace path="/index.html/3f9a648b-7360-41b5-86e5-6b4b108268f1.html"/> <#-- 头部Header -->
 </head>
 <body>
@@ -23,9 +20,22 @@
 						<input type="submit" value="搜索"/>
 						<input type="button" onclick="$('.search form').attr('action','facet.html').submit();" value="高级搜索"/>
 				</form>
-				<#if tagId?has_content>
-						标签:${tagName}
-				</#if>
+				<@_tagList count=10>
+					<p>
+						热门标签：
+						<#list page.list as a>
+							<a href="?tagId=${a.id?html}">${a.name?html}</a>
+						</#list>
+					</p>
+				</@_tagList>
+				<@_wordList count=10>
+					<p>	
+						热门搜索词：
+						<#list page.list as a>
+							<a href="?word=${a.name?html}">${a.name?html}</a>
+						</#list>
+					</p>
+				</@_wordList>
 			</div>
 <@import path="/ftl/tools.ftl" namespace="t"/>
 <#if word?has_content||tagId?has_content>
@@ -37,13 +47,6 @@
 				<@include path="/ftl/search-page.ftl"/>
 			</#if>
 		</@_search>
-<#else>
-	<@_wordList count=10>
-		热门搜索词：
-		<#list page.list as a>
-			<a href="?word=${a.name?html}">${a.name?html}</a>
-		</#list>
-	</@_wordList>
 </#if>
 		</div>
 		<aside>

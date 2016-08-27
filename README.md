@@ -20,7 +20,7 @@ https://github.com/sanluan/PublicCMS-lib
 
 https://git.oschina.net/sanluan/PublicCMS-lib
 
-###V2016.0814更新：
+###V2016.0828更新：
 
 框架升级:
 
@@ -74,8 +74,9 @@ BUG修复:
 
 鸣谢：
 
-感谢@深圳-final @日照-ゞkong.“ @辉 等群友们热心提出产品的BUG及改进建议
+感谢@深圳-final @日照-ゞkong.“ @辉 @隔壁邻居王先生 等群友们热心提出产品的BUG及改进建议
 感谢@枫之舞 为CMS改造的UI界面(此版本只参考了部分修改)
+感谢@日照-ゞkong.“ @隔壁邻居王先生 @暗亮之间 为Public CMS贡献文档
 
 ###V2016.0510更新：
 

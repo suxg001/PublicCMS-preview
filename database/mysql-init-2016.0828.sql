@@ -1,18 +1,3 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : localhost
-Source Server Version : 50090
-Source Host           : localhost:3306
-Source Database       : public_cms
-
-Target Server Type    : MYSQL
-Target Server Version : 50090
-File Encoding         : 65001
-
-Date: 2016-07-10 11:11:49
-*/
-
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -1008,15 +993,19 @@ CREATE TABLE `sys_domain` (
   PRIMARY KEY  (`id`),
   KEY `site_id` (`site_id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='域名';
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='域名';
 
 -- ----------------------------
 -- Records of sys_domain
 -- ----------------------------
 INSERT INTO `sys_domain` VALUES ('1', 'dev.publiccms.com', '1', '');
 INSERT INTO `sys_domain` VALUES ('2', 'dev.publiccms.com:8080', '1', '');
-INSERT INTO `sys_domain` VALUES ('3', 'site2.dev.publiccms.com', '2', '');
-INSERT INTO `sys_domain` VALUES ('4', 'site2.dev.publiccms.com:8080', '2', '');
+INSERT INTO `sys_domain` VALUES ('3', 'member.dev.publiccms.com', '1', '/member/');
+INSERT INTO `sys_domain` VALUES ('4', 'member.dev.publiccms.com:8080', '1', '/member/');
+INSERT INTO `sys_domain` VALUES ('5', 'search.dev.publiccms.com', '1', '/search/');
+INSERT INTO `sys_domain` VALUES ('6', 'search.dev.publiccms.com:8080', '1', '/search/');
+INSERT INTO `sys_domain` VALUES ('7', 'site2.dev.publiccms.com', '2', '');
+INSERT INTO `sys_domain` VALUES ('8', 'site2.dev.publiccms.com:8080', '2', '');
 
 -- ----------------------------
 -- Table structure for sys_email_token

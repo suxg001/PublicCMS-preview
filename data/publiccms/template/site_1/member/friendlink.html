@@ -27,9 +27,10 @@
 				<p class="message">提交成功，请在您的网站添加本站链接并等待审核通过</p>
 			</#if>
 		<#else>
-			<form method="post" action="${site.dynamicPath}place/save.do" onsubmit="return check();">
+		    <@_metadata path='/index.html'><#assign metadata=object/></@_metadata>
+			<form method="post" action="${metadata.extendData.member!}place/save.do" onsubmit="return check();">
 				<input name="path" type="hidden" value="/index.html/cfdc226d-8abc-48ec-810d-f3941b175b20.html" />
-				<input name="returnUrl" type="hidden" value="${site.dynamicPath}friendlink.html?result=true" />
+				<input name="returnUrl" type="hidden" value="${metadata.extendData.member!}friendlink.html?result=true" />
 				<p><label>友链标题:</label><input name="title" type="text" size="60" maxlength="60" value=""/></p>
 				<p><label>网站地址:</label><input name="url" type="text" size="60"  maxlength="60" value=""/></p>
 				<p><input type="submit" value="提交"/></p>

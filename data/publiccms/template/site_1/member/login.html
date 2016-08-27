@@ -31,7 +31,7 @@
 				<input type="submit" class="button" value="登  录"/>
 				<input type="hidden" name="returnUrl" value="login.html?returnUrl=${(returnUrl!site.sitePath!)?html}"/>
 			</p>
-			<p class="message">没有账号?请<a href="${site.dynamicPath}register.html?returnUrl=${(returnUrl!site.sitePath!)?html?url}">注册</a></p>
+			<p class="message">没有账号?请<a href="register.html?returnUrl=${(returnUrl!site.sitePath!)?html?url}">注册</a></p>
 			<@import path="/ftl/tools.ftl" namespace="t"/>
 			<#if error??>
 				<p class="message red"><@t.m error/></p>
