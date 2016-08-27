@@ -89,7 +89,7 @@ public class CmsCategoryAdminController extends AbstractController {
 		SysSite site = getSite(request);
 		if (notEmpty(entity.getId())) {
 			CmsCategory oldEntity = service.getEntity(entity.getId());
-			if (empty(oldEntity) || virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
+			if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
 				return TEMPLATE_ERROR;
 			}
 			entity = service.update(entity.getId(), entity, new String[] { "siteId", "childIds", "tagTypeIds", "url",
@@ -150,7 +150,7 @@ public class CmsCategoryAdminController extends AbstractController {
 		try {
 			publish(site, entity.getId(), null);
 		} catch (IOException | TemplateException e) {
-			virifyCustom("static", true, model);
+			verifyCustom("static", true, model);
 		}
 		return TEMPLATE_DONE;
 	}
@@ -212,7 +212,7 @@ public class CmsCategoryAdminController extends AbstractController {
 					publish(site, id, max);
 				}
 			} catch (IOException | TemplateException e) {
-				virifyCustom("static", true, model);
+				verifyCustom("static", true, model);
 				log.error(e.getMessage());
 				return TEMPLATE_ERROR;
 			}

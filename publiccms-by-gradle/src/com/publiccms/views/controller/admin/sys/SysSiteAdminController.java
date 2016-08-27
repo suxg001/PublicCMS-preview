@@ -60,7 +60,7 @@ public class SysSiteAdminController extends AbstractController {
                                 "update.site", getIpAddress(request), getDate(), entity.getId() + ":" + entity.getName()));
             }
         } else {
-            if (virifyNotEmpty("userName", userName, model) || virifyNotEmpty("password", password, model)) {
+            if (verifyNotEmpty("userName", userName, model) || verifyNotEmpty("password", password, model)) {
                 return TEMPLATE_ERROR;
             }
             service.save(entity);

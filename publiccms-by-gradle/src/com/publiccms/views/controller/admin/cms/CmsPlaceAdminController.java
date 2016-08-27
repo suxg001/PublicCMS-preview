@@ -66,7 +66,7 @@ public class CmsPlaceAdminController extends AbstractController {
             }
             if (notEmpty(entity.getId())) {
                 CmsPlace oldEntity = service.getEntity(entity.getId());
-                if (empty(oldEntity) || virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
+                if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                     return TEMPLATE_ERROR;
                 }
                 entity = service.update(entity.getId(), entity,

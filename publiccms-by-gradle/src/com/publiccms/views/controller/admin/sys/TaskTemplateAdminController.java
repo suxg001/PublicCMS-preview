@@ -60,7 +60,7 @@ public class TaskTemplateAdminController extends AbstractController {
                 }
                 templateComponent.clear();
             } catch (IOException e) {
-                virifyCustom("template.save", true, model);
+                verifyCustom("template.save", true, model);
                 log.error(e.getMessage());
                 return TEMPLATE_ERROR;
             }
@@ -80,7 +80,7 @@ public class TaskTemplateAdminController extends AbstractController {
         if (notEmpty(path)) {
             SysSite site = getSite(request);
             String filePath = siteComponent.getWebTemplateFilePath(site, path);
-            if (virifyCustom("notExist.template", !fileComponent.deleteFile(filePath), model)) {
+            if (verifyCustom("notExist.template", !fileComponent.deleteFile(filePath), model)) {
                 return TEMPLATE_ERROR;
             }
             templateComponent.clear();

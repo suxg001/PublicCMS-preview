@@ -35,7 +35,7 @@ public class SysConfigController extends AbstractController {
             HttpSession session, ModelMap model) {
         SysSite site = getSite(request);
         SysConfig oldEntity = service.getEntity(site.getId(), entity.getCode(), entity.getSubcode());
-        if (notEmpty(oldEntity) && virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
+        if (notEmpty(oldEntity) && verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
             return TEMPLATE_ERROR;
         }
         Map<String, String> map = getExtentDataMap(sysConfigParamters.getExtendDataList(),

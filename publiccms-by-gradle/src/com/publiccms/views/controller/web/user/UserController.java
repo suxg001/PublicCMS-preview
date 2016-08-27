@@ -80,8 +80,8 @@ public class UserController extends AbstractController {
     public String changePassword(String oldpassword, String password, String repassword, String returnUrl,
             HttpServletRequest request, HttpSession session, HttpServletResponse response, ModelMap model) {
         SysUser user = getUserFromSession(session);
-        if (!virifyNotEmpty("password", password, model) && !virifyNotEquals("repassword", password, repassword, model)) {
-            if (!virifyNotEquals("password", user.getPassword(), encode(oldpassword), model)) {
+        if (!verifyNotEmpty("password", password, model) && !verifyNotEquals("repassword", password, repassword, model)) {
+            if (!verifyNotEquals("password", user.getPassword(), encode(oldpassword), model)) {
                 Cookie userCookie = getCookie(request.getCookies(), getCookiesUser());
                 if (null != userCookie && notEmpty(userCookie.getValue())) {
                     String value = userCookie.getValue();
@@ -117,9 +117,9 @@ public class UserController extends AbstractController {
         Map<String, String> config = configComponent.getConfigData(site.getId(), CONFIG_CODE, CONFIG_SUBCODE);
         String emailTitle = config.get(CONFIG_EMAIL_TITLE);
         String emailPath = config.get(CONFIG_EMAIL_PATH);
-        if (!virifyNotEmpty("email", email, model) && !virifyNotEmpty("email.config", emailTitle, model)
-                && !virifyNotEmpty("config", emailTitle, model) && !virifyNotEMail("email.config", emailPath, model)
-                && virifyHasExist("email", service.findByEmail(site.getId(), email), model)) {
+        if (!verifyNotEmpty("email", email, model) && !verifyNotEmpty("email.config", emailTitle, model)
+                && !verifyNotEmpty("config", emailTitle, model) && !verifyNotEMail("email.config", emailPath, model)
+                && verifyHasExist("email", service.findByEmail(site.getId(), email), model)) {
             SysUser user = getUserFromSession(session);
             SysEmailToken sysEmailToken = new SysEmailToken();
             sysEmailToken.setUserId(user.getId());
@@ -156,8 +156,8 @@ public class UserController extends AbstractController {
     @ResponseBody
     public String verifyEmail(String authToken, String returnUrl, HttpSession session, ModelMap model) {
         SysEmailToken sysEmailToken = sysEmailTokenService.getEntity(authToken);
-        if (virifyNotEmpty("verifyEmail.authToken", authToken, model)
-                || virifyNotExist("verifyEmail.sysEmailToken", sysEmailToken, model)) {
+        if (verifyNotEmpty("verifyEmail.authToken", authToken, model)
+                || verifyNotExist("verifyEmail.sysEmailToken", sysEmailToken, model)) {
             return REDIRECT + returnUrl;
         }
         sysEmailTokenService.delete(sysEmailToken.getAuthToken());

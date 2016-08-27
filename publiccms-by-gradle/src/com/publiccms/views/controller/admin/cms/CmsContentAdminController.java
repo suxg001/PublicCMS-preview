@@ -110,15 +110,15 @@ public class CmsContentAdminController extends AbstractController {
         SysSite site = getSite(request);
         SysUser user = getAdminFromSession(session);
         SysDept dept = sysDeptService.getEntity(user.getDeptId());
-        if (virifyNotEmpty("deptId", user.getDeptId(), model) && virifyNotEmpty("deptId", dept, model)
-                && virifyCustom("noright",
+        if (verifyNotEmpty("deptId", user.getDeptId(), model) && verifyNotEmpty("deptId", dept, model)
+                && verifyCustom("noright",
                         !(dept.isOwnsAllCategory()
                                 || notEmpty(sysDeptCategoryService.getEntity(user.getDeptId(), entity.getCategoryId()))),
                         model)) {
             return TEMPLATE_ERROR;
         }
         CmsCategoryModel categoryModel = categoryModelService.getEntity(entity.getModelId(), entity.getCategoryId());
-        if (virifyNotEmpty("categoryModel", categoryModel, model)) {
+        if (verifyNotEmpty("categoryModel", categoryModel, model)) {
             return TEMPLATE_ERROR;
         }
         CmsCategory category = categoryService.getEntity(entity.getCategoryId());
@@ -130,7 +130,7 @@ public class CmsContentAdminController extends AbstractController {
             cmsModel = null;
         }
 
-        if (virifyNotEmpty("category", category, model) || virifyNotEmpty("model", cmsModel, model)) {
+        if (verifyNotEmpty("category", category, model) || verifyNotEmpty("model", cmsModel, model)) {
             return TEMPLATE_ERROR;
         }
         entity.setHasFiles(cmsModel.isHasFiles());
@@ -148,7 +148,7 @@ public class CmsContentAdminController extends AbstractController {
         }
         if (notEmpty(entity.getId())) {
             CmsContent oldEntity = service.getEntity(entity.getId());
-            if (empty(oldEntity) || virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
+            if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
             String[] ignoreProperties = new String[] { "siteId", "userId", "categoryId", "tagIds", "createDate", "clicks",
@@ -357,10 +357,10 @@ public class CmsContentAdminController extends AbstractController {
         if (notEmpty(ids)) {
             for (CmsContent entity : service.getEntitys(ids)) {
                 CmsCategoryModel categoryModel = categoryModelService.getEntity(entity.getModelId(), entity.getCategoryId());
-                if (virifyNotEmpty("categoryModel", categoryModel, model)) {
+                if (verifyNotEmpty("categoryModel", categoryModel, model)) {
                     return TEMPLATE_ERROR;
                 } else if (!templateComponent.createContentFile(site, entity, null, categoryModel)) {
-                    virifyCustom("static", true, model);
+                    verifyCustom("static", true, model);
                     return TEMPLATE_ERROR;
                 }
             }

@@ -76,29 +76,29 @@ public class LoginController extends AbstractController {
         if (empty(returnUrl)) {
             returnUrl = site.getSitePath();
         }
-        if (virifyNotEmpty("domain", domain.getId(), model)) {
+        if (verifyNotEmpty("domain", domain.getId(), model)) {
             return REDIRECT + returnUrl;
         }
 
         Map<String, String> config = configComponent.getConfigData(site.getId(), CONFIG_CODE, domain.getId().toString());
         String loginPath = config.get(CONFIG_LOGIN_PATH);
-        if (virifyNotEmpty("loginPath", loginPath, model)) {
+        if (verifyNotEmpty("loginPath", loginPath, model)) {
             return REDIRECT + returnUrl;
         }
-        if (virifyNotEmpty("username", username, model) || virifyNotEmpty("password", password, model)) {
+        if (verifyNotEmpty("username", username, model) || verifyNotEmpty("password", password, model)) {
             model.addAttribute("username", username);
             model.addAttribute("returnUrl", returnUrl);
             return REDIRECT + loginPath;
         }
         SysUser user;
-        if (virifyNotEMail(username)) {
+        if (verifyNotEMail(username)) {
             user = service.findByName(site.getId(), username);
         } else {
             user = service.findByEmail(site.getId(), username);
         }
         String ip = getIpAddress(request);
-        if (virifyNotExist("username", user, model) || virifyNotEquals("password", encode(password), user.getPassword(), model)
-                || virifyNotEnablie(user, model)) {
+        if (verifyNotExist("username", user, model) || verifyNotEquals("password", encode(password), user.getPassword(), model)
+                || verifyNotEnablie(user, model)) {
             model.addAttribute("username", username);
             model.addAttribute("returnUrl", returnUrl);
             Long userId = null;
@@ -165,22 +165,22 @@ public class LoginController extends AbstractController {
         entity.setNickName(trim(entity.getNickName()));
         entity.setPassword(trim(entity.getPassword()));
         repassword = trim(repassword);
-        if (virifyNotEmpty("domain", domain.getId(), model)) {
+        if (verifyNotEmpty("domain", domain.getId(), model)) {
             return REDIRECT + returnUrl;
         }
 
         Map<String, String> config = configComponent.getConfigData(site.getId(), CONFIG_CODE, domain.getId().toString());
         String registerPath = config.get(CONFIG_REGISTER_PATH);
-        if (virifyNotEmpty("registerPath", registerPath, model)) {
+        if (verifyNotEmpty("registerPath", registerPath, model)) {
             return REDIRECT + returnUrl;
         }
-        if (virifyNotEmpty("username", entity.getName(), model) || virifyNotEmpty("nickname", entity.getNickName(), model)
-                || virifyNotEmpty("password", entity.getPassword(), model)
-                || virifyNotUserName("username", entity.getName(), model)
-                || virifyNotNickName("nickname", entity.getNickName(), model)
-                || virifyNotEquals("repassword", entity.getPassword(), repassword, model)
-                || virifyHasExist("username", service.findByName(site.getId(), entity.getName()), model)
-                || virifyHasExist("nickname", service.findByNickName(site.getId(), entity.getNickName()), model)) {
+        if (verifyNotEmpty("username", entity.getName(), model) || verifyNotEmpty("nickname", entity.getNickName(), model)
+                || verifyNotEmpty("password", entity.getPassword(), model)
+                || verifyNotUserName("username", entity.getName(), model)
+                || verifyNotNickName("nickname", entity.getNickName(), model)
+                || verifyNotEquals("repassword", entity.getPassword(), repassword, model)
+                || verifyHasExist("username", service.findByName(site.getId(), entity.getName()), model)
+                || verifyHasExist("nickname", service.findByNickName(site.getId(), entity.getNickName()), model)) {
             return REDIRECT + registerPath;
         }
         String ip = getIpAddress(request);
@@ -222,7 +222,7 @@ public class LoginController extends AbstractController {
         return REDIRECT + returnUrl;
     }
 
-    protected boolean virifyNotEnablie(SysUser user, ModelMap model) {
+    protected boolean verifyNotEnablie(SysUser user, ModelMap model) {
         if (user.isDisabled()) {
             model.addAttribute(ERROR, "verify.user.notEnablie");
             return true;

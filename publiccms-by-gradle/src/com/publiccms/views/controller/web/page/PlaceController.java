@@ -55,14 +55,14 @@ public class PlaceController extends AbstractController {
             String filePath = siteComponent.getWebTemplateFilePath(site, placePath);
             CmsPlaceMetadata metadata = metadataComponent.getPlaceMetadata(filePath);
             SysUser user = getUserFromSession(session);
-            if ((!metadata.isAllowAnonymous() && empty(user)) || virifyCustom("contribute",
+            if ((!metadata.isAllowAnonymous() && empty(user)) || verifyCustom("contribute",
                     empty(metadata) || !metadata.isAllowContribute() || !(metadata.getSize() > 0), model)) {
                 return REDIRECT + returnUrl;
             }
             if (notEmpty(entity.getId())) {
                 CmsPlace oldEntity = service.getEntity(entity.getId());
-                if (empty(oldEntity) || empty(user) || virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)
-                        || virifyNotEquals("siteId", user.getId(), oldEntity.getUserId(), model)) {
+                if (empty(oldEntity) || empty(user) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)
+                        || verifyNotEquals("siteId", user.getId(), oldEntity.getUserId(), model)) {
                     return REDIRECT + returnUrl;
                 }
                 entity = service.update(entity.getId(), entity,

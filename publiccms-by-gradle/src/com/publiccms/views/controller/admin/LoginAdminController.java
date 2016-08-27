@@ -38,15 +38,15 @@ public class LoginAdminController extends AbstractController {
         SysSite site = getSite(request);
         username = trim(username);
         password = trim(password);
-        if (virifyNotEmpty("username", username, model) || virifyNotEmpty("password", password, model)) {
+        if (verifyNotEmpty("username", username, model) || verifyNotEmpty("password", password, model)) {
             model.addAttribute("username", username);
             model.addAttribute("returnUrl", returnUrl);
             return "login";
         }
         String ip = getIpAddress(request);
         SysUser user = service.findByName(site.getId(), username);
-        if (virifyNotExist("username", user, model) || virifyNotEquals("password", encode(password), user.getPassword(), model)
-                || virifyNotAdmin(user, model)) {
+        if (verifyNotExist("username", user, model) || verifyNotEquals("password", encode(password), user.getPassword(), model)
+                || verifyNotAdmin(user, model)) {
             model.addAttribute("username", username);
             model.addAttribute("returnUrl", returnUrl);
             Long userId = null;
@@ -81,13 +81,13 @@ public class LoginAdminController extends AbstractController {
             HttpSession session, ModelMap model) {
         SysSite site = getSite(request);
         SysUser user = service.getEntity(getAdminFromSession(session).getId());
-        if (virifyNotEquals("siteId", site.getId(), user.getSiteId(), model)) {
+        if (verifyNotEquals("siteId", site.getId(), user.getSiteId(), model)) {
             return TEMPLATE_ERROR;
         }
         String encodedOldPassword = encode(oldpassword);
-        if (virifyNotEquals("password", user.getPassword(), encodedOldPassword, model)) {
+        if (verifyNotEquals("password", user.getPassword(), encodedOldPassword, model)) {
             return TEMPLATE_ERROR;
-        } else if (virifyNotEmpty("password", password, model) || virifyNotEquals("repassword", password, repassword, model)) {
+        } else if (verifyNotEmpty("password", password, model) || verifyNotEquals("repassword", password, repassword, model)) {
             return TEMPLATE_ERROR;
         } else {
             clearAdminToSession(session);
@@ -111,7 +111,7 @@ public class LoginAdminController extends AbstractController {
         return TEMPLATE_DONE;
     }
 
-    protected boolean virifyNotAdmin(SysUser user, ModelMap model) {
+    protected boolean verifyNotAdmin(SysUser user, ModelMap model) {
         if (!user.isDisabled() && !user.isSuperuserAccess()) {
             model.addAttribute(ERROR, "verify.user.notAdmin");
             return true;

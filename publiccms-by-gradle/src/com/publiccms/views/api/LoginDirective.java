@@ -35,7 +35,7 @@ public class LoginDirective extends AbstractAppV1Directive {
         boolean result = false;
         if (notEmpty(username) && notEmpty(password)) {
             SysSite site = getSite(handler);
-            if (AbstractController.virifyNotEMail(username)) {
+            if (AbstractController.verifyNotEMail(username)) {
                 user = service.findByName(site.getId(), username);
             } else {
                 user = service.findByEmail(site.getId(), username);

@@ -30,7 +30,7 @@ public class SysDomainAdminController extends AbstractController {
         SysSite site = getSite(request);
         if (notEmpty(entity.getId())) {
             if (!entity.getName().equals(service.getEntity(entity.getId()).getName())
-                    && virifyHasExist("domain", service.getEntity(entity.getName()), model)) {
+                    && verifyHasExist("domain", service.getEntity(entity.getName()), model)) {
                 return TEMPLATE_ERROR;
             }
             entity = service.update(entity.getId(), entity, new String[] { "id" });
@@ -40,7 +40,7 @@ public class SysDomainAdminController extends AbstractController {
                                 "update.domain", getIpAddress(request), getDate(), entity.getId() + ":" + entity.getName()));
             }
         } else {
-            if (virifyHasExist("domain", service.getEntity(entity.getName()), model)) {
+            if (verifyHasExist("domain", service.getEntity(entity.getName()), model)) {
                 return TEMPLATE_ERROR;
             }
             if (0 == entity.getSiteId()) {

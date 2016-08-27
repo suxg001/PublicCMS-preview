@@ -93,7 +93,7 @@ public class ContentController extends AbstractController {
         SysSite site = getSite(request);
         SysUser user = getAdminFromSession(session);
         CmsCategoryModel categoryModel = categoryModelService.getEntity(entity.getModelId(), entity.getCategoryId());
-        if (virifyNotEmpty("categoryModel", categoryModel, model)) {
+        if (verifyNotEmpty("categoryModel", categoryModel, model)) {
             return REDIRECT + returnUrl;
         }
         CmsCategory category = categoryService.getEntity(entity.getCategoryId());
@@ -105,7 +105,7 @@ public class ContentController extends AbstractController {
             cmsModel = null;
         }
 
-        if (virifyNotEmpty("category", category, model) || virifyNotEmpty("model", cmsModel, model)) {
+        if (verifyNotEmpty("category", category, model) || verifyNotEmpty("model", cmsModel, model)) {
             return REDIRECT + returnUrl;
         }
         entity.setHasFiles(cmsModel.isHasFiles());
@@ -123,7 +123,7 @@ public class ContentController extends AbstractController {
         }
         if (notEmpty(entity)) {
             CmsContent oldEntity = service.getEntity(entity.getId());
-            if (empty(oldEntity) || virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
+            if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return REDIRECT + returnUrl;
             }
             String[] ignoreProperties = new String[] { "siteId", "userId", "categoryId", "tagIds", "createDate", "clicks",

@@ -35,7 +35,7 @@ public class SysTaskAdminController extends AbstractController {
         SysSite site = getSite(request);
         if (notEmpty(entity.getId())) {
             SysTask oldEntity = service.getEntity(entity.getId());
-            if (empty(oldEntity) || virifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
+            if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
             entity.setUpdateDate(getDate());
@@ -62,7 +62,7 @@ public class SysTaskAdminController extends AbstractController {
         SysSite site = getSite(request);
         SysTask entity = service.getEntity(id);
         if (notEmpty(entity)) {
-            if (virifyNotEquals("siteId", site.getId(), entity.getSiteId(), model)) {
+            if (verifyNotEquals("siteId", site.getId(), entity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
             scheduledTask.runOnce(site, id);
@@ -78,7 +78,7 @@ public class SysTaskAdminController extends AbstractController {
         SysSite site = getSite(request);
         SysTask entity = service.getEntity(id);
         if (notEmpty(entity)) {
-            if (virifyNotEquals("siteId", site.getId(), entity.getSiteId(), model)) {
+            if (verifyNotEquals("siteId", site.getId(), entity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
             service.updateStatus(id, ScheduledTask.TASK_STATUS_PAUSE);
@@ -95,7 +95,7 @@ public class SysTaskAdminController extends AbstractController {
         SysSite site = getSite(request);
         SysTask entity = service.getEntity(id);
         if (notEmpty(entity)) {
-            if (virifyNotEquals("siteId", site.getId(), entity.getSiteId(), model)) {
+            if (verifyNotEquals("siteId", site.getId(), entity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
             service.updateStatus(id, ScheduledTask.TASK_STATUS_READY);
@@ -112,7 +112,7 @@ public class SysTaskAdminController extends AbstractController {
         SysSite site = getSite(request);
         SysTask entity = service.getEntity(id);
         if (notEmpty(entity)) {
-            if (virifyNotEquals("siteId", site.getId(), entity.getSiteId(), model)) {
+            if (verifyNotEquals("siteId", site.getId(), entity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
             service.updateStatus(id, ScheduledTask.TASK_STATUS_READY);
@@ -142,7 +142,7 @@ public class SysTaskAdminController extends AbstractController {
         SysSite site = getSite(request);
         SysTask entity = service.getEntity(id);
         if (notEmpty(entity)) {
-            if (virifyNotEquals("siteId", site.getId(), entity.getSiteId(), model)) {
+            if (verifyNotEquals("siteId", site.getId(), entity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
             service.delete(id);

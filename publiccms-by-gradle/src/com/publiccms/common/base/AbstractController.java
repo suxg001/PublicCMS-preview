@@ -133,7 +133,7 @@ public abstract class AbstractController extends BaseController {
      * @param value
      * @return
      */
-    public static boolean virifyNotUserName(String value) {
+    public static boolean verifyNotUserName(String value) {
         Matcher m = USERNAME_PATTERN.matcher(value);
         if (!m.matches()) {
             return true;
@@ -145,7 +145,7 @@ public abstract class AbstractController extends BaseController {
      * @param value
      * @return
      */
-    public static boolean virifyNotNickName(String value) {
+    public static boolean verifyNotNickName(String value) {
         Matcher m = NICKNAME_PATTERN.matcher(value);
         if (!m.matches()) {
             return true;
@@ -157,7 +157,7 @@ public abstract class AbstractController extends BaseController {
      * @param value
      * @return
      */
-    protected static boolean virifyNotMobile(String value) {
+    protected static boolean verifyNotMobile(String value) {
         Matcher m = MOBILE_PATTERN.matcher(value);
         if (!m.matches()) {
             return true;
@@ -171,8 +171,8 @@ public abstract class AbstractController extends BaseController {
      * @param model
      * @return
      */
-    protected static boolean virifyNotEMail(String field, String value, Map<String, Object> model) {
-        if (virifyNotEMail(value)) {
+    protected static boolean verifyNotEMail(String field, String value, Map<String, Object> model) {
+        if (verifyNotEMail(value)) {
             model.put(ERROR, "verify.notEmail." + field);
             return true;
         }
@@ -185,8 +185,8 @@ public abstract class AbstractController extends BaseController {
      * @param model
      * @return
      */
-    protected static boolean virifyNotUserName(String field, String value, Map<String, Object> model) {
-        if (virifyNotUserName(value)) {
+    protected static boolean verifyNotUserName(String field, String value, Map<String, Object> model) {
+        if (verifyNotUserName(value)) {
             model.put(ERROR, "verify.notUserName." + field);
             return true;
         }
@@ -199,8 +199,8 @@ public abstract class AbstractController extends BaseController {
      * @param model
      * @return
      */
-    protected static boolean virifyNotNickName(String field, String value, Map<String, Object> model) {
-        if (virifyNotNickName(value)) {
+    protected static boolean verifyNotNickName(String field, String value, Map<String, Object> model) {
+        if (verifyNotNickName(value)) {
             model.put(ERROR, "verify.notNickName." + field);
             return true;
         }
@@ -213,8 +213,8 @@ public abstract class AbstractController extends BaseController {
      * @param model
      * @return
      */
-    protected static boolean virifyNotMobile(String field, String value, Map<String, Object> model) {
-        if (virifyNotMobile(value)) {
+    protected static boolean verifyNotMobile(String field, String value, Map<String, Object> model) {
+        if (verifyNotMobile(value)) {
             model.put(ERROR, "verify.notMobile." + field);
             return true;
         }
@@ -225,7 +225,7 @@ public abstract class AbstractController extends BaseController {
      * @param value
      * @return
      */
-    public static boolean virifyNotEMail(String value) {
+    public static boolean verifyNotEMail(String value) {
         Matcher m = EMAIL_PATTERN.matcher(value);
         if (!m.matches()) {
             return true;
@@ -237,7 +237,7 @@ public abstract class AbstractController extends BaseController {
      * @param value
      * @return
      */
-    public static boolean virifyNotNumber(String value) {
+    public static boolean verifyNotNumber(String value) {
         Matcher m = NUMBER_PATTERN.matcher(value);
         if (!m.matches()) {
             return true;
@@ -251,8 +251,8 @@ public abstract class AbstractController extends BaseController {
      * @param model
      * @return
      */
-    protected static boolean virifyNotEMailAndMobile(String field, String value, Map<String, Object> model) {
-        if (virifyNotEMail(value) && virifyNotMobile(value)) {
+    protected static boolean verifyNotEMailAndMobile(String field, String value, Map<String, Object> model) {
+        if (verifyNotEMail(value) && verifyNotMobile(value)) {
             model.put(ERROR, "verify.notEmailAndMobile." + field);
             return true;
         }
