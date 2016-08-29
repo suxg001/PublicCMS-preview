@@ -20,6 +20,12 @@ https://github.com/sanluan/PublicCMS-lib
 
 https://git.oschina.net/sanluan/PublicCMS-lib
 
+###预览版更新
+
+BUG修复:
+
+1. 内容推荐bug修复
+
 ###V2016.0828更新：
 
 框架升级:
