@@ -55,16 +55,16 @@
 				<@t.merge 'categoryIds' a.categoryId!/>
 				<@t.merge 'modelIds' a.modelId!/>
 			</#list>
-			
+
 			<@_sysUser ids=t.userIds!><#assign userMap=map!/></@_sysUser>
 			<@_sysUser ids=t.checkUserIds!><#assign checkUserMap=map!/></@_sysUser>
 			<@_category ids=t.categoryIds!><#assign categoryMap=map!/></@_category>
 			<@_model ids=t.modelIds!><#assign modelMap=map!/></@_model>
-			
+
 			<#list page.list as a>
 			<tr target="sid" rel="${a.id}">
 				<td>
-					<a class="btnSelect" href="javascript:;" onclick="$.bringBack({relatedContentId:'${a.id}', url:'${a.url!}', title:'${a.title?js_string}', description:'${(a.description!)?js_string}'}); return false;" title="选择">选择</a>
+					<a class="btnSelect" href="javascript:;" onclick="$.bringBack({'${field!'relatedContentId'}':'${a.id}', url:'${a.url!}', title:'${a.title?js_string}', description:'${(a.description!)?js_string}'}); return false;" title="选择">选择</a>
 				</td>
 				<td>${a.id}</td>
 				<td>
