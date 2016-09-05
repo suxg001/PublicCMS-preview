@@ -1,6 +1,8 @@
 <div class="pageHeader">
 	<form id="pagerForm" action="cmsContent/lookup_list.html" onsubmit="return divSearch(this, 'content_list');" method="post">
 		<#include "../include_page/paramters.html"/>
+		<input type="hidden" name="field" value="${field!'relatedContentId'}"/>
+		<input type="hidden" name="categoryId" value="${categoryId!}"/>
 		<div class="searchBar">
 			<ul class="searchContent">
 				<li>
@@ -29,8 +31,8 @@
 	</form>
 </div>
 <div>
-<@_contentList categoryId=categoryId modelId=modelId title=title userId=userId startPublishDate=startPublishDate orderField=orderField orderType=orderType pageIndex=pageNum count=numPerPage>
-	<table class="list" width="100%" layoutH="66" rel="content_list">
+<@_contentList categoryId=categoryId modelId=modelId title=title containChild=true userId=userId startPublishDate=startPublishDate orderField=orderField orderType=orderType pageIndex=pageNum count=numPerPage>
+	<table class="list" width="100%" layoutH="103" rel="content_list">
 		<thead>
 			<tr>
 				<th>使用</th>
@@ -105,6 +107,19 @@
 			</#list>
 		</tbody>
 	</table>
-	<#include "../include_page/pageDialog.html"/>
+	<#if page??>
+	<div class="pageBar panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="numPerPage" onchange="dwzPageBreak({targetType:dialog, numPerPage:this.value})">
+				<option value="30"${(page.pageSize=30)?then(' selected="true"','')}>30</option>
+				<option value="50"${(page.pageSize=50)?then(' selected="true"','')}>50</option>
+				<option value="100"${(page.pageSize=100)?then(' selected="true"','')}>100</option>
+			</select>
+			<span>条，共${page.totalCount}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" rel="content_list" totalCount="${page.totalCount}" numPerPage="${page.pageSize}" pageNumShown="10" currentPage="${page.pageIndex}"></div>
+	</div>
+	</#if>
 </@_contentList>
 </div>
