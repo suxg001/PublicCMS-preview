@@ -18,7 +18,8 @@ import com.sanluan.common.handler.PageHandler;
 @Service
 @Transactional
 public class SysExtendFieldService extends BaseService<SysExtendField> {
-
+    private String[] ignoreProperties = new String[] { "id", "extendId" };
+    
     @Transactional(readOnly = true)
     public PageHandler getPage(Integer extendId, Integer pageIndex, Integer pageSize) {
         return dao.getPage(extendId, pageIndex, pageSize);
@@ -31,7 +32,7 @@ public class SysExtendFieldService extends BaseService<SysExtendField> {
             if (notEmpty(entitys)) {
                 for (SysExtendField entity : entitys) {
                     if (notEmpty(entity.getId())) {
-                        update(entity.getId(), entity, new String[] { "id", "extendId" });
+                        update(entity.getId(), entity, ignoreProperties);
                     } else {
                         entity.setExtendId(extendId);
                         save(entity);

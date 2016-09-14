@@ -24,6 +24,8 @@ import com.publiccms.logic.service.sys.SysAppService;
 public class SysAppAdminController extends AbstractController {
     @Autowired
     private SysAppService service;
+    
+    private String[] ignoreProperties = new String[] { "id", "siteId", "channel" };
 
     @RequestMapping("save")
     public String save(SysApp entity, HttpServletRequest request, HttpSession session, ModelMap model) {
@@ -33,7 +35,7 @@ public class SysAppAdminController extends AbstractController {
             if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id", "siteId", "channel" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
                         LogLoginService.CHANNEL_WEB_MANAGER, "update.app", getIpAddress(request), getDate(), entity.getId() + ":"

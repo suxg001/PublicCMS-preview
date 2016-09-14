@@ -22,11 +22,13 @@ import com.publiccms.logic.service.sys.SysSiteService;
 public class CmsSiteAdminController extends AbstractController {
     @Autowired
     private SysSiteService service;
+    
+    private String[] ignoreProperties = new String[] { "id", "useStatic", "useSsi", "disabled" };
 
     @RequestMapping("save")
     public String save(SysSite entity, HttpServletRequest request, HttpSession session) {
         SysSite site = getSite(request);
-        entity = service.update(site.getId(), entity, new String[] { "id", "useStatic", "useSsi", "disabled" });
+        entity = service.update(site.getId(), entity, ignoreProperties);
         logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
                 LogLoginService.CHANNEL_WEB_MANAGER, "update.site", getIpAddress(request), getDate(), entity.getId() + ":"
                         + entity.getName()));

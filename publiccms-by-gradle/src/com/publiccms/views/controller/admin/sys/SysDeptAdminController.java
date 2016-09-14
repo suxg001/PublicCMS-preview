@@ -31,29 +31,31 @@ public class SysDeptAdminController extends AbstractController {
     @Autowired
     private SysDeptPageService sysDeptPageService;
 
+    private String[] ignoreProperties = new String[] { "id", "siteId" };
+
     @RequestMapping("save")
-    public String save(SysDept entity, Integer[] categoryIds, String[] pages, HttpServletRequest request,
-            HttpSession session, ModelMap model) {
+    public String save(SysDept entity, Integer[] categoryIds, String[] pages, HttpServletRequest request, HttpSession session,
+            ModelMap model) {
         SysSite site = getSite(request);
         if (notEmpty(entity.getId())) {
             SysDept oldEntity = service.getEntity(entity.getId());
             if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id", "siteId" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
-                logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                        LogLoginService.CHANNEL_WEB_MANAGER, "update.dept", getIpAddress(request), getDate(), entity.getId()
-                                + ":" + entity.getName()));
+                logOperateService.save(
+                        new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,
+                                "update.dept", getIpAddress(request), getDate(), entity.getId() + ":" + entity.getName()));
             }
             sysDeptCategoryService.updateDeptCategorys(entity.getId(), categoryIds);
             sysDeptPageService.updateDeptPages(entity.getId(), pages);
         } else {
             entity.setSiteId(site.getId());
             service.save(entity);
-            logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                    LogLoginService.CHANNEL_WEB_MANAGER, "save.dept", getIpAddress(request), getDate(), entity.getId() + ":"
-                            + entity.getName()));
+            logOperateService
+                    .save(new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,
+                            "save.dept", getIpAddress(request), getDate(), entity.getId() + ":" + entity.getName()));
             sysDeptCategoryService.saveDeptCategorys(entity.getId(), categoryIds);
             sysDeptPageService.saveDeptPages(entity.getId(), pages);
         }

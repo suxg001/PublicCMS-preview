@@ -2,6 +2,8 @@ package com.sanluan.common.datasource;
 
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
@@ -17,10 +19,11 @@ public class MultiDataSource extends AbstractRoutingDataSource {
         return HOLDER.get();
     }
 
-    @Override
-    public void setTargetDataSources(Map<Object, Object> targetDataSources) {
+    public void setTargetDataSources(Map<Object, Object> targetDataSources, DataSource database) {
         super.setTargetDataSources(targetDataSources);
-        super.setDefaultTargetDataSource(targetDataSources.values().iterator().next());
+        if (null != database) {
+            setDefaultTargetDataSource(database);
+        }
     }
 
     /**
@@ -29,7 +32,7 @@ public class MultiDataSource extends AbstractRoutingDataSource {
     public static void setDataSourceName(String name) {
         HOLDER.set(name);
     }
-    
+
     public static void clearDataSourceName() {
         HOLDER.remove();
     }

@@ -46,16 +46,13 @@ public abstract class BaseHandler extends Base implements RenderHandler {
         regristerParamter(type, name, null);
     }
 
-    protected void regristerParamter(final String type, final String name, final Object defaultValue) {
+    protected void regristerParamter(String type, String name, Object defaultValue) {
         if (regristerParamters) {
-            parameterList.add(new HashMap<String, Object>() {
-                private static final long serialVersionUID = 1L;
-                {
-                    put("name", name);
-                    put("type", type);
-                    put("defaultValue", defaultValue);
-                }
-            });
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            map.put("name", name);
+            map.put("type", type);
+            map.put("defaultValue", defaultValue);
+            parameterList.add(map);
         }
     }
 

@@ -92,7 +92,14 @@ public class CmsContentAdminController extends AbstractController {
     @Autowired
     private SysExtendFieldService extendFieldService;
 
+    private String[] ignoreProperties = new String[] { "siteId", "userId", "categoryId", "tagIds", "createDate", "clicks",
+            "comments", "scores", "childs", "checkUserId" };
+
+    private String[] ignorePropertiesWithUrl = addAll(ignoreProperties, new String[] { "url" });
+
     /**
+     * 保存内容
+     * 
      * @param entity
      * @param attribute
      * @param contentParamters
@@ -151,12 +158,7 @@ public class CmsContentAdminController extends AbstractController {
             if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
-            String[] ignoreProperties = new String[] { "siteId", "userId", "categoryId", "tagIds", "createDate", "clicks",
-                    "comments", "scores", "childs", "checkUserId" };
-            if (!entity.isOnlyUrl()) {
-                ignoreProperties = addAll(ignoreProperties, new String[] { "url" });
-            }
-            entity = service.update(entity.getId(), entity, ignoreProperties);
+            entity = service.update(entity.getId(), entity, entity.isOnlyUrl() ? ignoreProperties : ignorePropertiesWithUrl);
             if (notEmpty(entity)) {
                 logOperateService.save(new LogOperate(site.getId(), user.getId(), LogLoginService.CHANNEL_WEB_MANAGER,
                         "update.content", getIpAddress(request), now, entity.getId() + ":" + entity.getTitle()));

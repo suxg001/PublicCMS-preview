@@ -22,63 +22,57 @@ import com.publiccms.common.view.admin.AdminFreeMarkerView;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.publiccms.views.controller.admin", useDefaultFilters = false, includeFilters = {
-		@ComponentScan.Filter(value = { Controller.class }) })
+        @ComponentScan.Filter(value = { Controller.class }) })
 public class AdminConfig extends WebMvcConfigurerAdapter {
-	/**
-	 * 视图层解析器
-	 * 
-	 * @return
-	 */
-	@Bean
-	public ViewResolver jspViewResolver() {
-		return new InternalResourceViewResolver() {
-			{
-				setOrder(1);
-				setPrefix("/WEB-INF/template/");
-				setSuffix(".jsp");
-				setContentType("text/html;charset=UTF-8");
-			}
-		};
-	}
+    /**
+     * 视图层解析器
+     * 
+     * @return
+     */
+    @Bean
+    public ViewResolver jspViewResolver() {
+        InternalResourceViewResolver bean = new InternalResourceViewResolver();
+        bean.setOrder(1);
+        bean.setPrefix("/WEB-INF/template/");
+        bean.setSuffix(".jsp");
+        bean.setContentType("text/html;charset=UTF-8");
+        return bean;
+    }
 
-	/**
-	 * 视图层解析器
-	 * 
-	 * @return
-	 */
-	@Bean
-	public ViewResolver viewResolver() {
-		return new FreeMarkerViewResolver() {
-			{
-				setOrder(0);
-				setViewClass(AdminFreeMarkerView.class);
-				setPrefix("/template/");
-				setSuffix(".html");
-				setContentType("text/html;charset=UTF-8");
-			}
-		};
-	}
+    /**
+     * 视图层解析器
+     * 
+     * @return
+     */
+    @Bean
+    public ViewResolver viewResolver() {
+        FreeMarkerViewResolver bean = new FreeMarkerViewResolver();
+        bean.setOrder(0);
+        bean.setViewClass(AdminFreeMarkerView.class);
+        bean.setPrefix("/template/");
+        bean.setSuffix(".html");
+        bean.setContentType("text/html;charset=UTF-8");
+        return bean;
+    }
 
-	/**
-	 * 拦截器
-	 * 
-	 * @return
-	 */
-	@Bean
-	public AdminContextInterceptor initializingInterceptor() {
-		return new AdminContextInterceptor() {
-			{
-				setLoginUrl("/login.html");
-				setUnauthorizedUrl("/common/unauthorizedUrl.html");
-				setLoginJsonUrl("/common/ajaxTimeout.html");
-				setNeedNotLoginUrls(new String[] { "/logout", "/common/", "/login" });
-				setNeedNotAuthorizedUrls(new String[] { "/index", "/main", "/menus" });
-			}
-		};
-	}
+    /**
+     * 拦截器
+     * 
+     * @return
+     */
+    @Bean
+    public AdminContextInterceptor initializingInterceptor() {
+        AdminContextInterceptor bean = new AdminContextInterceptor();
+        bean.setLoginUrl("/login.html");
+        bean.setUnauthorizedUrl("/common/unauthorizedUrl.html");
+        bean.setLoginJsonUrl("/common/ajaxTimeout.html");
+        bean.setNeedNotLoginUrls(new String[] { "/logout", "/common/", "/login" });
+        bean.setNeedNotAuthorizedUrls(new String[] { "/index", "/main", "/menus" });
+        return bean;
+    }
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(initializingInterceptor());
-	}
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(initializingInterceptor());
+    }
 }

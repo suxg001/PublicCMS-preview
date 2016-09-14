@@ -40,6 +40,8 @@ public class ScheduledJob extends Base implements Job {
 	public static ScheduledTask scheduledTask;
 	public static TemplateComponent templateComponent;
 	public static SiteComponent siteComponent;
+	
+	private String[] ignoreProperties = new String[]{"id", "begintime", "taskId", "siteId"};
 
 	@Autowired
 	public void init(LogTaskService logTaskService, SysSiteService siteService, SysTaskService sysTaskService,
@@ -82,7 +84,7 @@ public class ScheduledJob extends Base implements Job {
 				entity.setEndtime(getDate());
 				entity.setSuccess(success);
 				entity.setResult(result);
-				logTaskService.update(entity.getId(), entity, new String[] { "id", "begintime", "taskId", "siteId" });
+				logTaskService.update(entity.getId(), entity, ignoreProperties);
 				sysTaskService.updateStatus(task.getId(), ScheduledTask.TASK_STATUS_READY);
 
 			}

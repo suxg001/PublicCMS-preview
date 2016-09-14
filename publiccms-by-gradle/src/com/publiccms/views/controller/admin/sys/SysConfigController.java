@@ -29,6 +29,8 @@ import com.publiccms.views.pojo.SysConfigParamters;
 @Controller
 @RequestMapping("sysConfig")
 public class SysConfigController extends AbstractController {
+    
+    private String[] ignoreProperties = new String[] { "id", "siteId", "code", "subcode" };
 
     @RequestMapping("save")
     public String save(SysConfig entity, @ModelAttribute SysConfigParamters sysConfigParamters, HttpServletRequest request,
@@ -42,7 +44,7 @@ public class SysConfigController extends AbstractController {
                 configComponent.getExtendFieldList(site.getId(), entity.getCode(), entity.getSubcode(), getLocale(request)));
         entity.setData(getExtendString(map));
         if (notEmpty(oldEntity)) {
-            entity = service.update(oldEntity.getId(), entity, new String[] { "id", "siteId", "code", "subcode" });
+            entity = service.update(oldEntity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 logOperateService.save(
                         new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,

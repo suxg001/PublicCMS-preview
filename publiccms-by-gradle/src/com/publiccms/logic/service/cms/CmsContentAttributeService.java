@@ -14,7 +14,8 @@ import com.sanluan.common.handler.PageHandler;
 @Service
 @Transactional
 public class CmsContentAttributeService extends BaseService<CmsContentAttribute> {
-
+    private String[] ignoreProperties = new String[] { "contentId" };
+    
     @Transactional(readOnly = true)
     public PageHandler getPage(Integer pageIndex, Integer pageSize) {
         return dao.getPage(pageIndex, pageSize);
@@ -24,7 +25,7 @@ public class CmsContentAttributeService extends BaseService<CmsContentAttribute>
         CmsContentAttribute attribute = getEntity(contentId);
         if (notEmpty(attribute)) {
             if (notEmpty(entity)) {
-                update(attribute.getContentId(), entity, new String[] { "contentId" });
+                update(attribute.getContentId(), entity, ignoreProperties);
             } else {
                 delete(attribute.getContentId());
             }

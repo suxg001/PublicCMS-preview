@@ -41,6 +41,8 @@ public class CmsCategoryTypeAdminController extends AbstractController {
     private SysExtendService extendService;
     @Autowired
     private SysExtendFieldService extendFieldService;
+    
+    private String[] ignoreProperties = new String[] { "id", "siteId", "extendId" };
 
     /**
      * @param entity
@@ -59,7 +61,7 @@ public class CmsCategoryTypeAdminController extends AbstractController {
             if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id", "siteId", "extendId" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
                         LogLoginService.CHANNEL_WEB_MANAGER, "update.categoryType", getIpAddress(request), getDate(), entity

@@ -25,6 +25,8 @@ public class PluginLotteryAdminController extends AbstractController {
     @Autowired
     private PluginLotteryService service;
 
+    private String[] ignoreProperties = new String[] { "id", "siteId", "extendId" };
+
     @RequestMapping("save")
     public String save(PluginLottery entity, HttpServletRequest request, HttpSession session, ModelMap model) {
         SysSite site = getSite(request);
@@ -33,18 +35,18 @@ public class PluginLotteryAdminController extends AbstractController {
             if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id", "siteId", "extendId" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                        LogLoginService.CHANNEL_WEB_MANAGER, "update.plugin.lottery", getIpAddress(request), getDate(), entity
-                                .getId() + ":" + entity.getTitle()));
+                        LogLoginService.CHANNEL_WEB_MANAGER, "update.plugin.lottery", getIpAddress(request), getDate(),
+                        entity.getId() + ":" + entity.getTitle()));
             }
         } else {
             entity.setSiteId(site.getId());
             service.save(entity);
-            logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                    LogLoginService.CHANNEL_WEB_MANAGER, "save.plugin.lottery", getIpAddress(request), getDate(), entity.getId()
-                            + ":" + entity.getTitle()));
+            logOperateService
+                    .save(new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,
+                            "save.plugin.lottery", getIpAddress(request), getDate(), entity.getId() + ":" + entity.getTitle()));
         }
         return TEMPLATE_DONE;
     }
@@ -58,9 +60,9 @@ public class PluginLotteryAdminController extends AbstractController {
                 return TEMPLATE_ERROR;
             }
             service.delete(id);
-            logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                    LogLoginService.CHANNEL_WEB_MANAGER, "delete.plugin.site", getIpAddress(request), getDate(), id + ":"
-                            + entity.getTitle()));
+            logOperateService
+                    .save(new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,
+                            "delete.plugin.site", getIpAddress(request), getDate(), id + ":" + entity.getTitle()));
         }
         return TEMPLATE_DONE;
     }

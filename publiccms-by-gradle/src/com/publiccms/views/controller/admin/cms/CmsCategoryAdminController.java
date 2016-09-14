@@ -72,6 +72,9 @@ public class CmsCategoryAdminController extends AbstractController {
 	private SysExtendFieldService extendFieldService;
 	@Autowired
 	private TemplateComponent templateComponent;
+	
+	private String[] ignoreProperties = new String[] { "siteId", "childIds", "tagTypeIds", "url",
+            "disabled", "extendId", "contents", "typeId" };
 
 	/**
 	 * @param entity
@@ -92,8 +95,7 @@ public class CmsCategoryAdminController extends AbstractController {
 			if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
 				return TEMPLATE_ERROR;
 			}
-			entity = service.update(entity.getId(), entity, new String[] { "siteId", "childIds", "tagTypeIds", "url",
-					"disabled", "extendId", "contents", "typeId" });
+			entity = service.update(entity.getId(), entity, ignoreProperties);
 			if (notEmpty(entity)) {
 				if (notEmpty(oldEntity.getParentId()) && !oldEntity.getParentId().equals(entity.getParentId())) {
 					service.generateChildIds(site.getId(), oldEntity.getParentId());

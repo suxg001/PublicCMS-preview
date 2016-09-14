@@ -29,6 +29,8 @@ public class SysTaskAdminController extends AbstractController {
     private SysTaskService service;
     @Autowired
     private ScheduledTask scheduledTask;
+    
+    private String[] ignoreProperties = new String[] { "id", "siteId" };
 
     @RequestMapping("save")
     public String save(SysTask entity, HttpServletRequest request, HttpSession session, ModelMap model) {
@@ -39,7 +41,7 @@ public class SysTaskAdminController extends AbstractController {
                 return TEMPLATE_ERROR;
             }
             entity.setUpdateDate(getDate());
-            entity = service.update(entity.getId(), entity, new String[] { "id", "siteId" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
                         LogLoginService.CHANNEL_WEB_MANAGER, "update.task", getIpAddress(request), getDate(), entity.getId()

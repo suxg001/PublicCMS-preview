@@ -40,6 +40,8 @@ public class SysRoleAdminController extends AbstractController {
     private SysRoleAuthorizedService roleAuthorizedService;
     @Autowired
     private SysUserService userService;
+    
+    private String[] ignoreProperties = new String[] { "id", "siteId" };
 
     @RequestMapping("save")
     public String save(SysRole entity, Integer[] moudleIds, HttpServletRequest request, HttpSession session, ModelMap model) {
@@ -53,7 +55,7 @@ public class SysRoleAdminController extends AbstractController {
             if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id", "siteId" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
                         LogLoginService.CHANNEL_WEB_MANAGER, "update.role", getIpAddress(request), getDate(), entity.getId()

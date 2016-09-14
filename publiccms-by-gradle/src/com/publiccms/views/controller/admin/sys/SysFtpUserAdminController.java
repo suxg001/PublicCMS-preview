@@ -25,6 +25,8 @@ import com.publiccms.logic.service.sys.SysFtpUserService;
 public class SysFtpUserAdminController extends AbstractController {
     @Autowired
     private SysFtpUserService service;
+    
+    private String[] ignoreProperties = new String[] { "id" };
 
     @RequestMapping("save")
     public String save(SysFtpUser entity, HttpServletRequest request, HttpSession session, ModelMap model) {
@@ -40,7 +42,7 @@ public class SysFtpUserAdminController extends AbstractController {
             } else {
                 entity.setPassword(user.getPassword());
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
                         LogLoginService.CHANNEL_WEB_MANAGER, "update.ftpuser", getIpAddress(request), getDate(), entity.getId()

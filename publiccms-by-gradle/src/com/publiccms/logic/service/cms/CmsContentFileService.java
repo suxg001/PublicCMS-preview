@@ -18,7 +18,8 @@ import com.sanluan.common.handler.PageHandler;
 @Service
 @Transactional
 public class CmsContentFileService extends BaseService<CmsContentFile> {
-
+    private String[] ignoreProperties =  new String[] { "id", "userId", "contentId", "image" };
+    
     @Transactional(readOnly = true)
     public PageHandler getPage(Long contentId, Long userId, Boolean image, String orderField, String orderType,
             Integer pageIndex, Integer pageSize) {
@@ -31,7 +32,7 @@ public class CmsContentFileService extends BaseService<CmsContentFile> {
         if (notEmpty(images)) {
             for (CmsContentFile entity : images) {
                 if (notEmpty(entity.getId())) {
-                    update(entity.getId(), entity, new String[] { "id", "userId", "contentId", "image" });
+                    update(entity.getId(), entity, ignoreProperties);
                 } else {
                     entity.setImage(true);
                     entity.setUserId(userId);
@@ -44,7 +45,7 @@ public class CmsContentFileService extends BaseService<CmsContentFile> {
         if (notEmpty(files)) {
             for (CmsContentFile entity : files) {
                 if (notEmpty(entity.getId())) {
-                    update(entity.getId(), entity, new String[] { "id", "userId", "contentId", "image" });
+                    update(entity.getId(), entity, ignoreProperties);
                 } else {
                     entity.setContentId(contentId);
                     entity.setUserId(userId);

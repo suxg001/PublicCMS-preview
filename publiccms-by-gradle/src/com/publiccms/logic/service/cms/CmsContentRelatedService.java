@@ -20,7 +20,8 @@ import com.sanluan.common.handler.PageHandler;
 @Service
 @Transactional
 public class CmsContentRelatedService extends BaseService<CmsContentRelated> {
-
+    private String[] ignoreProperties = new String[] { "id", "contentId", "userId" };
+    
     @Transactional(readOnly = true)
     public PageHandler getPage(Long contentId, Long relatedContentId, Long userId, String orderField, String orderType,
             Integer pageIndex, Integer pageSize) {
@@ -42,7 +43,7 @@ public class CmsContentRelatedService extends BaseService<CmsContentRelated> {
         if (notEmpty(entitys)) {
             for (CmsContentRelated entity : entitys) {
                 if (notEmpty(entity.getId())) {
-                    update(entity.getId(), entity, new String[] { "id", "contentId", "userId" });
+                    update(entity.getId(), entity, ignoreProperties);
                 } else {
                     entity.setContentId(contentId);
                     entity.setUserId(userId);

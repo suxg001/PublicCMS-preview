@@ -21,7 +21,8 @@ import com.sanluan.common.handler.PageHandler;
 @Service
 @Transactional
 public class CmsCategoryModelService extends BaseService<CmsCategoryModel> {
-
+    private String[] ignoreProperties = new String[] { "id", "categoryId", "modelId" };
+    
     @Transactional(readOnly = true)
     public PageHandler getPage(Integer modelId, Integer categoryId, Integer pageIndex, Integer pageSize) {
         return dao.getPage(modelId, categoryId, pageIndex, pageSize);
@@ -39,7 +40,7 @@ public class CmsCategoryModelService extends BaseService<CmsCategoryModel> {
         }
         if (notEmpty(categoryModel) && flag) {
             categoryModel.setTemplatePath(getValue(parameterMap, "templatePath_" + model.getId()));
-            update(categoryModel.getId(), categoryModel, new String[] { "id", "categoryId", "modelId" });
+            update(categoryModel.getId(), categoryModel, ignoreProperties);
         } else if (notEmpty(categoryModel) && !flag) {
             delete(categoryModel.getId());
         } else if (null == categoryModel && flag) {

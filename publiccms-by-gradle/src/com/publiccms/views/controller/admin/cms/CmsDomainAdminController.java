@@ -29,6 +29,7 @@ import com.publiccms.logic.service.sys.SysDomainService;
 public class CmsDomainAdminController extends AbstractController {
     @Autowired
     private SysDomainService service;
+    private String[] ignoreProperties = new String[] { "id", "siteId", "name" };
 
     /**
      * @param entity
@@ -45,11 +46,11 @@ public class CmsDomainAdminController extends AbstractController {
             if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id", "siteId", "name" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
-                logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                        LogLoginService.CHANNEL_WEB_MANAGER, "update.domain", getIpAddress(request), getDate(), entity.getId()
-                                + ":" + entity.getName()));
+                logOperateService.save(
+                        new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,
+                                "update.domain", getIpAddress(request), getDate(), entity.getId() + ":" + entity.getName()));
             }
             siteComponent.clear();
         }

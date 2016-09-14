@@ -14,7 +14,8 @@ import com.sanluan.common.handler.PageHandler;
 @Service
 @Transactional
 public class CmsCategoryAttributeService extends BaseService<CmsCategoryAttribute> {
-
+    private String[] ignoreProperties = new String[] { "categoryId" };
+    
     @Transactional(readOnly = true)
     public PageHandler getPage(Integer pageIndex, Integer pageSize) {
         return dao.getPage(pageIndex, pageSize);
@@ -24,7 +25,7 @@ public class CmsCategoryAttributeService extends BaseService<CmsCategoryAttribut
         CmsCategoryAttribute attribute = getEntity(categoryId);
         if (notEmpty(attribute)) {
             if (notEmpty(entity)) {
-                update(attribute.getCategoryId(), entity, new String[] { "categoryId" });
+                update(attribute.getCategoryId(), entity, ignoreProperties);
             } else {
                 delete(attribute.getCategoryId());
             }

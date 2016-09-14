@@ -72,6 +72,11 @@ public class ContentController extends AbstractController {
     private SysExtendFieldService extendFieldService;
     @Autowired
     private CmsContentFileService contentFileService;
+    
+    private String[] ignoreProperties = new String[] { "siteId", "userId", "categoryId", "tagIds", "createDate", "clicks",
+            "comments", "scores", "childs", "checkUserId" };
+
+    private String[] ignorePropertiesWithUrl = addAll(ignoreProperties, new String[] { "url" });
 
     /**
      * 保存内容
@@ -126,12 +131,7 @@ public class ContentController extends AbstractController {
             if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return REDIRECT + returnUrl;
             }
-            String[] ignoreProperties = new String[] { "siteId", "userId", "categoryId", "tagIds", "createDate", "clicks",
-                    "comments", "scores", "childs", "checkUserId" };
-            if (!entity.isOnlyUrl()) {
-                ignoreProperties = addAll(ignoreProperties, new String[] { "url" });
-            }
-            entity = service.update(entity.getId(), entity, ignoreProperties);
+            entity = service.update(entity.getId(), entity, entity.isOnlyUrl() ? ignoreProperties : ignorePropertiesWithUrl);
             if (notEmpty(entity.getId())) {
                 logOperateService.save(new LogOperate(site.getId(), user.getId(), LogLoginService.CHANNEL_WEB, "update.content",
                         getIpAddress(request), now, entity.getId() + ":" + entity.getTitle()));

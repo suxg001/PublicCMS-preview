@@ -30,6 +30,9 @@ public class SysUserAdminController extends AbstractController {
     private SysUserService service;
     @Autowired
     private SysRoleUserService roleUserService;
+    
+    private String[] ignoreProperties = new String[] { "id", "registeredDate", "siteId", "authToken",
+                    "lastLoginDate", "lastLoginIp", "loginCount", "disabled" };
 
     @RequestMapping("save")
     public String save(SysUser entity, String repassword, Integer[] roleIds, HttpServletRequest request, HttpSession session,
@@ -37,8 +40,8 @@ public class SysUserAdminController extends AbstractController {
         SysSite site = getSite(request);
         entity.setName(trim(entity.getName()));
         entity.setNickName(trim(entity.getNickName()));
-        entity.setPassword(trim(repassword));
-        repassword = trim(entity.getNickName());
+        entity.setPassword(trim(entity.getPassword()));
+        repassword = trim(repassword);
         if (verifyNotEmpty("username", entity.getName(), model) || verifyNotEmpty("nickname", entity.getNickName(), model)
                 || verifyNotUserName("username", entity.getName(), model)
                 || verifyNotNickName("nickname", entity.getNickName(), model)) {
@@ -74,8 +77,7 @@ public class SysUserAdminController extends AbstractController {
                     entity.setEmailChecked(false);
                 }
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id", "registeredDate", "siteId", "authToken",
-                    "lastLoginDate", "lastLoginIp", "loginCount", "disabled" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 roleUserService.dealRoleUsers(entity.getId(), roleIds);
                 logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),

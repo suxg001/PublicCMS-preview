@@ -24,6 +24,8 @@ import com.publiccms.logic.service.sys.SysDomainService;
 public class SysDomainAdminController extends AbstractController {
     @Autowired
     private SysDomainService service;
+    
+    private String[] ignoreProperties = new String[] { "id" };
 
     @RequestMapping("save")
     public String save(SysDomain entity, HttpServletRequest request, HttpSession session, ModelMap model) {
@@ -33,7 +35,7 @@ public class SysDomainAdminController extends AbstractController {
                     && verifyHasExist("domain", service.getEntity(entity.getName()), model)) {
                 return TEMPLATE_ERROR;
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 logOperateService.save(
                         new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,

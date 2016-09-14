@@ -38,12 +38,14 @@ public class SysMoudleAdminController extends AbstractController {
     private SysRoleMoudleService roleMoudleService;
     @Autowired
     private SysRoleAuthorizedService roleAuthorizedService;
-
+    
+    private String[] ignoreProperties = new String[] { "id" };
+    
     @RequestMapping("save")
     public String save(SysMoudle entity, HttpServletRequest request, HttpSession session) {
         SysSite site = getSite(request);
         if (notEmpty(entity.getId())) {
-            entity = service.update(entity.getId(), entity, new String[] { "id" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 @SuppressWarnings("unchecked")
                 List<SysRoleMoudle> roleMoudleList = (List<SysRoleMoudle>) roleMoudleService.getPage(null, entity.getId(), null,

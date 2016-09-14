@@ -24,6 +24,8 @@ import com.publiccms.logic.service.plugin.PluginSiteService;
 public class PluginSiteAdminController extends AbstractController {
     @Autowired
     private PluginSiteService service;
+    
+    private String[] ignoreProperties = new String[] { "id", "siteId", "pluginCode" };
 
     @RequestMapping("save")
     public String save(PluginSite entity, HttpServletRequest request, HttpSession session, ModelMap model) {
@@ -33,7 +35,7 @@ public class PluginSiteAdminController extends AbstractController {
             if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id", "siteId", "pluginCode" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
                         LogLoginService.CHANNEL_WEB_MANAGER, "update.plugin.site", getIpAddress(request), getDate(), "plugin:"

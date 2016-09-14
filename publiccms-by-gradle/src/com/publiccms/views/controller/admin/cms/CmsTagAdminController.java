@@ -32,6 +32,8 @@ public class CmsTagAdminController extends AbstractController {
     @Autowired
     private CmsContentTagService contentTagService;
 
+    private String[] ignoreProperties = new String[] { "id", "siteId", "searchCount" };
+
     /**
      * @param entity
      * @param request
@@ -47,18 +49,18 @@ public class CmsTagAdminController extends AbstractController {
             if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id", "siteId", "searchCount" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
-                logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                        LogLoginService.CHANNEL_WEB_MANAGER, "update.tag", getIpAddress(request), getDate(), entity.getId() + ":"
-                                + entity.getName()));
+                logOperateService.save(
+                        new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,
+                                "update.tag", getIpAddress(request), getDate(), entity.getId() + ":" + entity.getName()));
             }
         } else {
             entity.setSiteId(site.getId());
             service.save(entity);
-            logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
-                    LogLoginService.CHANNEL_WEB_MANAGER, "save.tag", getIpAddress(request), getDate(), entity.getId() + ":"
-                            + entity.getName()));
+            logOperateService
+                    .save(new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,
+                            "save.tag", getIpAddress(request), getDate(), entity.getId() + ":" + entity.getName()));
         }
         return TEMPLATE_DONE;
     }

@@ -17,10 +17,12 @@ import com.publiccms.common.base.AbstractController;
 @RequestMapping("${entityName?uncap_first}")
 public class ${entityName}Controller extends AbstractController {
 
+	private String[] ignoreProperties = new String[]{"id"};
+
     @RequestMapping("save")
     public String save(${entityName} entity, HttpServletRequest request) {
         if (notEmpty(entity.getId())) {
-            entity = service.update(entity.getId(), entity, new String[]{"id"});
+            entity = service.update(entity.getId(), entity, ignoreProperties);
         } else {
             service.save(entity);
         }

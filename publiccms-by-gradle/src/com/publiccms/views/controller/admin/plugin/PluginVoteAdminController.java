@@ -24,6 +24,8 @@ import com.publiccms.logic.service.plugin.PluginVoteService;
 public class PluginVoteAdminController extends AbstractController {
     @Autowired
     private PluginVoteService service;
+    
+    private String[] ignoreProperties = new String[] { "id", "siteId", "itemExtendId", "userCounts" };
 
     @RequestMapping("save")
     public String save(PluginVote entity, HttpServletRequest request, HttpSession session, ModelMap model) {
@@ -33,7 +35,7 @@ public class PluginVoteAdminController extends AbstractController {
             if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id", "siteId", "itemExtendId", "userCounts" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 logOperateService.save(new LogOperate(site.getId(), getAdminFromSession(session).getId(),
                         LogLoginService.CHANNEL_WEB_MANAGER, "update.plugin.vote", getIpAddress(request), getDate(), entity

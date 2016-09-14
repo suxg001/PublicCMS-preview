@@ -45,6 +45,8 @@ public class PlaceController extends AbstractController {
     @Autowired
     private MetadataComponent metadataComponent;
 
+    private String[] ignoreProperties = new String[] { "id", "siteId", "type", "path", "createDate", "userId", "disabled" };
+
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public String save(CmsPlace entity, String returnUrl, @ModelAttribute CmsPlaceParamters placeParamters,
             HttpServletRequest request, HttpSession session, ModelMap model) {
@@ -65,8 +67,7 @@ public class PlaceController extends AbstractController {
                         || verifyNotEquals("siteId", user.getId(), oldEntity.getUserId(), model)) {
                     return REDIRECT + returnUrl;
                 }
-                entity = service.update(entity.getId(), entity,
-                        new String[] { "id", "siteId", "type", "path", "createDate", "userId", "disabled" });
+                entity = service.update(entity.getId(), entity, ignoreProperties);
                 logOperateService.save(new LogOperate(site.getId(), user.getId(), LogLoginService.CHANNEL_WEB, "update.place",
                         getIpAddress(request), getDate(), entity.getPath()));
             } else {

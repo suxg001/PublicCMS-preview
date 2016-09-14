@@ -49,8 +49,6 @@ import com.sanluan.common.datasource.MultiDataSource;
 public class ApplicationConfig extends Base {
     @Autowired
     private Environment env;
-    @Autowired
-    private SessionFactory sessionFactory;
     public static String basePath;
     public static WebApplicationContext webApplicationContext;
 
@@ -62,30 +60,24 @@ public class ApplicationConfig extends Base {
      */
     @Bean
     public DataSource dataSource() throws PropertyVetoException {
-        return new MultiDataSource() {
-            {
-                setTargetDataSources(new HashMap<Object, Object>() {
-                    private static final long serialVersionUID = 1L;
-                    {
-                        ComboPooledDataSource database = new ComboPooledDataSource();
-                        database.setDriverClass(env.getProperty("jdbc.driverClassName"));
-                        database.setJdbcUrl(env.getProperty("jdbc.url"));
-                        database.setUser(env.getProperty("jdbc.username"));
-                        database.setPassword(env.getProperty("jdbc.password"));
-                        database.setAutoCommitOnClose(Boolean.parseBoolean(env.getProperty("cpool.autoCommitOnClose")));
-                        database.setCheckoutTimeout(Integer.parseInt(env.getProperty("cpool.checkoutTimeout")));
-                        database.setInitialPoolSize(Integer.parseInt(env.getProperty("cpool.minPoolSize")));
-                        database.setMinPoolSize(Integer.parseInt(env.getProperty("cpool.minPoolSize")));
-                        database.setMaxPoolSize(Integer.parseInt(env.getProperty("cpool.maxPoolSize")));
-                        database.setMaxIdleTime(Integer.parseInt(env.getProperty("cpool.maxIdleTime")));
-                        database.setAcquireIncrement(Integer.parseInt(env.getProperty("cpool.acquireIncrement")));
-                        database.setMaxIdleTimeExcessConnections(
-                                Integer.parseInt(env.getProperty("cpool.maxIdleTimeExcessConnections")));
-                        put("default", database);
-                    }
-                });
-            }
-        };
+        MultiDataSource bean = new MultiDataSource();
+        HashMap<Object, Object> targetDataSources = new HashMap<Object, Object>();
+        ComboPooledDataSource database = new ComboPooledDataSource();
+        database.setDriverClass(env.getProperty("jdbc.driverClassName"));
+        database.setJdbcUrl(env.getProperty("jdbc.url"));
+        database.setUser(env.getProperty("jdbc.username"));
+        database.setPassword(env.getProperty("jdbc.password"));
+        database.setAutoCommitOnClose(Boolean.parseBoolean(env.getProperty("cpool.autoCommitOnClose")));
+        database.setCheckoutTimeout(Integer.parseInt(env.getProperty("cpool.checkoutTimeout")));
+        database.setInitialPoolSize(Integer.parseInt(env.getProperty("cpool.minPoolSize")));
+        database.setMinPoolSize(Integer.parseInt(env.getProperty("cpool.minPoolSize")));
+        database.setMaxPoolSize(Integer.parseInt(env.getProperty("cpool.maxPoolSize")));
+        database.setMaxIdleTime(Integer.parseInt(env.getProperty("cpool.maxIdleTime")));
+        database.setAcquireIncrement(Integer.parseInt(env.getProperty("cpool.acquireIncrement")));
+        database.setMaxIdleTimeExcessConnections(Integer.parseInt(env.getProperty("cpool.maxIdleTimeExcessConnections")));
+        targetDataSources.put("default", database);
+        bean.setTargetDataSources(targetDataSources, database);
+        return bean;
     }
 
     /**
@@ -94,13 +86,10 @@ public class ApplicationConfig extends Base {
      * @return
      */
     @Bean
-    public HibernateTransactionManager hibernateTransactionManager() {
-        return new HibernateTransactionManager() {
-            private static final long serialVersionUID = 1L;
-            {
-                setSessionFactory(sessionFactory);
-            }
-        };
+    public HibernateTransactionManager hibernateTransactionManager(SessionFactory sessionFactory) {
+        HibernateTransactionManager bean = new HibernateTransactionManager();
+        bean.setSessionFactory(sessionFactory);
+        return bean;
     }
 
     /**
@@ -111,34 +100,28 @@ public class ApplicationConfig extends Base {
      */
     @Bean
     public FactoryBean<SessionFactory> sessionFactory() throws PropertyVetoException {
-        return new LocalSessionFactoryBean() {
-            {
-                setDataSource(dataSource());
-                setPackagesToScan(new String[] { "com.publiccms.entities" });
-                setHibernateProperties(new Properties() {
-                    private static final long serialVersionUID = 1L;
-                    {
-                        setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-                        setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-                        setProperty("hibernate.query.substitutions", env.getProperty("hibernate.query.substitutions"));
-                        setProperty("hibernate.jdbc.fetch_size", env.getProperty("hibernate.jdbc.fetch_size"));
-                        setProperty("hibernate.jdbc.batch_size", env.getProperty("hibernate.jdbc.batch_size"));
-                        setProperty("hibernate.cache.region.factory_class",
-                                env.getProperty("hibernate.cache.region.factory_class"));
-                        setProperty("hibernate.cache.use_second_level_cache",
-                                env.getProperty("hibernate.cache.use_second_level_cache"));
-                        setProperty("hibernate.cache.use_query_cache", env.getProperty("hibernate.cache.use_query_cache"));
-                        setProperty("hibernate.transaction.coordinator_class",
-                                env.getProperty("hibernate.transaction.coordinator_class"));
-                        setProperty("hibernate.cache.provider_configuration_file_resource_path",
-                                env.getProperty("hibernate.cache.provider_configuration_file_resource_path"));
-                        setProperty("hibernate.search.default.directory_provider",
-                                env.getProperty("hibernate.search.default.directory_provider"));
-                        setProperty("hibernate.search.default.indexBase", getDirPath("/indexes/"));
-                    }
-                });
-            }
-        };
+        LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
+        bean.setDataSource(dataSource());
+        bean.setPackagesToScan(new String[] { "com.publiccms.entities" });
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        properties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        properties.setProperty("hibernate.query.substitutions", env.getProperty("hibernate.query.substitutions"));
+        properties.setProperty("hibernate.jdbc.fetch_size", env.getProperty("hibernate.jdbc.fetch_size"));
+        properties.setProperty("hibernate.jdbc.batch_size", env.getProperty("hibernate.jdbc.batch_size"));
+        properties.setProperty("hibernate.cache.region.factory_class", env.getProperty("hibernate.cache.region.factory_class"));
+        properties.setProperty("hibernate.cache.use_second_level_cache",
+                env.getProperty("hibernate.cache.use_second_level_cache"));
+        properties.setProperty("hibernate.cache.use_query_cache", env.getProperty("hibernate.cache.use_query_cache"));
+        properties.setProperty("hibernate.transaction.coordinator_class",
+                env.getProperty("hibernate.transaction.coordinator_class"));
+        properties.setProperty("hibernate.cache.provider_configuration_file_resource_path",
+                env.getProperty("hibernate.cache.provider_configuration_file_resource_path"));
+        properties.setProperty("hibernate.search.default.directory_provider",
+                env.getProperty("hibernate.search.default.directory_provider"));
+        properties.setProperty("hibernate.search.default.indexBase", getDirPath("/indexes/"));
+        bean.setHibernateProperties(properties);
+        return bean;
     }
 
     /**
@@ -148,13 +131,11 @@ public class ApplicationConfig extends Base {
      */
     @Bean
     public MessageSource messageSource() {
-        return new ResourceBundleMessageSource() {
-            {
-                setBasenames(new String[] { "config.language.message", "config.language.config", "config.language.plugin" });
-                setCacheSeconds(300);
-                setUseCodeAsDefaultMessage(true);
-            }
-        };
+        ResourceBundleMessageSource bean = new ResourceBundleMessageSource();
+        bean.setBasenames(new String[] { "config.language.message", "config.language.config", "config.language.plugin" });
+        bean.setCacheSeconds(300);
+        bean.setUseCodeAsDefaultMessage(true);
+        return bean;
     }
 
     /**
@@ -164,13 +145,11 @@ public class ApplicationConfig extends Base {
      */
     @Bean
     public TemplateComponent templateComponent() {
-        return new TemplateComponent() {
-            {
-                setDirectivePrefix(env.getProperty("freeMarkerExtendHandler.directivePrefix"));
-                setDirectiveRemoveRegex(env.getProperty("freeMarkerExtendHandler.directiveRemoveRegex"));
-                setMethodRemoveRegex(env.getProperty("freeMarkerExtendHandler.methodRemoveRegex"));
-            }
-        };
+        TemplateComponent bean = new TemplateComponent();
+        bean.setDirectivePrefix(env.getProperty("freeMarkerExtendHandler.directivePrefix"));
+        bean.setDirectiveRemoveRegex(env.getProperty("freeMarkerExtendHandler.directiveRemoveRegex"));
+        bean.setMethodRemoveRegex(env.getProperty("freeMarkerExtendHandler.methodRemoveRegex"));
+        return bean;
     }
 
     /**
@@ -180,13 +159,11 @@ public class ApplicationConfig extends Base {
      */
     @Bean
     public SiteComponent siteComponent() {
-        return InitializeFreeMarkerView.siteComponent = new SiteComponent() {
-            {
-                setRootPath(getDirPath(""));
-                setSiteMasters(env.getProperty("site.masterSiteIds"));
-                setDefaultSiteId(Integer.parseInt(env.getProperty("site.defaultSiteId")));
-            }
-        };
+        SiteComponent bean = new SiteComponent();
+        bean.setRootPath(getDirPath(""));
+        bean.setSiteMasters(env.getProperty("site.masterSiteIds"));
+        bean.setDefaultSiteId(Integer.parseInt(env.getProperty("site.defaultSiteId")));
+        return InitializeFreeMarkerView.siteComponent = bean;
     }
 
     /**
@@ -196,31 +173,24 @@ public class ApplicationConfig extends Base {
      */
     @Bean
     public FreeMarkerConfigurer freeMarkerConfigurer() {
-        return new FreeMarkerConfigurer() {
-            {
-                setTemplateLoaderPath("/WEB-INF/");
-                setFreemarkerSettings(new Properties() {
-                    private static final long serialVersionUID = 1L;
-                    {
-                        setProperty("new_builtin_class_resolver",
-                                env.getProperty("freemarkerSettings.new_builtin_class_resolver"));
-                        setProperty("template_update_delay", env.getProperty("freemarkerSettings.template_update_delay"));
-                        setProperty("defaultEncoding", env.getProperty("freemarkerSettings.defaultEncoding"));
-                        setProperty("url_escaping_charset", env.getProperty("freemarkerSettings.url_escaping_charset"));
-                        setProperty("locale", env.getProperty("freemarkerSettings.locale"));
-                        setProperty("boolean_format", env.getProperty("freemarkerSettings.boolean_format"));
-                        setProperty("datetime_format", env.getProperty("freemarkerSettings.datetime_format"));
-                        setProperty("date_format", env.getProperty("freemarkerSettings.date_format"));
-                        setProperty("time_format", env.getProperty("freemarkerSettings.time_format"));
-                        setProperty("number_format", env.getProperty("freemarkerSettings.number_format"));
-                        setProperty("auto_import", env.getProperty("freemarkerSettings.auto_import"));
-                        setProperty("auto_include", env.getProperty("freemarkerSettings.auto_include"));
-                        setProperty("template_exception_handler",
-                                env.getProperty("freemarkerSettings.template_exception_handler"));
-                    }
-                });
-            }
-        };
+        FreeMarkerConfigurer bean = new FreeMarkerConfigurer();
+        bean.setTemplateLoaderPath("/WEB-INF/");
+        Properties properties = new Properties();
+        properties.setProperty("new_builtin_class_resolver", env.getProperty("freemarkerSettings.new_builtin_class_resolver"));
+        properties.setProperty("template_update_delay", env.getProperty("freemarkerSettings.template_update_delay"));
+        properties.setProperty("defaultEncoding", env.getProperty("freemarkerSettings.defaultEncoding"));
+        properties.setProperty("url_escaping_charset", env.getProperty("freemarkerSettings.url_escaping_charset"));
+        properties.setProperty("locale", env.getProperty("freemarkerSettings.locale"));
+        properties.setProperty("boolean_format", env.getProperty("freemarkerSettings.boolean_format"));
+        properties.setProperty("datetime_format", env.getProperty("freemarkerSettings.datetime_format"));
+        properties.setProperty("date_format", env.getProperty("freemarkerSettings.date_format"));
+        properties.setProperty("time_format", env.getProperty("freemarkerSettings.time_format"));
+        properties.setProperty("number_format", env.getProperty("freemarkerSettings.number_format"));
+        properties.setProperty("auto_import", env.getProperty("freemarkerSettings.auto_import"));
+        properties.setProperty("auto_include", env.getProperty("freemarkerSettings.auto_include"));
+        properties.setProperty("template_exception_handler", env.getProperty("freemarkerSettings.template_exception_handler"));
+        bean.setFreemarkerSettings(properties);
+        return bean;
     }
 
     /**
@@ -230,12 +200,10 @@ public class ApplicationConfig extends Base {
      */
     @Bean
     public CommonsMultipartResolver multipartResolver() {
-        return new CommonsMultipartResolver() {
-            {
-                setDefaultEncoding(DEFAULT_CHARSET);
-                setMaxUploadSize(102400000);
-            }
-        };
+        CommonsMultipartResolver bean = new CommonsMultipartResolver();
+        bean.setDefaultEncoding(DEFAULT_CHARSET);
+        bean.setMaxUploadSize(102400000);
+        return bean;
     }
 
     /**
@@ -245,16 +213,11 @@ public class ApplicationConfig extends Base {
      */
     @Bean
     public SchedulerFactoryBean scheduler() {
-        return new SchedulerFactoryBean() {
-            {
-                setQuartzProperties(new Properties() {
-                    private static final long serialVersionUID = 1L;
-                    {
-                        setProperty("org.quartz.threadPool.threadCount", env.getProperty("task.threadCount"));
-                    }
-                });
-            }
-        };
+        SchedulerFactoryBean bean = new SchedulerFactoryBean();
+        Properties properties = new Properties();
+        properties.setProperty("org.quartz.threadPool.threadCount", env.getProperty("task.threadCount"));
+        bean.setQuartzProperties(properties);
+        return bean;
     }
 
     /**

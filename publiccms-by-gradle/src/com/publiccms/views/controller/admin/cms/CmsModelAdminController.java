@@ -36,7 +36,7 @@ public class CmsModelAdminController extends AbstractController {
     private SysExtendService extendService;
     @Autowired
     private SysExtendFieldService extendFieldService;
-
+    private String[] ignoreProperties = new String[] { "id", "siteId", "disabled", "extendId" };
     /**
      * @param entity
      * @param modelParamters
@@ -54,7 +54,7 @@ public class CmsModelAdminController extends AbstractController {
             if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                 return TEMPLATE_ERROR;
             }
-            entity = service.update(entity.getId(), entity, new String[] { "id", "siteId", "disabled", "extendId" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 logOperateService.save(new LogOperate(entity.getSiteId(), getAdminFromSession(session).getId(),
                         LogLoginService.CHANNEL_WEB_MANAGER, "update.model", getIpAddress(request), getDate(), entity.getId()

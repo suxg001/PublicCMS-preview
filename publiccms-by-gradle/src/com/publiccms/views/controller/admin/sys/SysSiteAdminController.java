@@ -43,6 +43,8 @@ public class SysSiteAdminController extends AbstractController {
     private SysRoleUserService roleUserService;
     @Autowired
     private SysDomainService domainService;
+    
+    private String[] ignoreProperties = new String[] { "id" };
 
     @RequestMapping("save")
     public String save(SysSite entity, String roleName, String userName, String password, HttpServletRequest request,
@@ -53,7 +55,7 @@ public class SysSiteAdminController extends AbstractController {
             entity.setUseSsi(false);
         }
         if (notEmpty(entity.getId())) {
-            entity = service.update(entity.getId(), entity, new String[] { "id" });
+            entity = service.update(entity.getId(), entity, ignoreProperties);
             if (notEmpty(entity)) {
                 logOperateService.save(
                         new LogOperate(site.getId(), getAdminFromSession(session).getId(), LogLoginService.CHANNEL_WEB_MANAGER,

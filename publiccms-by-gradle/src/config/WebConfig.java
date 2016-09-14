@@ -24,43 +24,39 @@ import com.publiccms.logic.component.TemplateComponent;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.publiccms.views.controller.web", useDefaultFilters = false, includeFilters = {
-		@ComponentScan.Filter(value = { Controller.class }) })
+        @ComponentScan.Filter(value = { Controller.class }) })
 public class WebConfig extends WebMvcConfigurerAdapter {
-	@Autowired
-	private TemplateComponent templateComponent;
-	@Autowired
-	private WebContextInterceptor initializingInterceptor;
+    @Autowired
+    private WebContextInterceptor initializingInterceptor;
 
-	/**
-	 * 视图层解析器
-	 * 
-	 * @return
-	 * @throws IOException
-	 */
-	@Bean
-	public WebFreeMarkerViewResolver viewResolver() {
-		return new WebFreeMarkerViewResolver() {
-			{
-				setOrder(0);
-				setConfiguration(templateComponent.getWebConfiguration());
-				setViewClass(WebFreeMarkerView.class);
-				setContentType("text/html;charset=UTF-8");
-			}
-		};
-	}
+    /**
+     * 视图层解析器
+     * 
+     * @return
+     * @throws IOException
+     */
+    @Bean
+    public WebFreeMarkerViewResolver viewResolver(TemplateComponent templateComponent) {
+        WebFreeMarkerViewResolver bean = new WebFreeMarkerViewResolver();
+        bean.setOrder(0);
+        bean.setConfiguration(templateComponent.getWebConfiguration());
+        bean.setViewClass(WebFreeMarkerView.class);
+        bean.setContentType("text/html;charset=UTF-8");
+        return bean;
+    }
 
-	/**
-	 * 拦截器
-	 * 
-	 * @return
-	 */
-	@Bean
-	public WebContextInterceptor initializingInterceptor() {
-		return new WebContextInterceptor();
-	}
+    /**
+     * 拦截器
+     * 
+     * @return
+     */
+    @Bean
+    public WebContextInterceptor initializingInterceptor() {
+        return new WebContextInterceptor();
+    }
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(initializingInterceptor);
-	}
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(initializingInterceptor);
+    }
 }

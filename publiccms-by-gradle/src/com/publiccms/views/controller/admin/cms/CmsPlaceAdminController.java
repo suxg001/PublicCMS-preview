@@ -45,6 +45,9 @@ public class CmsPlaceAdminController extends AbstractController {
     @Autowired
     private MetadataComponent metadataComponent;
 
+    private String[] ignoreProperties = new String[] { "id", "siteId", "status", "userId", "type", "clicks", "path", "createDate",
+            "disabled" };
+
     /**
      * @param entity
      * @param placeParamters
@@ -69,8 +72,7 @@ public class CmsPlaceAdminController extends AbstractController {
                 if (empty(oldEntity) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)) {
                     return TEMPLATE_ERROR;
                 }
-                entity = service.update(entity.getId(), entity,
-                        new String[] { "id", "siteId", "status", "userId", "type", "clicks", "path", "createDate", "disabled" });
+                entity = service.update(entity.getId(), entity, ignoreProperties);
                 if (notEmpty(entity)) {
                     logOperateService.save(new LogOperate(site.getId(), userId, LogLoginService.CHANNEL_WEB_MANAGER,
                             "update.place", getIpAddress(request), getDate(), entity.getPath()));
