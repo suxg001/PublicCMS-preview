@@ -46,7 +46,7 @@ public class UeditorAdminController extends AbstractController {
     @Autowired
     protected LogUploadService logUploadService;
 
-    private static final String ACTION_CONFIT = "config";
+    private static final String ACTION_CONFIG = "config";
     private static final String ACTION_UPLOAD = "upload";
     private static final String ACTION_UPLOAD_SCRAW = "uploadScraw";
     private static final String ACTION_CATCHIMAGE = "catchimage";
@@ -74,7 +74,7 @@ public class UeditorAdminController extends AbstractController {
     };
     CloseableHttpClient httpclient = HttpClients.createDefault();
 
-    @RequestMapping(params = "action=" + ACTION_CONFIT)
+    @RequestMapping(params = "action=" + ACTION_CONFIG)
     @ResponseBody
     public UeditorConfig config(HttpServletRequest request) {
         String urlPrefix = getSite(request).getResourcePath();
