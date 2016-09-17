@@ -21,13 +21,10 @@ import com.publiccms.common.spi.Cacheable;
 import com.publiccms.views.pojo.CmsPageMetadata;
 import com.publiccms.views.pojo.CmsPlaceMetadata;
 import com.sanluan.common.base.Base;
-import com.sanluan.common.handler.JacksonTypeReference;
 
 @Component
 public class MetadataComponent extends Base implements Cacheable {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final TypeReference<Map<String, CmsPlaceMetadata>> placeTypeReference = new JacksonTypeReference<Map<String, CmsPlaceMetadata>>();
-    private static final TypeReference<Map<String, CmsPageMetadata>> pageTypeReference = new JacksonTypeReference<Map<String, CmsPageMetadata>>();
     public static String METADATA_FILE = "metadata.data";
 
     private static List<String> cachedPagelist = synchronizedList(new ArrayList<String>());
@@ -170,23 +167,24 @@ public class MetadataComponent extends Base implements Cacheable {
      * @return
      */
     public Map<String, CmsPlaceMetadata> getPlaceMetadataMap(String dirPath) {
-        Map<String, CmsPlaceMetadata> medatadaMap = cachedPlaceMap.get(dirPath);
-        if (empty(medatadaMap)) {
+        Map<String, CmsPlaceMetadata> metadataMap = cachedPlaceMap.get(dirPath);
+        if (empty(metadataMap)) {
             File file = new File(dirPath + SEPARATOR + METADATA_FILE);
             if (notEmpty(file)) {
                 try {
-                    medatadaMap = objectMapper.readValue(file, placeTypeReference);
+                    metadataMap = objectMapper.readValue(file, new TypeReference<Map<String, CmsPlaceMetadata>>() {
+                    });
                 } catch (IOException | ClassCastException e) {
-                    medatadaMap = new HashMap<String, CmsPlaceMetadata>();
+                    metadataMap = new HashMap<String, CmsPlaceMetadata>();
                 }
             } else {
-                medatadaMap = new HashMap<String, CmsPlaceMetadata>();
+                metadataMap = new HashMap<String, CmsPlaceMetadata>();
             }
             clearPlaceCache(100);
             cachedPlacelist.add(dirPath);
-            cachedPlaceMap.put(dirPath, medatadaMap);
+            cachedPlaceMap.put(dirPath, metadataMap);
         }
-        return medatadaMap;
+        return metadataMap;
     }
 
     /**
@@ -196,23 +194,24 @@ public class MetadataComponent extends Base implements Cacheable {
      * @return
      */
     public Map<String, CmsPageMetadata> getTemplateMetadataMap(String dirPath) {
-        Map<String, CmsPageMetadata> medatadaMap = cachedPageMap.get(dirPath);
-        if (empty(medatadaMap)) {
+        Map<String, CmsPageMetadata> metadataMap = cachedPageMap.get(dirPath);
+        if (empty(metadataMap)) {
             File file = new File(dirPath + SEPARATOR + METADATA_FILE);
             if (notEmpty(file)) {
                 try {
-                    medatadaMap = objectMapper.readValue(file, pageTypeReference);
+                    metadataMap = objectMapper.readValue(file, new TypeReference<Map<String, CmsPageMetadata>>() {
+                    });
                 } catch (IOException | ClassCastException e) {
-                    medatadaMap = new HashMap<String, CmsPageMetadata>();
+                    metadataMap = new HashMap<String, CmsPageMetadata>();
                 }
             } else {
-                medatadaMap = new HashMap<String, CmsPageMetadata>();
+                metadataMap = new HashMap<String, CmsPageMetadata>();
             }
             clearPageCache(100);
             cachedPagelist.add(dirPath);
-            cachedPageMap.put(dirPath, medatadaMap);
+            cachedPageMap.put(dirPath, metadataMap);
         }
-        return medatadaMap;
+        return metadataMap;
     }
 
     /**

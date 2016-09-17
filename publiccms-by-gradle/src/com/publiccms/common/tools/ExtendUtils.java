@@ -11,11 +11,9 @@ import com.publiccms.entities.sys.SysExtendField;
 import com.publiccms.views.pojo.ExtendData;
 import com.publiccms.views.pojo.ExtendField;
 import com.sanluan.common.base.Base;
-import com.sanluan.common.handler.JacksonTypeReference;
 
 public class ExtendUtils extends Base {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final TypeReference<Map<String, String>> typeReference = new JacksonTypeReference<Map<String, String>>();
 
     public static Map<String, String> getSysExtentDataMap(List<ExtendData> extendDataList,
             List<SysExtendField> sysExtendFieldList) {
@@ -59,7 +57,9 @@ public class ExtendUtils extends Base {
     public static Map<String, String> getExtendMap(String data) {
         if (notEmpty(data)) {
             try {
-                return objectMapper.readValue(data, typeReference);
+                return objectMapper.readValue(data, new TypeReference<Map<String, String>>() {
+
+                });
             } catch (IOException | ClassCastException e) {
                 return new HashMap<String, String>();
             }
