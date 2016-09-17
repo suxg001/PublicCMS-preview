@@ -30,6 +30,11 @@ public class SysConfigDirective extends AbstractTemplateDirective {
             }
         }
     }
+    
+    @Override
+    public boolean needAppToken() {
+        return true;
+    }
 
     @Autowired
     private SysConfigService service;

@@ -23,6 +23,11 @@ public class SysConfigItemListDirective extends AbstractTemplateDirective {
             handler.put("list", configComponent.getConfigItemList(site.getId(), code, handler.getLocale())).render();
         }
     }
+    
+    @Override
+    public boolean needAppToken() {
+        return true;
+    }
 
     @Autowired
     private ConfigComponent configComponent;

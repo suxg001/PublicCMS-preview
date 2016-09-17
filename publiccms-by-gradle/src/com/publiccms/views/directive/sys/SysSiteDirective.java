@@ -38,6 +38,11 @@ public class SysSiteDirective extends AbstractTemplateDirective {
             }
         }
     }
+    
+    @Override
+    public boolean needAppToken() {
+        return true;
+    }
 
     @Autowired
     private SysSiteService service;

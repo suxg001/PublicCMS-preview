@@ -42,6 +42,11 @@ public class SysAppDirective extends AbstractTemplateDirective {
             }
         }
     }
+    
+    @Override
+    public boolean needAppToken() {
+        return true;
+    }
 
     @Autowired
     private SysAppService service;

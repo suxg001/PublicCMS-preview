@@ -100,7 +100,7 @@ server {
 	</#if>
 
 	location ${siteLocation!'/'} {
-		root   ${rootPath}/web/site_${siteId}/;
+		alias   ${rootPath}/web/site_${siteId}/;
 		index  index.html;
 	}
 	<#if a.resourcePath?starts_with(a.sitePath)>
@@ -133,7 +133,7 @@ server {
 	server_name  ${resourcePath};
 
 	location ${resourceLocation!'/'} {
-		root   ${rootPath}/resource/site_${siteId}/;
+		alias   ${rootPath}/resource/site_${siteId}/;
 		index  index.html;
 		add_header Access-Control-Allow-Origin *;
 	}

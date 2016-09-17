@@ -26,7 +26,8 @@ import com.sanluan.common.handler.JacksonTypeReference;
 @Component
 public class MetadataComponent extends Base implements Cacheable {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final TypeReference<Map<String, CmsPageMetadata>> typeReference = new JacksonTypeReference<Map<String, CmsPageMetadata>>();
+    private static final TypeReference<Map<String, CmsPlaceMetadata>> placeTypeReference = new JacksonTypeReference<Map<String, CmsPlaceMetadata>>();
+    private static final TypeReference<Map<String, CmsPageMetadata>> pageTypeReference = new JacksonTypeReference<Map<String, CmsPageMetadata>>();
     public static String METADATA_FILE = "metadata.data";
 
     private static List<String> cachedPagelist = synchronizedList(new ArrayList<String>());
@@ -174,7 +175,7 @@ public class MetadataComponent extends Base implements Cacheable {
             File file = new File(dirPath + SEPARATOR + METADATA_FILE);
             if (notEmpty(file)) {
                 try {
-                    medatadaMap = objectMapper.readValue(file, typeReference);
+                    medatadaMap = objectMapper.readValue(file, placeTypeReference);
                 } catch (IOException | ClassCastException e) {
                     medatadaMap = new HashMap<String, CmsPlaceMetadata>();
                 }
@@ -200,7 +201,7 @@ public class MetadataComponent extends Base implements Cacheable {
             File file = new File(dirPath + SEPARATOR + METADATA_FILE);
             if (notEmpty(file)) {
                 try {
-                    medatadaMap = objectMapper.readValue(file, typeReference);
+                    medatadaMap = objectMapper.readValue(file, pageTypeReference);
                 } catch (IOException | ClassCastException e) {
                     medatadaMap = new HashMap<String, CmsPageMetadata>();
                 }

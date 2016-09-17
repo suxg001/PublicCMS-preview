@@ -38,6 +38,11 @@ public class SysFtpUserDirective extends AbstractTemplateDirective {
             }
         }
     }
+    
+    @Override
+    public boolean needAppToken() {
+        return true;
+    }
 
     @Autowired
     private SysFtpUserService service;

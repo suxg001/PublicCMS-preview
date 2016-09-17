@@ -24,6 +24,11 @@ public class SysConfigExtendFieldListDirective extends AbstractTemplateDirective
             handler.put("list", configComponent.getExtendFieldList(site.getId(), code, subcode, handler.getLocale())).render();
         }
     }
+    
+    @Override
+    public boolean needAppToken() {
+        return true;
+    }
 
     @Autowired
     private ConfigComponent configComponent;

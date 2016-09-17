@@ -21,6 +21,11 @@ public class SysAppListDirective extends AbstractTemplateDirective {
                 handler.getInteger("pageIndex", 1), handler.getInteger("count", 30));
         handler.put("page", page).render();
     }
+    
+    @Override
+    public boolean needAppToken() {
+        return true;
+    }
 
     @Autowired
     private SysAppService service;
