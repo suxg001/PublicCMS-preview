@@ -3,6 +3,7 @@ package com.publiccms.views.controller.web;
 import static com.publiccms.common.constants.CommonConstants.getCookiesUser;
 import static com.publiccms.common.constants.CommonConstants.getCookiesUserSplit;
 import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_CODE;
+import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_SUBCODE;
 import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_LOGIN_PATH;
 import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_REGISTER_PATH;
 import static com.publiccms.logic.service.log.LogLoginService.CHANNEL_WEB;
@@ -80,7 +81,7 @@ public class LoginController extends AbstractController {
             return REDIRECT + returnUrl;
         }
 
-        Map<String, String> config = configComponent.getConfigData(site.getId(), CONFIG_CODE, domain.getId().toString());
+        Map<String, String> config = configComponent.getConfigData(site.getId(), CONFIG_CODE, CONFIG_SUBCODE);
         String loginPath = config.get(CONFIG_LOGIN_PATH);
         if (verifyNotEmpty("loginPath", loginPath, model)) {
             return REDIRECT + returnUrl;
@@ -169,7 +170,7 @@ public class LoginController extends AbstractController {
             return REDIRECT + returnUrl;
         }
 
-        Map<String, String> config = configComponent.getConfigData(site.getId(), CONFIG_CODE, domain.getId().toString());
+        Map<String, String> config = configComponent.getConfigData(site.getId(), CONFIG_CODE, CONFIG_SUBCODE);
         String registerPath = config.get(CONFIG_REGISTER_PATH);
         if (verifyNotEmpty("registerPath", registerPath, model)) {
             return REDIRECT + returnUrl;

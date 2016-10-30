@@ -7,13 +7,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import com.publiccms.common.interceptor.web.WebContextInterceptor;
 import com.publiccms.common.view.WebFreeMarkerViewResolver;
 import com.publiccms.common.view.web.WebFreeMarkerView;
+import com.publiccms.logic.component.CacheComponent;
 import com.publiccms.logic.component.TemplateComponent;
 
 /**
@@ -28,6 +31,24 @@ import com.publiccms.logic.component.TemplateComponent;
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private WebContextInterceptor initializingInterceptor;
+    @Autowired
+    private CacheComponent cacheComponent;
+
+    /**
+     * 视图层解析器
+     * 
+     * @return
+     */
+    @Bean
+    public ViewResolver webViewResolver() {
+        FreeMarkerViewResolver bean = new FreeMarkerViewResolver();
+        bean.setOrder(1);
+        bean.setViewClass(WebFreeMarkerView.class);
+        bean.setPrefix("/web/");
+        bean.setContentType("text/html;charset=UTF-8");
+        cacheComponent.registerCachingViewResolverList(bean);
+        return bean;
+    }
 
     /**
      * 视图层解析器
@@ -42,6 +63,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         bean.setConfiguration(templateComponent.getWebConfiguration());
         bean.setViewClass(WebFreeMarkerView.class);
         bean.setContentType("text/html;charset=UTF-8");
+        cacheComponent.registerCachingViewResolverList(bean);
         return bean;
     }
 

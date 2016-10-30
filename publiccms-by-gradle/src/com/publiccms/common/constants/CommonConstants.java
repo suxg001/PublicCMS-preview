@@ -1,6 +1,9 @@
 package com.publiccms.common.constants;
 
 public class CommonConstants {
+    public static String getDefaultPage() {
+        return "index.html";
+    }
     public static String getSessionUser() {
         return "PUBLICCMS_USER";
     }

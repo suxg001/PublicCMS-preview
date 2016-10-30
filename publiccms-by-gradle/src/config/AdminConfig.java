@@ -1,5 +1,6 @@
 package config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import com.publiccms.common.interceptor.admin.AdminContextInterceptor;
 import com.publiccms.common.view.admin.AdminFreeMarkerView;
+import com.publiccms.logic.component.CacheComponent;
 
 /**
  * 
@@ -24,6 +26,9 @@ import com.publiccms.common.view.admin.AdminFreeMarkerView;
 @ComponentScan(basePackages = "com.publiccms.views.controller.admin", useDefaultFilters = false, includeFilters = {
         @ComponentScan.Filter(value = { Controller.class }) })
 public class AdminConfig extends WebMvcConfigurerAdapter {
+    @Autowired
+    private CacheComponent cacheComponent;
+
     /**
      * 视图层解析器
      * 
@@ -33,9 +38,10 @@ public class AdminConfig extends WebMvcConfigurerAdapter {
     public ViewResolver jspViewResolver() {
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
         bean.setOrder(1);
-        bean.setPrefix("/WEB-INF/template/");
+        bean.setPrefix("/WEB-INF/admin/");
         bean.setSuffix(".jsp");
         bean.setContentType("text/html;charset=UTF-8");
+        cacheComponent.registerCachingViewResolverList(bean);
         return bean;
     }
 
@@ -49,9 +55,10 @@ public class AdminConfig extends WebMvcConfigurerAdapter {
         FreeMarkerViewResolver bean = new FreeMarkerViewResolver();
         bean.setOrder(0);
         bean.setViewClass(AdminFreeMarkerView.class);
-        bean.setPrefix("/template/");
+        bean.setPrefix("/admin/");
         bean.setSuffix(".html");
         bean.setContentType("text/html;charset=UTF-8");
+        cacheComponent.registerCachingViewResolverList(bean);
         return bean;
     }
 

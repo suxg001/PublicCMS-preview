@@ -40,7 +40,7 @@ public class SourceMaker extends Base {
     public static final String CONTROLLER_BASE_PACKAGE = "views.controller.admin";
     public static final String CONTROLLER_SUFFIX = "Controller";
     public static final String JAVA_BASE_PATH = "src/";
-    public static final String WEB_BASE_PATH = "WebContent/template/";
+    public static final String WEB_BASE_PATH = "WebContent/admin/";
 
     public static void main(String[] args) throws ClassNotFoundException {
         SourceMaker sourceMaker = new SourceMaker();

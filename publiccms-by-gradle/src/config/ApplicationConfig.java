@@ -36,7 +36,7 @@ import com.sanluan.common.base.Base;
 import com.sanluan.common.datasource.MultiDataSource;
 
 /**
- * 
+ *
  * ApplicationConfig Spring配置类
  *
  */
@@ -54,7 +54,7 @@ public class ApplicationConfig extends Base {
 
     /**
      * 数据源
-     * 
+     *
      * @return
      * @throws PropertyVetoException
      */
@@ -82,7 +82,7 @@ public class ApplicationConfig extends Base {
 
     /**
      * Hibernate事务管理
-     * 
+     *
      * @return
      */
     @Bean
@@ -94,7 +94,7 @@ public class ApplicationConfig extends Base {
 
     /**
      * 持久层会话工厂类
-     * 
+     *
      * @return
      * @throws PropertyVetoException
      */
@@ -126,7 +126,7 @@ public class ApplicationConfig extends Base {
 
     /**
      * 国际化处理
-     * 
+     *
      * @return
      */
     @Bean
@@ -140,7 +140,7 @@ public class ApplicationConfig extends Base {
 
     /**
      * 模板操作组件
-     * 
+     *
      * @return
      */
     @Bean
@@ -154,7 +154,7 @@ public class ApplicationConfig extends Base {
 
     /**
      * 文件操作组件
-     * 
+     *
      * @return
      */
     @Bean
@@ -168,7 +168,7 @@ public class ApplicationConfig extends Base {
 
     /**
      * FreeMarker配置工厂
-     * 
+     *
      * @return
      */
     @Bean
@@ -176,26 +176,28 @@ public class ApplicationConfig extends Base {
         FreeMarkerConfigurer bean = new FreeMarkerConfigurer();
         bean.setTemplateLoaderPath("/WEB-INF/");
         Properties properties = new Properties();
-        properties.setProperty("new_builtin_class_resolver", env.getProperty("freemarkerSettings.new_builtin_class_resolver"));
-        properties.setProperty("template_update_delay", env.getProperty("freemarkerSettings.template_update_delay"));
+        properties.setProperty("newBuiltinClassResolver", env.getProperty("freemarkerSettings.newBuiltinClassResolver"));
+        properties.setProperty("templateUpdateDelay", env.getProperty("freemarkerSettings.templateUpdateDelay"));
         properties.setProperty("defaultEncoding", env.getProperty("freemarkerSettings.defaultEncoding"));
-        properties.setProperty("url_escaping_charset", env.getProperty("freemarkerSettings.url_escaping_charset"));
+        properties.setProperty("urlEscapingCharset", env.getProperty("freemarkerSettings.urlEscapingCharset"));
         properties.setProperty("locale", env.getProperty("freemarkerSettings.locale"));
-        properties.setProperty("boolean_format", env.getProperty("freemarkerSettings.boolean_format"));
-        properties.setProperty("datetime_format", env.getProperty("freemarkerSettings.datetime_format"));
-        properties.setProperty("date_format", env.getProperty("freemarkerSettings.date_format"));
-        properties.setProperty("time_format", env.getProperty("freemarkerSettings.time_format"));
-        properties.setProperty("number_format", env.getProperty("freemarkerSettings.number_format"));
-        properties.setProperty("auto_import", env.getProperty("freemarkerSettings.auto_import"));
-        properties.setProperty("auto_include", env.getProperty("freemarkerSettings.auto_include"));
-        properties.setProperty("template_exception_handler", env.getProperty("freemarkerSettings.template_exception_handler"));
+        properties.setProperty("booleanFormat", env.getProperty("freemarkerSettings.booleanFormat"));
+        properties.setProperty("datetimeFormat", env.getProperty("freemarkerSettings.datetimeFormat"));
+        properties.setProperty("dateFormat", env.getProperty("freemarkerSettings.dateFormat"));
+        properties.setProperty("timeFormat", env.getProperty("freemarkerSettings.timeFormat"));
+        properties.setProperty("numberFormat", env.getProperty("freemarkerSettings.numberFormat"));
+		properties.setProperty("outputFormat", env.getProperty("freemarkerSettings.outputFormat"));
+        properties.setProperty("autoImport", env.getProperty("freemarkerSettings.autoImport"));
+		properties.setProperty("lazyAutoImports", env.getProperty("freemarkerSettings.lazyAutoImports"));
+        properties.setProperty("autoInclude", env.getProperty("freemarkerSettings.autoInclude"));
+        properties.setProperty("templateExceptionHandler", env.getProperty("freemarkerSettings.templateExceptionHandler"));
         bean.setFreemarkerSettings(properties);
         return bean;
     }
 
     /**
      * 附件Multipart解决方案
-     * 
+     *
      * @return
      */
     @Bean
@@ -208,7 +210,7 @@ public class ApplicationConfig extends Base {
 
     /**
      * 任务计划工厂类配置
-     * 
+     *
      * @return
      */
     @Bean
@@ -222,7 +224,7 @@ public class ApplicationConfig extends Base {
 
     /**
      * json消息转换适配器，用于支持RequestBody、ResponseBody
-     * 
+     *
      * @return
      */
     @Bean

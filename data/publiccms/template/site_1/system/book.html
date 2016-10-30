@@ -42,7 +42,7 @@ article ul li{ float:left;width:280px;margin:2px 10px;white-space:nowrap;overflo
 				</div>
 			</div>
 			<div id="content">
-				${text!}
+				${text?no_esc!}
 			</div>
 <@_contentList parentId=content.id pageIndex=1 count=100>
 	<#list 1..page.totalPage as n>

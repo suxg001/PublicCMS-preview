@@ -63,7 +63,8 @@ public class PlaceController extends AbstractController {
             }
             if (notEmpty(entity.getId())) {
                 CmsPlace oldEntity = service.getEntity(entity.getId());
-                if (empty(oldEntity) || empty(user) || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)
+                if (empty(oldEntity) || empty(oldEntity.getUserId()) || empty(user)
+                        || verifyNotEquals("siteId", site.getId(), oldEntity.getSiteId(), model)
                         || verifyNotEquals("siteId", user.getId(), oldEntity.getUserId(), model)) {
                     return REDIRECT + returnUrl;
                 }
@@ -72,11 +73,13 @@ public class PlaceController extends AbstractController {
                         getIpAddress(request), getDate(), entity.getPath()));
             } else {
                 entity.setSiteId(site.getId());
+                Long userId = null;
                 if (notEmpty(user)) {
+                    userId = user.getId();
                     entity.setUserId(user.getId());
                 }
                 service.save(entity);
-                logOperateService.save(new LogOperate(site.getId(), user.getId(), LogLoginService.CHANNEL_WEB, "save.place",
+                logOperateService.save(new LogOperate(site.getId(), userId, LogLoginService.CHANNEL_WEB, "save.place",
                         getIpAddress(request), getDate(), entity.getPath()));
             }
             Map<String, String> map = getExtentDataMap(placeParamters.getExtendDataList(),

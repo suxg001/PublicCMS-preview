@@ -17,7 +17,7 @@
 		<article>
 			<h3><@_content id=content.parentId><@_content id=object.parentId><a href="${object.url}" target="_blank">《${object.title}》</a></@_content> ${object.title}</@_content> ${content.title}</h3>
 			<div id="content">
-				${text!}
+				${text?no_esc!}
 			</div>
 			<script>
 				uParse('#content',{rootPath: '${site.resourcePath!}ueditor'});

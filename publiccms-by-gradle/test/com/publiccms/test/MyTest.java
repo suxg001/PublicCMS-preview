@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.publiccms.entities.log.LogOperate;
+import com.publiccms.logic.service.log.LogLoginService;
 import com.publiccms.logic.service.log.LogOperateService;
 
 import config.ApplicationConfig;
@@ -23,7 +24,7 @@ public class MyTest {
 
     @Test
     public void log() {
-        LogOperate entity = new LogOperate(1, 0, "test", "127.0.0.1", new Date(), "测试数据1");
+        LogOperate entity = new LogOperate(1, 0L, LogLoginService.CHANNEL_WEB_MANAGER, "test", "127.0.0.1", new Date(), "测试数据1");
         logOperateService.save(entity);
     }
 }

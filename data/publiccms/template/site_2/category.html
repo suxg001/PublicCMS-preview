@@ -1,0 +1,42 @@
+<#if id?has_content>
+<@_category id=id><#assign category=object/><#assign attribute=getCategoryAttribute(id)/></@_category>
+</#if>
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+	<title>${(attribute.title)!(category.name)!}</title>
+	<meta name="keywords" content="${(attribute.keywords)!}"/>
+	<meta name="description" content="${(attribute.description)!}">
+	<@_includePlace path="/index.html/7b6a73cb-e3dc-4476-8c3c-29cb14b95b20.html"/> <#-- 页头 -->
+	<script>var categoryId='${(category.id)!}';</script>
+</head>
+<body data-spy="scroll" data-offset="0" data-target="#navbar-main">
+  	<@_includePlace path="/index.html/2279038b-4e89-47c1-9066-d4bbbc4c4004.html"/> <#-- 导航 -->
+	<div class="container" style="margin-top:50px;margin-bottom:20px;">
+		<div class="row">
+			<h1 class="centered">${(category.name)!}</h1>
+			<hr>
+		</div><!-- /row -->
+		<div class="row">
+<#if category?has_content>
+	<@_contentList categoryId=category.id containChild=true pageIndex=pageIndex count=category.pageSize>
+		<#list page.list as a>
+			<div class="col-md-4 ">
+				<div class="grid mask">
+					<figure>
+						<img class="img-responsive" src="${(site.resourcePath+a.cover)!}" alt="${a.title}">
+						<figcaption>
+							<h5>${a.title}</h5>
+							<a data-toggle="modal" href="${a.url!}" class="btn btn-primary btn-lg">查看详情</a>
+						</figcaption><!-- /figcaption -->
+					</figure><!-- /figure -->
+				</div><!-- /grid-mask -->
+			</div>
+		</#list>
+	</@_contentList>
+</#if>
+		</div><!-- /row -->
+	</div><!-- /container -->
+	<@_includePlace path="/index.html/c74c4abb-a8fe-419a-94c8-59a1e5745318.html"/> <#-- 页尾 -->
+</body>
+</html>

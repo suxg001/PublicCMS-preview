@@ -63,7 +63,7 @@ public class SysConfigController extends AbstractController {
     }
 
     @RequestMapping("delete")
-    public String delete(String code, String subcode, HttpServletRequest request, HttpSession session, ModelMap model) {
+    public String delete(String code, String subcode, HttpServletRequest request, HttpSession session) {
         SysSite site = getSite(request);
         SysConfig entity = service.getEntity(site.getId(), code, subcode);
         if (notEmpty(entity)) {

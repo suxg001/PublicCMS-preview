@@ -32,7 +32,7 @@ public class LogOperate implements java.io.Serializable {
     @MyColumn(title = "站点", condition = true)
     private int siteId;
     @MyColumn(title = "用户", condition = true)
-    private long userId;
+    private Long userId;
     @MyColumn(title = "渠道", condition = true)
     private String channel;
     @MyColumn(title = "操作", condition = true)
@@ -47,16 +47,15 @@ public class LogOperate implements java.io.Serializable {
     public LogOperate() {
     }
 
-    public LogOperate(int siteId, long userId, String channel, String operate, Date createDate, String content) {
+    public LogOperate(int siteId, String channel, String operate, Date createDate, String content) {
         this.siteId = siteId;
-        this.userId = userId;
         this.channel = channel;
         this.operate = operate;
         this.createDate = createDate;
         this.content = content;
     }
 
-    public LogOperate(int siteId, long userId, String channel, String operate, String ip, Date createDate, String content) {
+    public LogOperate(int siteId, Long userId, String channel, String operate, String ip, Date createDate, String content) {
         this.siteId = siteId;
         this.userId = userId;
         this.channel = channel;
@@ -86,12 +85,12 @@ public class LogOperate implements java.io.Serializable {
         this.siteId = siteId;
     }
 
-    @Column(name = "user_id", nullable = false)
-    public long getUserId() {
+    @Column(name = "user_id")
+    public Long getUserId() {
         return this.userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

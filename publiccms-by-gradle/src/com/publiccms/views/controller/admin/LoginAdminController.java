@@ -1,5 +1,6 @@
 package com.publiccms.views.controller.admin;
 
+import static com.publiccms.common.constants.CommonConstants.getDefaultPage;
 import static com.publiccms.logic.service.log.LogLoginService.CHANNEL_WEB_MANAGER;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static com.sanluan.common.tools.VerificationUtils.encode;
@@ -65,7 +66,7 @@ public class LoginAdminController extends AbstractController {
         if (notEmpty(returnUrl)) {
             return REDIRECT + returnUrl;
         }
-        return REDIRECT + "index.html";
+        return REDIRECT + getDefaultPage();
     }
 
     @RequestMapping(value = "loginDialog", method = RequestMethod.POST)
@@ -102,7 +103,7 @@ public class LoginAdminController extends AbstractController {
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String logout(HttpSession session) {
         clearAdminToSession(session);
-        return REDIRECT + "index.html";
+        return REDIRECT + getDefaultPage();
     }
 
     @RequestMapping(value = "clearCache")

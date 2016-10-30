@@ -52,6 +52,19 @@ public class MetadataComponent extends Base implements Cacheable {
         return new CmsPlaceMetadata();
     }
 
+    /***
+     * 获取模板元数据**
+     * 
+     * @param filePath
+     * @return
+     * @throws IOException
+     * @throws JsonMappingException
+     * @throws JsonParseException
+     */
+    public CmsPageMetadata getTemplateMetadata(String filePath) {
+        return getTemplateMetadata(filePath, false);
+    }
+
     /**
      * 获取模板元数据
      * 
@@ -61,13 +74,17 @@ public class MetadataComponent extends Base implements Cacheable {
      * @throws JsonMappingException
      * @throws JsonParseException
      */
-    public CmsPageMetadata getTemplateMetadata(String filePath) {
+    public CmsPageMetadata getTemplateMetadata(String filePath, boolean allowNullValue) {
         File file = new File(filePath);
         CmsPageMetadata pageMetadata = getTemplateMetadataMap(file.getParent()).get(file.getName());
         if (notEmpty(pageMetadata)) {
             return pageMetadata;
         }
-        return new CmsPageMetadata();
+        if (allowNullValue) {
+            return null;
+        } else {
+            return new CmsPageMetadata();
+        }
     }
 
     /**

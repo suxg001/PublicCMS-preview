@@ -51,7 +51,6 @@ import freemarker.template.TemplateException;
  */
 @Controller
 @RequestMapping("user")
-@ResponseBody
 public class UserController extends AbstractController {
     @Autowired
     private SysUserService service;

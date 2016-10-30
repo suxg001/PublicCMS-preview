@@ -105,7 +105,7 @@ public class EmailComponent extends Base implements Cacheable, Configable {
      * @throws MessagingException
      */
     private boolean send(int siteId, String toAddress, String title, String content, boolean isHtml) throws MessagingException {
-        Map<String, String> config = configComponent.getConfigData(siteId, CONFIG_CODE, CONFIG_CODE);
+        Map<String, String> config = configComponent.getConfigData(siteId, CONFIG_CODE, CONFIG_SUBCODE);
         if (notEmpty(config)) {
             JavaMailSender mailSender = getMailSender(siteId, config);
             MimeMessage message = mailSender.createMimeMessage();

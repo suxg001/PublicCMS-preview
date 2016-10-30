@@ -17,8 +17,13 @@ public class SysExtendFieldListDirective extends AbstractTemplateDirective {
 
     @Override
     public void execute(RenderHandler handler) throws IOException, Exception {
-        PageHandler page = service.getPage(handler.getInteger("extendId"), 
-                handler.getInteger("pageIndex",1), handler.getInteger("count",30));
+        Integer extendId = handler.getInteger("extendId");
+        PageHandler page;
+        if (notEmpty(extendId)) {
+            page = service.getPage(extendId, handler.getInteger("pageIndex", 1), handler.getInteger("count", 30));
+        } else {
+            page = new PageHandler(0, 0, 0, 0);
+        }
         handler.put("page", page).render();
     }
 

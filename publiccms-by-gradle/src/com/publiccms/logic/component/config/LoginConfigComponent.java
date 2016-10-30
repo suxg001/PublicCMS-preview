@@ -17,7 +17,8 @@ import com.sanluan.common.base.Base;
 
 @Component
 public class LoginConfigComponent extends Base implements Configable {
-    public static final String CONFIG_CODE = "login";
+    public static final String CONFIG_CODE = "site";
+    public static final String CONFIG_SUBCODE = "login";
     public static final String CONFIG_LOGIN_PATH = "login_path";
     public static final String CONFIG_REGISTER_PATH = "register_path";
 
@@ -52,15 +53,6 @@ public class LoginConfigComponent extends Base implements Configable {
 
     @Override
     public String getSubcodeDescription(String subcode, Locale locale) {
-        try {
-            SysDomain entity = domainService.getEntity(Integer.parseInt(subcode));
-            if (notEmpty(entity)) {
-                return getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + "domain", entity.getName());
-            } else {
-                return BLANK;
-            }
-        } catch (NumberFormatException e) {
-            return BLANK;
-        }
+        return getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_SUBCODE);
     }
 }

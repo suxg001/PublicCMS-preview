@@ -1,0 +1,26 @@
+<div id="navbar-main">
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon icon-shield" style="font-size:30px; color:#3498db;"></span>
+				</button>
+				<a class="navbar-brand hidden-xs hidden-sm" href="./#home"><span class="icon icon-shield" style="font-size:18px; color:#3498db;"></span></a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="${site.dynamicPath}" class="smoothScroll">首页</a></li>
+<@_categoryList>
+	<#list page.list as a>
+					<li><a href="${a.url!}" data-categoryId="${a.id}" class="smoothScroll">${a.name}</a></li>
+	</#list>
+</@_categoryList>
+<#list page.list as a>
+					<li><a href="${a.url!}" class="smoothScroll">${a.title}</a></li>
+</#list>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</div>
+</div>
