@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -44,10 +46,12 @@ public class EmailComponent extends Base implements Cacheable, Configable {
     public static final String CONFIG_EMAIL_SMTP_TIMEOUT = "timeout";
     public static final String CONFIG_EMAIL_SMTP_AUTH = "auth";
     public static final String CONFIG_EMAIL_SMTP_FROMADDRESS = "fromAddress";
+    public static final String CONFIG_DESCRIPTION = CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_SUBCODE;
     @Autowired
     private ConfigComponent configComponent;
     private static List<Integer> cachedlist = synchronizedList(new ArrayList<Integer>());
     private static Map<Integer, JavaMailSenderImpl> cachedMap = synchronizedMap(new HashMap<Integer, JavaMailSenderImpl>());
+    private static ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     public JavaMailSender getMailSender(int siteId, Map<String, String> config) {
         JavaMailSenderImpl javaMailSender = cachedMap.get(siteId);
@@ -114,8 +118,7 @@ public class EmailComponent extends Base implements Cacheable, Configable {
             messageHelper.setFrom(getFromAddress(config));
             messageHelper.setSubject(title);
             messageHelper.setText(content, isHtml);
-            SendThread st = new SendThread(mailSender, message);
-            st.start();
+            pool.execute(new SendTask(mailSender, message));
             return true;
         }
         return false;
@@ -130,30 +133,24 @@ public class EmailComponent extends Base implements Cacheable, Configable {
     public List<ExtendField> getExtendFieldList(String subcode, Locale locale) {
         List<ExtendField> extendFieldList = new ArrayList<ExtendField>();
         if (CONFIG_SUBCODE.equals(subcode)) {
-            extendFieldList.add(new ExtendField(true,
-                    getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_EMAIL_SMTP_DEFAULTENCODING), null,
-                    CONFIG_EMAIL_SMTP_DEFAULTENCODING, "text", DEFAULT_CHARSET));
             extendFieldList
-                    .add(new ExtendField(true, getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_EMAIL_SMTP_HOST),
-                            null, CONFIG_EMAIL_SMTP_HOST, "text", null));
+                    .add(new ExtendField(true, getMessage(locale, CONFIG_DESCRIPTION + "." + CONFIG_EMAIL_SMTP_DEFAULTENCODING),
+                            null, CONFIG_EMAIL_SMTP_DEFAULTENCODING, "text", DEFAULT_CHARSET));
+            extendFieldList.add(new ExtendField(true, getMessage(locale, CONFIG_DESCRIPTION + "." + CONFIG_EMAIL_SMTP_HOST), null,
+                    CONFIG_EMAIL_SMTP_HOST, "text", null));
+            extendFieldList.add(new ExtendField(true, getMessage(locale, CONFIG_DESCRIPTION + "." + CONFIG_EMAIL_SMTP_PORT), null,
+                    CONFIG_EMAIL_SMTP_PORT, "number", String.valueOf(25)));
+            extendFieldList.add(new ExtendField(true, getMessage(locale, CONFIG_DESCRIPTION + "." + CONFIG_EMAIL_SMTP_USERNAME),
+                    null, CONFIG_EMAIL_SMTP_USERNAME, "text", null));
+            extendFieldList.add(new ExtendField(true, getMessage(locale, CONFIG_DESCRIPTION + "." + CONFIG_EMAIL_SMTP_PASSWORD),
+                    null, CONFIG_EMAIL_SMTP_PASSWORD, "password", null));
+            extendFieldList.add(new ExtendField(true, getMessage(locale, CONFIG_DESCRIPTION + "." + CONFIG_EMAIL_SMTP_TIMEOUT),
+                    null, CONFIG_EMAIL_SMTP_TIMEOUT, "number", String.valueOf(3000)));
+            extendFieldList.add(new ExtendField(true, getMessage(locale, CONFIG_DESCRIPTION + "." + CONFIG_EMAIL_SMTP_AUTH), null,
+                    CONFIG_EMAIL_SMTP_AUTH, "boolean", null));
             extendFieldList
-                    .add(new ExtendField(true, getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_EMAIL_SMTP_PORT),
-                            null, CONFIG_EMAIL_SMTP_PORT, "number", null));
-            extendFieldList
-                    .add(new ExtendField(true, getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_EMAIL_SMTP_USERNAME),
-                            null, CONFIG_EMAIL_SMTP_USERNAME, "text", null));
-            extendFieldList
-                    .add(new ExtendField(true, getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_EMAIL_SMTP_PASSWORD),
-                            null, CONFIG_EMAIL_SMTP_PASSWORD, "password", null));
-            extendFieldList
-                    .add(new ExtendField(true, getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_EMAIL_SMTP_TIMEOUT),
-                            null, CONFIG_EMAIL_SMTP_TIMEOUT, "number", null));
-            extendFieldList
-                    .add(new ExtendField(true, getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_EMAIL_SMTP_AUTH),
-                            null, CONFIG_EMAIL_SMTP_AUTH, "boolean", null));
-            extendFieldList.add(
-                    new ExtendField(true, getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_EMAIL_SMTP_FROMADDRESS),
-                            null, CONFIG_EMAIL_SMTP_FROMADDRESS, "email", null));
+                    .add(new ExtendField(true, getMessage(locale, CONFIG_DESCRIPTION + "." + CONFIG_EMAIL_SMTP_FROMADDRESS), null,
+                            CONFIG_EMAIL_SMTP_FROMADDRESS, "email", null));
         }
         return extendFieldList;
     }
@@ -167,7 +164,7 @@ public class EmailComponent extends Base implements Cacheable, Configable {
 
     @Override
     public String getSubcodeDescription(String subcode, Locale locale) {
-        return getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_SUBCODE);
+        return getMessage(locale, CONFIG_DESCRIPTION);
     }
 
     private void clearCache(int size) {
@@ -187,15 +184,15 @@ public class EmailComponent extends Base implements Cacheable, Configable {
 
 /**
  * 
- * SendThread 邮件发送线程
+ * SendTask 邮件发送线程
  *
  */
-class SendThread extends Thread {
+class SendTask implements Runnable {
     private JavaMailSender mailSender;
     private MimeMessage message;
     private final Log log = getLog(getClass());
 
-    public SendThread(JavaMailSender mailSender, MimeMessage message) {
+    public SendTask(JavaMailSender mailSender, MimeMessage message) {
         this.message = message;
         this.mailSender = mailSender;
     }

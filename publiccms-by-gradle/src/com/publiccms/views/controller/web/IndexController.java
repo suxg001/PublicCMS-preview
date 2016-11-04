@@ -1,8 +1,9 @@
 package com.publiccms.views.controller.web;
 
 import static com.publiccms.common.constants.CommonConstants.getDefaultPage;
-import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_CODE;
+import static com.publiccms.common.spi.Configable.CONFIG_CODE_SITE;
 import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_LOGIN_PATH;
+import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_SUBCODE;
 import static com.sanluan.common.tools.RequestUtils.getEncodePath;
 import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.split;
@@ -65,8 +66,7 @@ public class IndexController extends AbstractController {
         if (notEmpty(metadata)) {
             if (metadata.isUseDynamic()) {
                 if (metadata.isNeedLogin() && notEmpty(domain.getId()) && empty(getUserFromSession(session))) {
-                    Map<String, String> config = configComponent.getConfigData(site.getId(), CONFIG_CODE,
-                            domain.getId().toString());
+                    Map<String, String> config = configComponent.getConfigData(site.getId(), CONFIG_CODE_SITE, CONFIG_SUBCODE);
                     String loginPath = config.get(CONFIG_LOGIN_PATH);
                     if (notEmpty(loginPath)) {
                         return REDIRECT + loginPath + "?returnUrl=" + getEncodePath(requestPath, request.getQueryString());

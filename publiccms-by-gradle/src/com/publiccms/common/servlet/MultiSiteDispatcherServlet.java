@@ -44,7 +44,7 @@ public class MultiSiteDispatcherServlet extends ErrorToNotFoundDispatcherServlet
         } else if (viewName.startsWith(CACHE_URL_PREFIX)) {
             multiSiteViewName = viewName.substring(CACHE_URL_PREFIX_LENGTH);
         } else {
-            multiSiteViewName = getSiteComponent().getViewNamePreffix(request.getServerName(), request.getServerPort())
+            multiSiteViewName = getSiteComponent().getViewNamePreffix(request.getServerName())
                     + viewName;
         }
         return super.resolveViewName(multiSiteViewName, model, locale, request);

@@ -585,7 +585,7 @@ DROP TABLE IF EXISTS `log_operate`;
 CREATE TABLE `log_operate` (
   `id` bigint(20) NOT NULL auto_increment,
   `site_id` int(11) NOT NULL COMMENT '站点ID',
-  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `user_id` bigint(20) default NULL COMMENT '用户ID',
   `channel` varchar(50) NOT NULL COMMENT '操作取到',
   `operate` varchar(40) NOT NULL COMMENT '操作',
   `ip` varchar(64) default NULL COMMENT 'IP',

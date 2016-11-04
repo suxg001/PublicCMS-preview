@@ -7,6 +7,8 @@ import com.publiccms.views.pojo.ExtendField;
 
 public interface Configable {
     public static final String CONFIGPREFIX = "config.";
+    
+    public static final String CONFIG_CODE_SITE = "site";
 
     public String getCode();
 

@@ -78,9 +78,9 @@ public class SiteComponent extends Base implements Cacheable {
         return scheme + "://" + (80 == serverPort ? serverName : serverName + ":" + serverPort) + contextPath;
     }
 
-    public String getViewNamePreffix(String serverName, int serverPort) {
-        SysSite site = getSite(serverName, serverPort);
-        SysDomain sysDomain = getDomain(serverName, serverPort);
+    public String getViewNamePreffix(String serverName) {
+        SysSite site = getSite(serverName);
+        SysDomain sysDomain = getDomain(serverName);
         return getViewNamePreffix(site, sysDomain);
     }
 
@@ -96,17 +96,16 @@ public class SiteComponent extends Base implements Cacheable {
         }
     }
 
-    public SysDomain getDomain(String serverName, int serverPort) {
-        String domain = 80 == serverPort ? serverName : serverName + ":" + serverPort;
-        SysDomain sysDomain = cachedDomainMap.get(domain);
+    public SysDomain getDomain(String serverName) {
+        SysDomain sysDomain = cachedDomainMap.get(serverName);
         if (empty(sysDomain)) {
-            sysDomain = sysDomainService.getEntity(domain);
+            sysDomain = sysDomainService.getEntity(serverName);
             if (empty(sysDomain)) {
                 sysDomain = new SysDomain();
             } else {
                 clearDomainCache(300);
-                cachedDomainlist.add(domain);
-                cachedDomainMap.put(domain, sysDomain);
+                cachedDomainlist.add(serverName);
+                cachedDomainMap.put(serverName, sysDomain);
             }
         }
         return sysDomain;
@@ -120,8 +119,8 @@ public class SiteComponent extends Base implements Cacheable {
         }
     }
 
-    public SysSite getSite(String serverName, int serverPort) {
-        SysDomain sysDomain = getDomain(serverName, serverPort);
+    public SysSite getSite(String serverName) {
+        SysDomain sysDomain = getDomain(serverName);
         SysSite site = cachedSiteMap.get(sysDomain);
         if (empty(site)) {
             if (notEmpty(sysDomain.getId())) {

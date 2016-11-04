@@ -117,7 +117,7 @@ public class UserController extends AbstractController {
         String emailTitle = config.get(CONFIG_EMAIL_TITLE);
         String emailPath = config.get(CONFIG_EMAIL_PATH);
         if (!verifyNotEmpty("email", email, model) && !verifyNotEmpty("email.config", emailTitle, model)
-                && !verifyNotEmpty("config", emailTitle, model) && !verifyNotEMail("email.config", emailPath, model)
+                && !verifyNotEmpty("email.config", emailPath, model) && !verifyNotEMail("email", email, model)
                 && verifyHasExist("email", service.findByEmail(site.getId(), email), model)) {
             SysUser user = getUserFromSession(session);
             SysEmailToken sysEmailToken = new SysEmailToken();

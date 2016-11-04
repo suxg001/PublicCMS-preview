@@ -50,11 +50,11 @@ public abstract class AbstractController extends BaseController {
     protected SiteComponent siteComponent;
 
     protected SysDomain getDomain(HttpServletRequest request) {
-        return siteComponent.getDomain(request.getServerName(), request.getServerPort());
+        return siteComponent.getDomain(request.getServerName());
     }
 
     protected SysSite getSite(HttpServletRequest request) {
-        return siteComponent.getSite(request.getServerName(), request.getServerPort());
+        return siteComponent.getSite(request.getServerName());
     }
 
     protected static MappingJacksonValue getMappingJacksonValue(Object object, String callback) {

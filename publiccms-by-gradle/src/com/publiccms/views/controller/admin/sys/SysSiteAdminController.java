@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.publiccms.common.base.AbstractController;
 import com.publiccms.entities.log.LogOperate;
+import com.publiccms.entities.sys.SysDept;
 import com.publiccms.entities.sys.SysDomain;
 import com.publiccms.entities.sys.SysRole;
 import com.publiccms.entities.sys.SysRoleUser;
 import com.publiccms.entities.sys.SysSite;
 import com.publiccms.entities.sys.SysUser;
 import com.publiccms.logic.service.log.LogLoginService;
+import com.publiccms.logic.service.sys.SysDeptService;
 import com.publiccms.logic.service.sys.SysDomainService;
 import com.publiccms.logic.service.sys.SysRoleService;
 import com.publiccms.logic.service.sys.SysRoleUserService;
@@ -40,15 +42,17 @@ public class SysSiteAdminController extends AbstractController {
     @Autowired
     private SysUserService userService;
     @Autowired
+    private SysDeptService deptService;
+    @Autowired
     private SysRoleUserService roleUserService;
     @Autowired
     private SysDomainService domainService;
-    
+
     private String[] ignoreProperties = new String[] { "id" };
 
     @RequestMapping("save")
-    public String save(SysSite entity, String roleName, String userName, String password, HttpServletRequest request,
-            HttpSession session, ModelMap model) {
+    public String save(SysSite entity, String domainName, String roleName, String deptName, String userName, String password,
+            HttpServletRequest request, HttpSession session, ModelMap model) {
         SysSite site = getSite(request);
         if (!entity.isUseStatic()) {
             entity.setSitePath(entity.getDynamicPath());
@@ -66,9 +70,13 @@ public class SysSiteAdminController extends AbstractController {
                 return TEMPLATE_ERROR;
             }
             service.save(entity);
+            SysDomain domain = new SysDomain(domainName, entity.getId());
+            domainService.save(domain);
+            SysDept dept = new SysDept(entity.getId(), deptName, null, null, null, true, true);
+            deptService.save(dept);// 初始化部门
             SysRole role = new SysRole(entity.getId(), roleName, true, true);
             roleService.save(role);// 初始化角色
-            SysUser user = new SysUser(entity.getId(), userName, encode(password), userName, null, role.getId().toString(), null,
+            SysUser user = new SysUser(entity.getId(), userName, encode(password), userName, dept.getId(), role.getId().toString(), null,
                     false, true, false, null, null, 0, getDate());
             userService.save(user);// 初始化用户
             roleUserService.save(new SysRoleUser(role.getId(), user.getId()));// 初始化角色用户映射

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import com.publiccms.common.interceptor.web.WebContextInterceptor;
 import com.publiccms.common.view.WebFreeMarkerViewResolver;
+import com.publiccms.common.view.web.DefaultWebFreeMarkerView;
 import com.publiccms.common.view.web.WebFreeMarkerView;
 import com.publiccms.logic.component.CacheComponent;
 import com.publiccms.logic.component.TemplateComponent;
@@ -40,10 +41,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * @return
      */
     @Bean
-    public ViewResolver webViewResolver() {
+    public ViewResolver defaultWebViewResolver() {
         FreeMarkerViewResolver bean = new FreeMarkerViewResolver();
         bean.setOrder(1);
-        bean.setViewClass(WebFreeMarkerView.class);
+        bean.setViewClass(DefaultWebFreeMarkerView.class);
         bean.setPrefix("/web/");
         bean.setContentType("text/html;charset=UTF-8");
         cacheComponent.registerCachingViewResolverList(bean);
@@ -57,7 +58,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * @throws IOException
      */
     @Bean
-    public WebFreeMarkerViewResolver viewResolver(TemplateComponent templateComponent) {
+    public WebFreeMarkerViewResolver webViewResolver(TemplateComponent templateComponent) {
         WebFreeMarkerViewResolver bean = new WebFreeMarkerViewResolver();
         bean.setOrder(0);
         bean.setConfiguration(templateComponent.getWebConfiguration());

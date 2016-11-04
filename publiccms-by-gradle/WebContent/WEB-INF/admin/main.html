@@ -291,11 +291,7 @@ echarts.init(document.getElementById('disk')).setOption({
 	<@_masterSite>
 		<p>
 			<label>节点ID:</label>
-			${cluster}
-		</p>
-		<p>
-			<label>节点属性:</label>
-			${master?string('管理节点','[普通节点]')}
+			<a href="sysCluster/list"  title="<i class='icon-code-fork icon-large'></i> 节点列表" target="navTab" rel="sysCluster/list">${cluster}</a> [${master?string('管理节点','普通节点')}]
 		</p>
 		<script>
 			$.getJSON('http://cms.publiccms.com/api/directive/version?callback=?',function(data){

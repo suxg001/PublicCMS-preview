@@ -22,6 +22,7 @@ public class EmailTemplateConfigComponent extends Base implements Configable {
     public static final String CONFIG_SUBCODE = "template";
     public static final String CONFIG_EMAIL_TITLE = "email_title";
     public static final String CONFIG_EMAIL_PATH = "email_path";
+    public static final String CONFIG_DESCRIPTION = CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_SUBCODE;
 
     @Autowired
     private ConfigComponent configComponent;
@@ -35,10 +36,10 @@ public class EmailTemplateConfigComponent extends Base implements Configable {
     public List<ExtendField> getExtendFieldList(String subcode, Locale locale) {
         List<ExtendField> extendFieldList = new ArrayList<ExtendField>();
         if (CONFIG_SUBCODE.equals(subcode)) {
-            extendFieldList.add(new ExtendField(false, getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_EMAIL_TITLE),
-                    null, CONFIG_EMAIL_TITLE, "text", null));
-            extendFieldList.add(new ExtendField(false, getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_EMAIL_PATH),
-                    null, CONFIG_EMAIL_PATH, "template", null));
+            extendFieldList.add(new ExtendField(false, getMessage(locale, CONFIG_DESCRIPTION + "." + CONFIG_EMAIL_TITLE), null,
+                    CONFIG_EMAIL_TITLE, "text", null));
+            extendFieldList.add(new ExtendField(false, getMessage(locale, CONFIG_DESCRIPTION + "." + CONFIG_EMAIL_PATH), null,
+                    CONFIG_EMAIL_PATH, "template", null));
         }
         return extendFieldList;
     }
@@ -55,6 +56,6 @@ public class EmailTemplateConfigComponent extends Base implements Configable {
 
     @Override
     public String getSubcodeDescription(String subcode, Locale locale) {
-        return getMessage(locale, CONFIGPREFIX + CONFIG_CODE + "." + CONFIG_SUBCODE);
+        return getMessage(locale, CONFIG_DESCRIPTION);
     }
 }

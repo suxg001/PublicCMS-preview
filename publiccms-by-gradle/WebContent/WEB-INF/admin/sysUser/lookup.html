@@ -25,7 +25,7 @@
 						<select class="combox" name="superuserAccess">
 							<option value=""${(!superuserAccess?has_content)?then(' selected="true"','')}>用户身份</option>
 							<option value="false"${(superuserAccess?has_content&&"false"==superuserAccess)?then(' selected="true"','')}>普通用户</option>
-							<option value="true"${(superuserAccess?has_content&&"true"==superuserAccess)?then(' selected="true"','')}>超级管理员</option>
+							<option value="true"${(superuserAccess?has_content&&"true"==superuserAccess)?then(' selected="true"','')}>管理员</option>
 						</select>
 					</td>
 					<td>
@@ -41,13 +41,13 @@
 						<label>注册日期:</label>
 						<input type="text" name="startRegisteredDate" class="date" dateFmt="yyyy-MM-dd" maxDate="{%y}-%M-{%d}" value="${startRegisteredDate!}" />
 						<span>-</span>
-						<input type="text" name="endRegisteredDate" class="date" dateFmt="yyyy-MM-dd" maxDate="{%y}-%M-{%d}" value="${endRegisteredDate!}" />
+						<input type="text" name="endRegisteredDate" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" maxDate="{%y}-%M-{%d}" value="${endRegisteredDate!}" />
 					</td>
 					<td colspan="2">
 						<label>上次登录:</label>
 						<input type="text" name="startLastLoginDate" class="date" dateFmt="yyyy-MM-dd" maxDate="{%y}-%M-{%d}" value="${startLastLoginDate!}" />
 						<span>-</span>
-						<input type="text" name="endLastLoginDate" class="date" dateFmt="yyyy-MM-dd" maxDate="{%y}-%M-{%d}" value="${endLastLoginDate!}" />
+						<input type="text" name="endLastLoginDate" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" maxDate="{%y}-%M-{%d}" value="${endLastLoginDate!}" />
 					</td>
 				</tr>
 			</table>
@@ -83,7 +83,7 @@
 					<a class="btnSelect" href="javascript:;" onclick="$.bringBack({'${field!'userId'}':'${a.id}','${nickNameField!'nickName'}':'${(a.nickName?js_string)!}'});return false;" title="选择">选择</a>
 				</td>
 				<td>${(a.name)!}</td>
-				<td>${(a.nickName)!}${(a.superuserAccess)?then('[<font color="red">超级管理员</font>]','')}</td>
+				<td>${(a.nickName)!}${(a.superuserAccess)?then('[<font color="red">管理员</font>]','')}</td>
 				<td>${(a.email)!}</td>
 				<td>${a.emailChecked?then('已验证','未验证')}</td>
 				<td>${a.lastLoginDate!}</td>

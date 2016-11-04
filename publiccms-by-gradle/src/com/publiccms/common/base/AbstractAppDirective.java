@@ -21,7 +21,7 @@ public abstract class AbstractAppDirective extends BaseHttpDirective implements 
 
     public SysSite getSite(RenderHandler handler) throws IOException, Exception {
         HttpServletRequest request = handler.getRequest();
-        return siteComponent.getSite(request.getServerName(), request.getServerPort());
+        return siteComponent.getSite(request.getServerName());
     }
 
     public abstract boolean needUserToken();
