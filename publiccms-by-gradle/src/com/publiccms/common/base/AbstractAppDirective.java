@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.publiccms.common.base.app.App;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.SiteComponent;
+import com.publiccms.component.SiteComponent;
 import com.sanluan.common.directive.BaseHttpDirective;
 import com.sanluan.common.handler.RenderHandler;
 

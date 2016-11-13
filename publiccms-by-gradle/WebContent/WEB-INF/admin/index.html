@@ -25,7 +25,7 @@
 	<script src="${res}/ueditor/ueditor.all.min.js"></script>
 	<script src="${res}/ueditor/lang/zh-cn/zh-cn.js"></script>
 
-	<script src="${res}/js/dwz.min.js?0801"></script>
+	<script src="${res}/js/dwz.min.js?1107"></script>
 	<script src="${res}/js/dwz.regional.zh.js"></script>
 	
 	<link href="${res}/codemirror/lib/codemirror.css" rel="stylesheet" type="text/css" />
@@ -41,7 +41,6 @@
 $(function(){
 	DWZ.init("${res}/dwz.frag.html", {
 		loginUrl:"login_dialog.html", loginTitle:"登录",
-		statusCode:{ok:200, error:300, timeout:301}, //【可选】
 		pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"orderField", orderDirection:"orderType"}, //【可选】
 		debug:false,	// 调试模式 【true|false】
 		callback:function(){
@@ -50,12 +49,6 @@ $(function(){
 		}
 	});
 });
-var ueditor_loader={};
-function editorSyn(ename){
-	$.each(ueditor_loader[ename],function(i){
-		this.sync();
-	});
-}
 	</script>
 </head>
 <body scroll="no">

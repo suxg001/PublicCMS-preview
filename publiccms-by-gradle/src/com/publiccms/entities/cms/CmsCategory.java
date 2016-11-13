@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.publiccms.common.spi.Staticable;
+import com.publiccms.common.spi.Static;
 import com.sanluan.common.source.entity.MyColumn;
 
 /**
@@ -18,7 +18,7 @@ import com.sanluan.common.source.entity.MyColumn;
  */
 @Entity
 @Table(name = "cms_category")
-public class CmsCategory implements java.io.Serializable, Staticable {
+public class CmsCategory implements java.io.Serializable, Static {
 
     /**
      * 

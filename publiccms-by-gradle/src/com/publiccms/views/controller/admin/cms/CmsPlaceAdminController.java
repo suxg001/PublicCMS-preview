@@ -2,9 +2,9 @@ package com.publiccms.views.controller.admin.cms;
 
 import static com.publiccms.common.tools.ExtendUtils.getExtendString;
 import static com.publiccms.common.tools.ExtendUtils.getExtentDataMap;
-import static com.publiccms.logic.component.TemplateComponent.INCLUDE_DIRECTORY;
-import static com.publiccms.logic.service.cms.CmsPlaceService.ITEM_TYPE_CUSTOM;
-import static com.publiccms.logic.service.cms.CmsPlaceService.STATUS_NORMAL;
+import static com.publiccms.component.template.TemplateComponent.INCLUDE_DIRECTORY;
+import static com.publiccms.service.cms.CmsPlaceService.ITEM_TYPE_CUSTOM;
+import static com.publiccms.service.cms.CmsPlaceService.STATUS_NORMAL;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static org.apache.commons.lang3.StringUtils.join;
 
@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.publiccms.common.base.AbstractController;
+import com.publiccms.component.template.MetadataComponent;
 import com.publiccms.entities.cms.CmsPlace;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.MetadataComponent;
-import com.publiccms.logic.service.cms.CmsPlaceAttributeService;
-import com.publiccms.logic.service.cms.CmsPlaceService;
-import com.publiccms.logic.service.log.LogLoginService;
+import com.publiccms.service.cms.CmsPlaceAttributeService;
+import com.publiccms.service.cms.CmsPlaceService;
+import com.publiccms.service.log.LogLoginService;
 import com.publiccms.views.pojo.CmsPlaceParamters;
 
 /**

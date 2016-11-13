@@ -16,8 +16,8 @@ import com.publiccms.common.base.AbstractController;
 import com.publiccms.entities.cms.CmsWord;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.service.cms.CmsWordService;
-import com.publiccms.logic.service.log.LogLoginService;
+import com.publiccms.service.cms.CmsWordService;
+import com.publiccms.service.log.LogLoginService;
 
 @Controller
 @RequestMapping("cmsWord")

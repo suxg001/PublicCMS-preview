@@ -1,7 +1,7 @@
 package com.publiccms.views.directive.task;
 
-import static com.publiccms.logic.component.SiteComponent.getFullFileName;
-import static com.publiccms.logic.component.TemplateComponent.INCLUDE_DIRECTORY;
+import static com.publiccms.component.SiteComponent.getFullFileName;
+import static com.publiccms.component.template.TemplateComponent.INCLUDE_DIRECTORY;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 
 import com.publiccms.common.base.AbstractTaskDirective;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.FileComponent;
-import com.publiccms.logic.component.FileComponent.FileInfo;
-import com.publiccms.logic.component.MetadataComponent;
-import com.publiccms.logic.component.TemplateComponent;
+import com.publiccms.component.FileComponent;
+import com.publiccms.component.FileComponent.FileInfo;
+import com.publiccms.component.template.MetadataComponent;
+import com.publiccms.component.template.TemplateComponent;
 import com.publiccms.views.pojo.CmsPageMetadata;
 import com.publiccms.views.pojo.CmsPlaceMetadata;
 import com.sanluan.common.handler.RenderHandler;

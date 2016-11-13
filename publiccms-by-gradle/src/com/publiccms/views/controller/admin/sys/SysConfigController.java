@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.publiccms.common.base.AbstractController;
+import com.publiccms.component.config.ConfigComponent;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysConfig;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.ConfigComponent;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysConfigService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysConfigService;
 import com.publiccms.views.pojo.SysConfigParamters;
 
 @Controller

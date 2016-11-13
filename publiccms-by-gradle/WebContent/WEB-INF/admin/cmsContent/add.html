@@ -10,7 +10,7 @@
 <@_model id=modelId!><#assign model=object/></@_model>
 <script>
 function clickAddTag(){
-	$('.tags .button').click();
+	$('.tags .button',navTab.getCurrentPanel()).click();
 }
 </script>
 <form method="post" action="cmsContent/save.do?callbackType=closeCurrent&navTabId=cmsContent/list" class="pageForm required-validate" onsubmit="clickAddTag(); return validateCallback(this,navTabAjaxDone);">

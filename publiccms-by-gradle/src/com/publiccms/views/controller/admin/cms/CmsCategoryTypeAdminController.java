@@ -18,11 +18,11 @@ import com.publiccms.entities.cms.CmsCategoryType;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysExtend;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.service.cms.CmsCategoryService;
-import com.publiccms.logic.service.cms.CmsCategoryTypeService;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysExtendFieldService;
-import com.publiccms.logic.service.sys.SysExtendService;
+import com.publiccms.service.cms.CmsCategoryService;
+import com.publiccms.service.cms.CmsCategoryTypeService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysExtendFieldService;
+import com.publiccms.service.sys.SysExtendService;
 import com.publiccms.views.pojo.CmsCategoryTypeParamters;
 
 /**

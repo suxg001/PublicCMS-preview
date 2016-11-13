@@ -80,7 +80,7 @@
 				<td>${a.uuid!}</td>
 				<td>${a.userId!}</td>
 				<td>${(userMap[a.userId?string].nickName)!}</td>
-				<td>${(a.disabled)?then('<font color="red">禁用</font>','正常')}</td>
+				<td>${(a.disabled)?then('<font color="red">禁用</font>','正常')?no_esc}</td>
 				<td>${a.allowPush?string('允许','')}</td>
 				<td>${a.lastLoginDate!}</td>
 				<td>${a.lastLoginIp!}</td>

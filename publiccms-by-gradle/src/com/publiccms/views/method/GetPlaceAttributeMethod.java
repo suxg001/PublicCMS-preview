@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.publiccms.entities.cms.CmsPlaceAttribute;
-import com.publiccms.logic.service.cms.CmsPlaceAttributeService;
+import com.publiccms.service.cms.CmsPlaceAttributeService;
 import com.sanluan.common.base.BaseMethod;
 
 import freemarker.template.TemplateModelException;

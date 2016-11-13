@@ -16,7 +16,7 @@
 			<dt>用户名:</dt>
 			<dd>
 				<input class="required" name="name" type="text" maxlength="20" size="20" value="${(a.name)!}"/>
-				<label><input name="superuserAccess" type="checkbox" onclick="if($(this).is(':checked')){$('.superuserAccess').show();}else{$('.superuserAccess').hide();}"/>管理员</label>
+				<label><input name="superuserAccess" type="checkbox" onclick="if($(this).is(':checked')){$('.superuserAccess',navTab.getCurrentPanel()).show();}else{$('.superuserAccess',navTab.getCurrentPanel()).hide();}"/>管理员</label>
 			</dd>
 		</dl>
 		<dl class="nowrap superuserAccess" style="display:none">

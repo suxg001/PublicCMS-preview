@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.publiccms.common.base.AbstractTaskDirective;
+import com.publiccms.component.template.TemplateComponent;
 import com.publiccms.entities.cms.CmsCategory;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.TemplateComponent;
-import com.publiccms.logic.service.cms.CmsCategoryService;
+import com.publiccms.service.cms.CmsCategoryService;
 import com.sanluan.common.handler.RenderHandler;
 
 @Component

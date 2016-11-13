@@ -22,8 +22,8 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import com.publiccms.entities.sys.SysDomain;
 import com.publiccms.entities.sys.SysSite;
 import com.publiccms.entities.sys.SysUser;
-import com.publiccms.logic.component.SiteComponent;
-import com.publiccms.logic.service.log.LogOperateService;
+import com.publiccms.component.SiteComponent;
+import com.publiccms.service.log.LogOperateService;
 import com.sanluan.common.base.BaseController;
 
 import eu.bitwalker.useragentutils.DeviceType;

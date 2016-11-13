@@ -1,6 +1,6 @@
 package com.publiccms.views.directive.tools;
 
-import static com.publiccms.logic.component.TemplateComponent.INCLUDE_DIRECTORY;
+import static com.publiccms.component.template.TemplateComponent.INCLUDE_DIRECTORY;
 
 import java.io.IOException;
 
@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.publiccms.common.base.AbstractTemplateDirective;
+import com.publiccms.component.template.MetadataComponent;
+import com.publiccms.component.template.TemplateComponent;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.MetadataComponent;
-import com.publiccms.logic.component.TemplateComponent;
 import com.publiccms.views.pojo.CmsPlaceMetadata;
 import com.sanluan.common.handler.RenderHandler;
 

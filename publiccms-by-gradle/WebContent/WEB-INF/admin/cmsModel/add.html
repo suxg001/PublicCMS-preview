@@ -19,7 +19,7 @@
 				<dd>
 					<input class="required" name="name" type="text" maxlength="20" size="20" value="${(a.name)!}"/>
 					<label>
-						<input name="onlyUrl" type="checkbox" onclick="if($(this).is(':checked')){$('.onlyUrl').hide();$('.onlyUrl input[type=text]',navTab.getCurrentPanel()).val('');}else{$('.onlyUrl').show();}"/>
+						<input name="onlyUrl" type="checkbox" onclick="if($(this).is(':checked')){$('.onlyUrl',navTab.getCurrentPanel()).hide();$('.onlyUrl input[type=text]',navTab.getCurrentPanel()).val('');}else{$('.onlyUrl').show();}"/>
 						链接
 					</label>
 					<label class="onlyUrl"><input name="hasChild" type="checkbox"/>拥有子模型</label>

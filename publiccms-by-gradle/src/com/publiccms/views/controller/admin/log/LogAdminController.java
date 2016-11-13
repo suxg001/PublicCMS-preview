@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.publiccms.common.base.AbstractController;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.log.LogTaskService;
-import com.publiccms.logic.service.log.LogUploadService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.log.LogTaskService;
+import com.publiccms.service.log.LogUploadService;
 
 @Controller
 public class LogAdminController extends AbstractController {

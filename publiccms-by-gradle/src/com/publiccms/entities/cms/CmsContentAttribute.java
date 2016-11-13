@@ -87,7 +87,7 @@ public class CmsContentAttribute implements java.io.Serializable {
         this.data = data;
     }
 
-    @Column(name = "text", length = 65535)
+    @Column(name = "text")
     public String getText() {
         return this.text;
     }

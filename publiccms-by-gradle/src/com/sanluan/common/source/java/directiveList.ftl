@@ -14,7 +14,7 @@ import com.sanluan.common.handler.RenderHandler;
 import com.sanluan.common.handler.PageHandler;
 
 @Component
-public class ${entityName}ListDirective extends AbstractTemplateDirective {
+public class ${entityName}List${directiveSuffix} extends AbstractTemplateDirective {
 
     @Override
     public void execute(RenderHandler handler) throws IOException, Exception {

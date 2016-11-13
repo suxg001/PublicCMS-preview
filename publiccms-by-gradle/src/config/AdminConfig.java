@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import com.publiccms.common.interceptor.admin.AdminContextInterceptor;
 import com.publiccms.common.view.admin.AdminFreeMarkerView;
-import com.publiccms.logic.component.CacheComponent;
+import com.publiccms.component.cache.CacheComponent;
 
 /**
  * 

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import com.publiccms.common.base.AbstractTemplateDirective;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.StatisticsComponent;
-import com.publiccms.logic.service.cms.CmsContentService;
+import com.publiccms.component.StatisticsComponent;
+import com.publiccms.service.cms.CmsContentService;
 import com.sanluan.common.handler.PageHandler;
 import com.sanluan.common.handler.RenderHandler;
 

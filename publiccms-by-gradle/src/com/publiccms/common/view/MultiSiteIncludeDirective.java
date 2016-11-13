@@ -1,6 +1,6 @@
 package com.publiccms.common.view;
 
-import static com.publiccms.logic.component.SiteComponent.getFullFileName;
+import static com.publiccms.component.SiteComponent.getFullFileName;
 import static com.sanluan.common.tools.TemplateModelUtils.converString;
 
 import java.io.IOException;

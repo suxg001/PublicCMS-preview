@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.publiccms.entities.sys.SysFtpUser;
-import com.publiccms.logic.service.sys.SysFtpUserService;
+import com.publiccms.service.sys.SysFtpUserService;
 import com.publiccms.common.base.AbstractTemplateDirective;
 import com.sanluan.common.handler.RenderHandler;
 

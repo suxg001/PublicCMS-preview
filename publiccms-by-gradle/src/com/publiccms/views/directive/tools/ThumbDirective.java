@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.publiccms.common.base.AbstractTemplateDirective;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.FileComponent;
+import com.publiccms.component.FileComponent;
 import com.sanluan.common.handler.RenderHandler;
 
 import net.coobird.thumbnailator.Thumbnails;

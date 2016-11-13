@@ -2,11 +2,11 @@ package com.publiccms.views.controller.web;
 
 import static com.publiccms.common.constants.CommonConstants.getCookiesUser;
 import static com.publiccms.common.constants.CommonConstants.getCookiesUserSplit;
-import static com.publiccms.common.spi.Configable.CONFIG_CODE_SITE;
-import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_LOGIN_PATH;
-import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_REGISTER_PATH;
-import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_SUBCODE;
-import static com.publiccms.logic.service.log.LogLoginService.CHANNEL_WEB;
+import static com.publiccms.common.spi.Config.CONFIG_CODE_SITE;
+import static com.publiccms.component.config.LoginConfigComponent.CONFIG_LOGIN_PATH;
+import static com.publiccms.component.config.LoginConfigComponent.CONFIG_REGISTER_PATH;
+import static com.publiccms.component.config.LoginConfigComponent.CONFIG_SUBCODE;
+import static com.publiccms.service.log.LogLoginService.CHANNEL_WEB;
 import static com.sanluan.common.tools.RequestUtils.addCookie;
 import static com.sanluan.common.tools.RequestUtils.getCookie;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
@@ -30,15 +30,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.publiccms.common.base.AbstractController;
+import com.publiccms.component.config.ConfigComponent;
 import com.publiccms.entities.log.LogLogin;
 import com.publiccms.entities.sys.SysDomain;
 import com.publiccms.entities.sys.SysSite;
 import com.publiccms.entities.sys.SysUser;
 import com.publiccms.entities.sys.SysUserToken;
-import com.publiccms.logic.component.ConfigComponent;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysUserService;
-import com.publiccms.logic.service.sys.SysUserTokenService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysUserService;
+import com.publiccms.service.sys.SysUserTokenService;
 
 /**
  * 

@@ -1,7 +1,7 @@
 package com.publiccms.views.controller.admin;
 
 import static com.publiccms.common.constants.CommonConstants.getDefaultPage;
-import static com.publiccms.logic.service.log.LogLoginService.CHANNEL_WEB_MANAGER;
+import static com.publiccms.service.log.LogLoginService.CHANNEL_WEB_MANAGER;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static com.sanluan.common.tools.VerificationUtils.encode;
 import static org.apache.commons.lang3.StringUtils.trim;
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.publiccms.common.base.AbstractController;
+import com.publiccms.component.cache.CacheComponent;
 import com.publiccms.entities.log.LogLogin;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysSite;
 import com.publiccms.entities.sys.SysUser;
-import com.publiccms.logic.component.CacheComponent;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysUserService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysUserService;
 
 @Controller
 public class LoginAdminController extends AbstractController {

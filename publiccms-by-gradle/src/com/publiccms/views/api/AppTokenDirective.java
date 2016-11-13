@@ -12,8 +12,8 @@ import com.publiccms.common.base.AbstractAppV1Directive;
 import com.publiccms.entities.sys.SysApp;
 import com.publiccms.entities.sys.SysAppToken;
 import com.publiccms.entities.sys.SysUser;
-import com.publiccms.logic.service.sys.SysAppService;
-import com.publiccms.logic.service.sys.SysAppTokenService;
+import com.publiccms.service.sys.SysAppService;
+import com.publiccms.service.sys.SysAppTokenService;
 import com.sanluan.common.handler.RenderHandler;
 
 @Component

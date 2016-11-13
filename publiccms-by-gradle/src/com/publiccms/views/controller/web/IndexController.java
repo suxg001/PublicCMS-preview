@@ -1,9 +1,9 @@
 package com.publiccms.views.controller.web;
 
 import static com.publiccms.common.constants.CommonConstants.getDefaultPage;
-import static com.publiccms.common.spi.Configable.CONFIG_CODE_SITE;
-import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_LOGIN_PATH;
-import static com.publiccms.logic.component.config.LoginConfigComponent.CONFIG_SUBCODE;
+import static com.publiccms.common.spi.Config.CONFIG_CODE_SITE;
+import static com.publiccms.component.config.LoginConfigComponent.CONFIG_LOGIN_PATH;
+import static com.publiccms.component.config.LoginConfigComponent.CONFIG_SUBCODE;
 import static com.sanluan.common.tools.RequestUtils.getEncodePath;
 import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.split;
@@ -22,9 +22,9 @@ import org.springframework.web.util.UrlPathHelper;
 import com.publiccms.common.base.AbstractController;
 import com.publiccms.entities.sys.SysDomain;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.ConfigComponent;
-import com.publiccms.logic.component.MetadataComponent;
-import com.publiccms.logic.component.TemplateCacheComponent;
+import com.publiccms.component.config.ConfigComponent;
+import com.publiccms.component.template.MetadataComponent;
+import com.publiccms.component.template.TemplateCacheComponent;
 import com.publiccms.views.pojo.CmsPageMetadata;
 import com.sanluan.common.servlet.PageNotFoundException;
 
@@ -79,7 +79,14 @@ public class IndexController extends AbstractController {
                     billingRequestParamtersToModel(request, metadata.getAcceptParamters(), model);
                 }
                 if (notEmpty(metadata.getCacheTime()) && 10 <= metadata.getCacheTime()) {
-                    return templateCacheComponent.getCachedPath(requestPath, realRequestPath, metadata.getCacheTime() * 1000,
+                    int cacheMillisTime = metadata.getCacheTime() * 1000;
+                    String cacheControl = request.getHeader("Cache-Control");
+                    String pragma = request.getHeader("Pragma");
+                    if (notEmpty(cacheControl) && "no-cache".equalsIgnoreCase(cacheControl)
+                            || notEmpty(pragma) && "no-cache".equalsIgnoreCase(pragma)) {
+                        cacheMillisTime = 0;
+                    }
+                    return templateCacheComponent.getCachedPath(requestPath, realRequestPath, cacheMillisTime,
                             metadata.getAcceptParamters(), site, request, model);
                 }
             } else {

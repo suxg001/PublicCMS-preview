@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.publiccms.entities.cms.CmsCategoryAttribute;
-import com.publiccms.logic.service.cms.CmsCategoryAttributeService;
+import com.publiccms.service.cms.CmsCategoryAttributeService;
 import com.sanluan.common.base.BaseMethod;
 
 import freemarker.template.TemplateModelException;
@@ -25,7 +25,7 @@ public class GetCategoryAttributeMethod extends BaseMethod {
     @SuppressWarnings("unchecked")
     @Override
     public Object exec(@SuppressWarnings("rawtypes") List arguments) throws TemplateModelException {
-        Integer id = getInteger(0, arguments);
+        Long id = getLong(0, arguments);
         if (notEmpty(id)) {
             CmsCategoryAttribute entity = service.getEntity(id);
             if (notEmpty(entity)) {

@@ -1,6 +1,6 @@
 package com.publiccms.views.controller.admin.sys;
 
-import static com.publiccms.logic.service.log.LogLoginService.CHANNEL_WEB_MANAGER;
+import static com.publiccms.service.log.LogLoginService.CHANNEL_WEB_MANAGER;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 
 import java.io.IOException;
@@ -18,8 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.publiccms.common.base.AbstractController;
 import com.publiccms.entities.log.LogUpload;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.FileComponent;
-import com.publiccms.logic.service.log.LogUploadService;
+import com.publiccms.component.FileComponent;
+import com.publiccms.service.log.LogUploadService;
 
 @Controller
 @RequestMapping("file")

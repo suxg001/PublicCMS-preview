@@ -2,7 +2,7 @@ package com.publiccms.views.controller.web.changyan;
 
 import static com.publiccms.common.constants.CommonConstants.getCookiesUser;
 import static com.publiccms.common.constants.CommonConstants.getCookiesUserSplit;
-import static com.publiccms.views.controller.web.changyan.tools.HmacSha1Utils.getSign;
+import static com.publiccms.service.log.LogLoginService.CHANNEL_WEB;
 import static com.sanluan.common.tools.RequestUtils.addCookie;
 import static com.sanluan.common.tools.RequestUtils.getCookie;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
@@ -24,9 +24,9 @@ import com.publiccms.entities.log.LogLogin;
 import com.publiccms.entities.sys.SysSite;
 import com.publiccms.entities.sys.SysUser;
 import com.publiccms.entities.sys.SysUserToken;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysUserService;
-import com.publiccms.logic.service.sys.SysUserTokenService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysUserService;
+import com.publiccms.service.sys.SysUserTokenService;
 import com.publiccms.views.controller.web.changyan.pojo.LoginResult;
 import com.publiccms.views.controller.web.changyan.pojo.LogoutResult;
 import com.publiccms.views.controller.web.changyan.pojo.User;
@@ -62,7 +62,7 @@ public class ChangyanController extends AbstractController {
             setUserToSession(session, entity);
             addCookie(request.getContextPath(), response, getCookiesUser(), entity.getId() + getCookiesUserSplit() + authToken,
                     Integer.MAX_VALUE, null);
-            sysUserTokenService.save(new SysUserToken(authToken, site.getId(), entity.getId(), CHANNEL, getDate(), ip));
+            sysUserTokenService.save(new SysUserToken(authToken, site.getId(), entity.getId(), CHANNEL_WEB, getDate(), ip));
             loginResult.setUser_id(entity.getId());
         } else {
             SysUser sysuser = service.getEntity(user.getUser_id());
@@ -72,7 +72,7 @@ public class ChangyanController extends AbstractController {
                 String authToken = UUID.randomUUID().toString();
                 addCookie(request.getContextPath(), response, getCookiesUser(),
                         sysuser.getId() + getCookiesUserSplit() + authToken, Integer.MAX_VALUE, null);
-                sysUserTokenService.save(new SysUserToken(authToken, site.getId(), sysuser.getId(), CHANNEL, getDate(), ip));
+                sysUserTokenService.save(new SysUserToken(authToken, site.getId(), sysuser.getId(), CHANNEL_WEB, getDate(), ip));
                 service.updateLoginStatus(sysuser.getId(), ip);
                 logLoginService
                         .save(new LogLogin(site.getId(), sysuser.getName(), sysuser.getId(), ip, CHANNEL, true, getDate(), null));
@@ -108,7 +108,6 @@ public class ChangyanController extends AbstractController {
             User user = new User();
             user.setUser_id(sysUser.getId());
             user.setNickname(sysUser.getNickName());
-            user.setSign(getSign("", sysUser.getId().toString(), sysUser.getNickName()));
             userinfo.setUser(user);
         } else {
             userinfo.setIs_login(0);// 用户未登录

@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.publiccms.entities.cms.CmsWord;
-import com.publiccms.logic.service.cms.CmsWordService;
+import com.publiccms.service.cms.CmsWordService;
 import com.publiccms.common.base.AbstractTemplateDirective;
 import com.sanluan.common.handler.RenderHandler;
 

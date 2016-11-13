@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.publiccms.common.base.AbstractAppDirective;
 import com.publiccms.common.base.AbstractController;
-import com.publiccms.logic.component.TemplateComponent;
+import com.publiccms.component.template.TemplateComponent;
 import com.sanluan.common.handler.HttpParameterHandler;
 
 /**

@@ -17,8 +17,8 @@ import com.publiccms.common.interceptor.web.WebContextInterceptor;
 import com.publiccms.common.view.WebFreeMarkerViewResolver;
 import com.publiccms.common.view.web.DefaultWebFreeMarkerView;
 import com.publiccms.common.view.web.WebFreeMarkerView;
-import com.publiccms.logic.component.CacheComponent;
-import com.publiccms.logic.component.TemplateComponent;
+import com.publiccms.component.cache.CacheComponent;
+import com.publiccms.component.template.TemplateComponent;
 
 /**
  * 

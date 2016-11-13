@@ -19,11 +19,11 @@ import com.publiccms.entities.sys.SysMoudle;
 import com.publiccms.entities.sys.SysRole;
 import com.publiccms.entities.sys.SysRoleMoudle;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysMoudleService;
-import com.publiccms.logic.service.sys.SysRoleAuthorizedService;
-import com.publiccms.logic.service.sys.SysRoleMoudleService;
-import com.publiccms.logic.service.sys.SysRoleService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysMoudleService;
+import com.publiccms.service.sys.SysRoleAuthorizedService;
+import com.publiccms.service.sys.SysRoleMoudleService;
+import com.publiccms.service.sys.SysRoleService;
 
 @Controller
 @RequestMapping("sysMoudle")

@@ -17,8 +17,8 @@ import com.publiccms.common.base.AbstractController;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysFtpUser;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysFtpUserService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysFtpUserService;
 
 /**
  * 

@@ -1,6 +1,6 @@
 package com.publiccms.views.controller.admin.cms;
 
-import static com.publiccms.logic.component.SiteComponent.getFullFileName;
+import static com.publiccms.component.SiteComponent.getFullFileName;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.publiccms.common.base.AbstractController;
+import com.publiccms.component.template.MetadataComponent;
+import com.publiccms.component.template.TemplateCacheComponent;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.MetadataComponent;
-import com.publiccms.logic.component.TemplateCacheComponent;
-import com.publiccms.logic.service.log.LogLoginService;
+import com.publiccms.service.log.LogLoginService;
 import com.publiccms.views.pojo.CmsPlaceParamters;
 import com.publiccms.views.pojo.CmsPageMetadata;
 

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.publiccms.entities.cms.CmsTag;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.service.cms.CmsTagService;
+import com.publiccms.service.cms.CmsTagService;
 import com.publiccms.common.base.AbstractTemplateDirective;
 import com.sanluan.common.handler.RenderHandler;
 

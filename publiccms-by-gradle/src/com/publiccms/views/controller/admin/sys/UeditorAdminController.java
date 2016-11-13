@@ -1,6 +1,6 @@
 package com.publiccms.views.controller.admin.sys;
 
-import static com.publiccms.logic.service.log.LogLoginService.CHANNEL_WEB_MANAGER;
+import static com.publiccms.service.log.LogLoginService.CHANNEL_WEB_MANAGER;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 import static org.apache.commons.io.FileUtils.copyInputStreamToFile;
@@ -33,8 +33,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.publiccms.common.base.AbstractController;
 import com.publiccms.entities.log.LogUpload;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.FileComponent;
-import com.publiccms.logic.service.log.LogUploadService;
+import com.publiccms.component.FileComponent;
+import com.publiccms.service.log.LogUploadService;
 import com.publiccms.views.pojo.UeditorConfig;
 import com.sanluan.common.handler.PageHandler;
 
@@ -72,7 +72,6 @@ public class UeditorAdminController extends AbstractController {
             put("image/bmp", ".bmp");
         }
     };
-    CloseableHttpClient httpclient = HttpClients.createDefault();
 
     @RequestMapping(params = "action=" + ACTION_CONFIG)
     @ResponseBody
@@ -168,7 +167,9 @@ public class UeditorAdminController extends AbstractController {
     @ResponseBody
     public Map<String, Object> catchimage(HttpServletRequest request, HttpSession session) {
         SysSite site = getSite(request);
+        CloseableHttpClient httpclient = null;
         try {
+            httpclient = HttpClients.createDefault();
             String[] files = request.getParameterValues(FIELD_NAME + "[]");
             if (notEmpty(files)) {
                 List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -205,6 +206,14 @@ public class UeditorAdminController extends AbstractController {
         } catch (Exception e) {
             log.error(e.getMessage());
             return getResultMap(false);
+        } finally {
+            try {
+                if (notEmpty(httpclient)) {
+                    httpclient.close();
+                }
+            } catch (IOException e) {
+                log.error(e.getMessage());
+            }
         }
         return getResultMap(false);
     }

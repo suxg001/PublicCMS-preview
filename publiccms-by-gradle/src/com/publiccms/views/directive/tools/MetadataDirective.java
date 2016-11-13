@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.publiccms.common.base.AbstractTemplateDirective;
-import com.publiccms.logic.component.MetadataComponent;
+import com.publiccms.component.template.MetadataComponent;
 import com.sanluan.common.handler.RenderHandler;
 
 @Component

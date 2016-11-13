@@ -17,7 +17,7 @@ import com.sanluan.common.handler.PageHandler;
 
 @Service
 @Transactional
-public class ${entityName}Service extends BaseService<${entityName}> {
+public class ${entityName}${serviceSuffix} extends BaseService<${entityName}> {
 
     @Transactional(readOnly = true)
     public PageHandler getPage(<#include "../include_condition/condition.ftl">) {

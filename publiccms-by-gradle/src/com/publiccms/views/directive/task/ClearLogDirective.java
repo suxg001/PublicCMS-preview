@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 
 import com.publiccms.common.base.AbstractTaskDirective;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.log.LogOperateService;
-import com.publiccms.logic.service.log.LogTaskService;
-import com.publiccms.logic.service.log.LogUploadService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.log.LogOperateService;
+import com.publiccms.service.log.LogTaskService;
+import com.publiccms.service.log.LogUploadService;
 import com.sanluan.common.handler.RenderHandler;
 
 @Component

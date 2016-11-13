@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.publiccms.common.base.AbstractAppV1Directive;
 import com.publiccms.entities.sys.SysApp;
 import com.publiccms.entities.sys.SysUser;
-import com.publiccms.logic.service.cms.CmsContentService;
+import com.publiccms.service.cms.CmsContentService;
 import com.sanluan.common.handler.PageHandler;
 import com.sanluan.common.handler.RenderHandler;
 

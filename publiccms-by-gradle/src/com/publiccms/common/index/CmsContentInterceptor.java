@@ -4,7 +4,7 @@ import org.hibernate.search.indexes.interceptor.EntityIndexingInterceptor;
 import org.hibernate.search.indexes.interceptor.IndexingOverride;
 
 import com.publiccms.entities.cms.CmsContent;
-import com.publiccms.logic.service.cms.CmsContentService;
+import com.publiccms.service.cms.CmsContentService;
 
 public class CmsContentInterceptor implements EntityIndexingInterceptor<CmsContent> {
     @Override

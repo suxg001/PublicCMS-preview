@@ -15,7 +15,7 @@ import com.publiccms.common.base.AbstractController;
 
 @Controller
 @RequestMapping("${entityName?uncap_first}")
-public class ${entityName}Controller extends AbstractController {
+public class ${entityName}${controllerSuffix} extends AbstractController {
 
 	private String[] ignoreProperties = new String[]{"id"};
 

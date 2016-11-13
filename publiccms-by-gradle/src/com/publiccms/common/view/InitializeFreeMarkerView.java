@@ -1,6 +1,6 @@
 package com.publiccms.common.view;
 
-import static com.publiccms.logic.component.SiteComponent.expose;
+import static com.publiccms.component.SiteComponent.expose;
 import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 
 import java.util.Enumeration;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
-import com.publiccms.logic.component.SiteComponent;
+import com.publiccms.component.SiteComponent;
 
 /**
  * 

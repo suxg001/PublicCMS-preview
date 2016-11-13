@@ -1,6 +1,6 @@
 package com.publiccms.common.servlet;
 
-import static com.publiccms.logic.component.TemplateCacheComponent.CACHE_URL_PREFIX;
+import static com.publiccms.component.template.TemplateCacheComponent.CACHE_URL_PREFIX;
 import static org.springframework.web.servlet.view.UrlBasedViewResolver.FORWARD_URL_PREFIX;
 import static org.springframework.web.servlet.view.UrlBasedViewResolver.REDIRECT_URL_PREFIX;
 
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.View;
 
-import com.publiccms.logic.component.SiteComponent;
+import com.publiccms.component.SiteComponent;
 import com.sanluan.common.servlet.ErrorToNotFoundDispatcherServlet;
 
 /**

@@ -16,8 +16,8 @@ import com.publiccms.common.base.AbstractController;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysSite;
 import com.publiccms.entities.sys.SysUserToken;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysUserTokenService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysUserTokenService;
 
 @Controller
 @RequestMapping("sysUserToken")

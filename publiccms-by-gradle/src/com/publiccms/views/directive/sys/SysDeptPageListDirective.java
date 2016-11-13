@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.publiccms.logic.service.sys.SysDeptPageService;
+import com.publiccms.service.sys.SysDeptPageService;
 import com.publiccms.common.base.AbstractTemplateDirective;
 import com.sanluan.common.handler.PageHandler;
 import com.sanluan.common.handler.RenderHandler;

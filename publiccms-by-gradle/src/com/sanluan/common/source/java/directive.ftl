@@ -18,7 +18,7 @@ import com.publiccms.common.base.AbstractTemplateDirective;
 import com.sanluan.common.handler.RenderHandler;
 
 @Component
-public class ${entityName}Directive extends AbstractTemplateDirective {
+public class ${entityName}${directiveSuffix} extends AbstractTemplateDirective {
 
     @Override
     public void execute(RenderHandler handler) throws IOException, Exception {

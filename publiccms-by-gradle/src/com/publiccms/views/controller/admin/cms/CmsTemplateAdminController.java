@@ -1,8 +1,8 @@
 package com.publiccms.views.controller.admin.cms;
 
 import static com.publiccms.common.constants.CommonConstants.getDefaultPage;
-import static com.publiccms.logic.component.SiteComponent.getFullFileName;
-import static com.publiccms.logic.component.TemplateComponent.INCLUDE_DIRECTORY;
+import static com.publiccms.component.SiteComponent.getFullFileName;
+import static com.publiccms.component.template.TemplateComponent.INCLUDE_DIRECTORY;
 import static com.sanluan.common.tools.RequestUtils.getIpAddress;
 
 import java.io.File;
@@ -21,15 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.publiccms.common.base.AbstractController;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.CacheComponent;
-import com.publiccms.logic.component.FileComponent;
-import com.publiccms.logic.component.FileComponent.FileInfo;
-import com.publiccms.logic.component.MetadataComponent;
-import com.publiccms.logic.component.TemplateCacheComponent;
-import com.publiccms.logic.component.TemplateComponent;
-import com.publiccms.logic.service.cms.CmsPlaceService;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysDeptPageService;
+import com.publiccms.component.FileComponent;
+import com.publiccms.component.FileComponent.FileInfo;
+import com.publiccms.component.cache.CacheComponent;
+import com.publiccms.component.template.MetadataComponent;
+import com.publiccms.component.template.TemplateCacheComponent;
+import com.publiccms.component.template.TemplateComponent;
+import com.publiccms.service.cms.CmsPlaceService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysDeptPageService;
 import com.publiccms.views.pojo.CmsPageMetadata;
 import com.publiccms.views.pojo.CmsPlaceMetadata;
 

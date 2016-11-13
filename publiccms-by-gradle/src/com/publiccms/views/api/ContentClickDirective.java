@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.publiccms.common.base.AbstractAppV1Directive;
 import com.publiccms.entities.sys.SysApp;
 import com.publiccms.entities.sys.SysUser;
-import com.publiccms.logic.component.StatisticsComponent;
+import com.publiccms.component.StatisticsComponent;
 import com.publiccms.views.pojo.CmsContentStatistics;
 import com.sanluan.common.handler.RenderHandler;
 

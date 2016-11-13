@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.publiccms.common.base.AbstractTemplateDirective;
+import com.publiccms.component.config.ConfigComponent;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.ConfigComponent;
 import com.sanluan.common.handler.RenderHandler;
 
 @Component

@@ -1,6 +1,6 @@
 package com.publiccms.views.controller.api;
 
-import static com.publiccms.logic.component.SiteComponent.CONTEXT_SITE;
+import static com.publiccms.component.SiteComponent.CONTEXT_SITE;
 import static com.publiccms.views.controller.api.AppController.INTERFACE_NOT_FOUND;
 import static org.springframework.util.StringUtils.uncapitalize;
 
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.publiccms.common.base.AbstractController;
 import com.publiccms.common.base.AbstractTemplateDirective;
-import com.publiccms.logic.component.TemplateComponent;
+import com.publiccms.component.template.TemplateComponent;
 import com.sanluan.common.directive.HttpDirective;
 import com.sanluan.common.handler.HttpParameterHandler;
 
@@ -97,7 +97,7 @@ public class DirectiveController extends AbstractController {
             Map<String, String> map = new HashMap<String, String>();
             map.put("name", directiveName);
             map.put("needAppToken", String.valueOf(entry.getValue().needAppToken()));
-            map.put("needUserToken", String.valueOf(false));
+            map.put("needUserToken", String.valueOf(entry.getValue().needUserToken()));
             actionList.add(map);
         }
     }

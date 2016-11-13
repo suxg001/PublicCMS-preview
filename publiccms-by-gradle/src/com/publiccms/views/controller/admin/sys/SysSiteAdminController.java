@@ -24,13 +24,13 @@ import com.publiccms.entities.sys.SysRole;
 import com.publiccms.entities.sys.SysRoleUser;
 import com.publiccms.entities.sys.SysSite;
 import com.publiccms.entities.sys.SysUser;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysDeptService;
-import com.publiccms.logic.service.sys.SysDomainService;
-import com.publiccms.logic.service.sys.SysRoleService;
-import com.publiccms.logic.service.sys.SysRoleUserService;
-import com.publiccms.logic.service.sys.SysSiteService;
-import com.publiccms.logic.service.sys.SysUserService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysDeptService;
+import com.publiccms.service.sys.SysDomainService;
+import com.publiccms.service.sys.SysRoleService;
+import com.publiccms.service.sys.SysRoleUserService;
+import com.publiccms.service.sys.SysSiteService;
+import com.publiccms.service.sys.SysUserService;
 
 @Controller
 @RequestMapping("sysSite")

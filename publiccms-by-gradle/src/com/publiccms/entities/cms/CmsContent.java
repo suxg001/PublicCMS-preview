@@ -34,7 +34,7 @@ import com.publiccms.common.index.CmsContentInterceptor;
 import com.publiccms.common.index.PublishDateFilterFactory;
 import com.publiccms.common.index.SiteIdFilterFactory;
 import com.publiccms.common.index.StringBridge;
-import com.publiccms.common.spi.Staticable;
+import com.publiccms.common.spi.Static;
 import com.sanluan.common.source.entity.MyColumn;
 
 /**
@@ -47,7 +47,7 @@ import com.sanluan.common.source.entity.MyColumn;
 @FullTextFilterDefs({ @FullTextFilterDef(name = "publishDate", impl = PublishDateFilterFactory.class),
         @FullTextFilterDef(name = "siteId", impl = SiteIdFilterFactory.class) })
 @Indexed(interceptor = CmsContentInterceptor.class)
-public class CmsContent implements java.io.Serializable, Staticable {
+public class CmsContent implements java.io.Serializable, Static {
 
     /**
      * 

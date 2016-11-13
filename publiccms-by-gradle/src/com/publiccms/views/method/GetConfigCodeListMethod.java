@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.publiccms.logic.component.ConfigComponent;
+import com.publiccms.component.config.ConfigComponent;
 import com.sanluan.common.base.BaseMethod;
 
 import freemarker.template.TemplateModelException;

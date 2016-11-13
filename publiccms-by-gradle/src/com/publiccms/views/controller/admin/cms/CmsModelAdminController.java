@@ -16,10 +16,10 @@ import com.publiccms.entities.cms.CmsModel;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysExtend;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.service.cms.CmsModelService;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysExtendFieldService;
-import com.publiccms.logic.service.sys.SysExtendService;
+import com.publiccms.service.cms.CmsModelService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysExtendFieldService;
+import com.publiccms.service.sys.SysExtendService;
 import com.publiccms.views.pojo.CmsModelParamters;
 
 /**

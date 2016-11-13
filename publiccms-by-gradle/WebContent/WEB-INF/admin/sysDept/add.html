@@ -40,11 +40,11 @@
 		</dl>
 		<dl>
 			<dt>拥有全部分类:</dt>
-			<dd><input name="ownsAllCategory" type="checkbox" onclick="if($(this).is(':checked')){$('.ownsAllCategory').hide();}else{$('.ownsAllCategory').show();}"/></dd>
+			<dd><input name="ownsAllCategory" type="checkbox" onclick="if($(this).is(':checked')){$('.ownsAllCategory',navTab.getCurrentPanel()).hide();}else{$('.ownsAllCategory',navTab.getCurrentPanel()).show();}"/></dd>
 		</dl>
 		<dl class="nowrap">
 			<dt>拥有全部页面:</dt>
-			<dd><input name="ownsAllPage" type="checkbox" onclick="if($(this).is(':checked')){$('.ownsAllPage').hide();}else{$('.ownsAllPage').show();}"/></dd>
+			<dd><input name="ownsAllPage" type="checkbox" onclick="if($(this).is(':checked')){$('.ownsAllPage',navTab.getCurrentPanel()).hide();}else{$('.ownsAllPage',navTab.getCurrentPanel()).show();}"/></dd>
 		</dl>
 <#macro categoryTree parentId=''>
 	<@_categoryList parentId=parentId>

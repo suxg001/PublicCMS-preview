@@ -160,3 +160,133 @@ ALTER TABLE  `log_upload` ADD  `file_size` BIGINT NOT NULL COMMENT  '文件大�
 INSERT INTO `sys_moudle` VALUES (60, '文件上传日志', 'log/upload', 'sysUser/lookup', '<i class=\"icon-list-alt icon-large\"></i>', 63, 0);
 -- 20161011 --
 ALTER TABLE `log_operate` MODIFY COLUMN `user_id`  bigint(20) NULL COMMENT '用户ID' AFTER `site_id`;
+-- 20161109 --
+DROP TABLE IF EXISTS `plugin_site`;
+-- 20161112 --
+ALTER TABLE  `cms_category_attribute` CHANGE  `category_id`  `category_id` BIGINT( 11 ) NOT NULL COMMENT  '分类ID'
+DROP TABLE IF EXISTS `plugin_lottery`;
+DROP TABLE IF EXISTS `plugin_lottery_user`;
+DROP TABLE IF EXISTS `plugin_lottery_user_attribute`;
+DROP TABLE IF EXISTS `plugin_vote`;
+DROP TABLE IF EXISTS `plugin_vote_item`;
+DROP TABLE IF EXISTS `plugin_vote_item_attribute`;
+DROP TABLE IF EXISTS `plugin_vote_user`;
+ALTER TABLE `sns_user` engine=MyISAM;
+
+CREATE TABLE `cms_lottery` (
+  `id` int(11) NOT NULL auto_increment,
+  `site_id` int(11) NOT NULL COMMENT '站点ID',
+  `start_date` datetime NOT NULL COMMENT '开始日期',
+  `end_date` datetime NOT NULL COMMENT '结束日期',
+  `interval_hour` int(11) NOT NULL COMMENT '抽奖间隔小时',
+  `gift` int(11) NOT NULL COMMENT '每次可抽奖数量',
+  `total_gift` int(11) NOT NULL COMMENT '奖品总数',
+  `last_gift` int(11) NOT NULL COMMENT '剩余数量',
+  `lottery_count` int(11) NOT NULL COMMENT '可抽奖次数',
+  `fractions` int(11) NOT NULL COMMENT '概率分子',
+  `numerator` int(11) NOT NULL COMMENT '概率分母',
+  `url` varchar(2048) default NULL COMMENT '地址',
+  `title` varchar(100) NOT NULL COMMENT '标题',
+  `description` varchar(300) default NULL COMMENT '描述',
+  `disabled` tinyint(1) NOT NULL COMMENT '是否禁用',
+  `extend_id` int(11) default NULL COMMENT '扩展ID',
+  PRIMARY KEY  (`id`),
+  KEY `start_date` (`start_date`,`end_date`),
+  KEY `disabled` (`disabled`),
+  KEY `site_id` (`site_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='抽奖';
+
+CREATE TABLE `cms_lottery_user` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `lottery_id` int(11) NOT NULL COMMENT '抽奖ID',
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `winning` tinyint(1) NOT NULL COMMENT '是否中奖',
+  `ip` varchar(64) NOT NULL COMMENT 'IP',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  PRIMARY KEY  (`id`),
+  KEY `lottery_id` (`lottery_id`),
+  KEY `user_id` (`user_id`),
+  KEY `winning` (`winning`),
+  KEY `create_date` (`create_date`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='抽奖用户';
+
+CREATE TABLE `cms_lottery_user_attribute` (
+  `lottery_user_id` bigint(20) NOT NULL COMMENT '抽奖用户ID',
+  `data` longtext COMMENT '数据JSON',
+  PRIMARY KEY  (`lottery_user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='抽奖用户扩展';
+
+CREATE TABLE `cms_vote` (
+  `id` int(11) NOT NULL auto_increment,
+  `site_id` int(11) NOT NULL COMMENT '站点ID',
+  `start_date` datetime NOT NULL COMMENT '开始日期',
+  `end_date` datetime NOT NULL COMMENT '结束日期',
+  `interval_hour` int(11) NOT NULL COMMENT '投票间隔小时',
+  `max_vote` int(11) NOT NULL COMMENT '最大投票数',
+  `anonymous` tinyint(1) NOT NULL COMMENT '匿名投票',
+  `user_counts` int(11) NOT NULL COMMENT '参与用户数',
+  `url` varchar(2048) NOT NULL COMMENT '地址',
+  `title` varchar(100) NOT NULL COMMENT '标题',
+  `description` varchar(300) default NULL COMMENT '描述',
+  `disabled` tinyint(1) NOT NULL COMMENT '已禁用',
+  `item_extend_id` int(11) NOT NULL COMMENT '扩展ID',
+  PRIMARY KEY  (`id`),
+  KEY `disabled` (`disabled`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `cms_vote_item` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `vote_id` int(11) NOT NULL COMMENT '投票',
+  `title` varchar(100) NOT NULL COMMENT '标题',
+  `description` varchar(300) default NULL COMMENT '描述',
+  `scores` int(11) NOT NULL COMMENT '票数',
+  `sort` int(11) NOT NULL COMMENT '顺序',
+  PRIMARY KEY  (`id`),
+  KEY `lottery_id` (`vote_id`),
+  KEY `user_id` (`title`),
+  KEY `create_date` (`sort`),
+  KEY `scores` (`scores`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `cms_vote_item_attribute` (
+  `vote_item_id` bigint(20) NOT NULL COMMENT '选项ID',
+  `data` longtext COMMENT '数据JSON',
+  PRIMARY KEY  (`vote_item_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='投票选项扩展';
+
+CREATE TABLE `cms_vote_user` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `lottery_id` int(11) NOT NULL COMMENT '抽奖ID',
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `item_ids` text NOT NULL COMMENT '投票选项',
+  `ip` varchar(64) NOT NULL COMMENT 'IP',
+  `create_date` datetime NOT NULL COMMENT '创建日期',
+  PRIMARY KEY  (`id`),
+  KEY `lottery_id` (`lottery_id`),
+  KEY `user_id` (`user_id`),
+  KEY `create_date` (`create_date`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `sys_moudle` VALUES (45, '用户', null, null, '<i class=\"icon-user icon-large\"></i>', null, 0);
+INSERT INTO `sys_moudle` VALUES (109, '空间管理', null, null, '<i class=\"icon-home icon-large\"></i>', 45, 0);
+INSERT INTO `sys_moudle` VALUES (110, '用户主页', 'homeUser/list', null, '<i class=\"icon-globe icon-large\"></i>', 109, 0);
+INSERT INTO `sys_moudle` VALUES (111, '查看', 'homeUser/view', null, '', 110, 0);
+INSERT INTO `sys_moudle` VALUES (112, '启用', null, 'homeUser/enable', '', 110, 0);
+INSERT INTO `sys_moudle` VALUES (113, '禁用', null, 'homeUser/disable', null, 110, 0);
+INSERT INTO `sys_moudle` VALUES (114, '目录管理', 'homeDirectory/list', 'sysUser/lookup', '<i class=\"icon-folder-close icon-large\"></i>', 109, 0);
+INSERT INTO `sys_moudle` VALUES (115, '启用', null, 'homeDirectory/enable', null, 114, 0);
+INSERT INTO `sys_moudle` VALUES (116, '禁用', null, 'homeDirectory/disable', null, 114, 0);
+INSERT INTO `sys_moudle` VALUES (117, '文章管理', 'homeArticle/list', 'sysUser/lookup', '<i class=\"icon-file-text icon-large\"></i>', 109, 0);
+INSERT INTO `sys_moudle` VALUES (118, '查看', 'homeFile/view', null, null, 117, 0);
+INSERT INTO `sys_moudle` VALUES (119, '启用', null, 'homeFile/enable', null, 117, 0);
+INSERT INTO `sys_moudle` VALUES (120, '禁用', null, 'homeFile/disable', null, 117, 0);
+INSERT INTO `sys_moudle` VALUES (121, '文件管理', 'homeFile/list', 'sysUser/lookup', '<i class=\"icon-file icon-large\"></i>', 109, 0);
+INSERT INTO `sys_moudle` VALUES (122, '启用', null, 'homeFile/enable', null, 121, 0);
+INSERT INTO `sys_moudle` VALUES (123, '禁用', null, 'homeFile/disable', null, 121, 0);
+INSERT INTO `sys_moudle` VALUES (124, '广播管理', 'homeBroadcast/list', 'sysUser/lookup', '<i class=\"icon-bullhorn icon-large\"></i>', 109, 0);
+INSERT INTO `sys_moudle` VALUES (125, '启用', null, 'homeBroadcast/enable', null, 124, 0);
+INSERT INTO `sys_moudle` VALUES (126, '禁用', null, 'homeBroadcast/disable', null, 124, 0);
+DELETE FROM `sys_moudle` WHERE id = 88;
+UPDATE `sys_moudle` SET parent_id = 45 WHERE id = 61;
+UPDATE `sys_moudle` SET parent_id = 30 WHERE id = 107;
+ALTER TABLE  `sys_moudle` ORDER BY  `id`;

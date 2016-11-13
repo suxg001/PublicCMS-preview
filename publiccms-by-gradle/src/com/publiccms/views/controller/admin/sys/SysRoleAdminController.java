@@ -17,13 +17,13 @@ import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysRole;
 import com.publiccms.entities.sys.SysRoleUser;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysMoudleService;
-import com.publiccms.logic.service.sys.SysRoleAuthorizedService;
-import com.publiccms.logic.service.sys.SysRoleMoudleService;
-import com.publiccms.logic.service.sys.SysRoleService;
-import com.publiccms.logic.service.sys.SysRoleUserService;
-import com.publiccms.logic.service.sys.SysUserService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysMoudleService;
+import com.publiccms.service.sys.SysRoleAuthorizedService;
+import com.publiccms.service.sys.SysRoleMoudleService;
+import com.publiccms.service.sys.SysRoleService;
+import com.publiccms.service.sys.SysRoleUserService;
+import com.publiccms.service.sys.SysUserService;
 
 @Controller
 @RequestMapping("sysRole")

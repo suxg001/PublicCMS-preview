@@ -28,7 +28,6 @@ import freemarker.template.TemplateModelIterator;
 
 @Component
 public class GetHtmlMethod extends BaseMethod {
-    CloseableHttpClient httpclient = HttpClients.createDefault();
 
     /*
      * (non-Javadoc)
@@ -43,8 +42,10 @@ public class GetHtmlMethod extends BaseMethod {
         String body = getString(1, arguments);
         String html = null;
         if (notEmpty(url)) {
+            CloseableHttpClient httpclient = null;
             CloseableHttpResponse response = null;
             try {
+                httpclient = HttpClients.createDefault();
                 if (notEmpty(paramters) || notEmpty(body)) {
                     HttpPost httppost = new HttpPost(url);
                     if (notEmpty(paramters)) {
@@ -74,6 +75,13 @@ public class GetHtmlMethod extends BaseMethod {
                 try {
                     if (notEmpty(response)) {
                         response.close();
+                    }
+                } catch (IOException e) {
+                    log.error(e.getMessage());
+                }
+                try {
+                    if (notEmpty(httpclient)) {
+                        httpclient.close();
                     }
                 } catch (IOException e) {
                     log.error(e.getMessage());

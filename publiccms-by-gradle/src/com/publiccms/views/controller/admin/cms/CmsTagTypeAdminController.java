@@ -14,8 +14,8 @@ import com.publiccms.common.base.AbstractController;
 import com.publiccms.entities.cms.CmsTagType;
 import com.publiccms.entities.log.LogOperate;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.service.cms.CmsTagTypeService;
-import com.publiccms.logic.service.log.LogLoginService;
+import com.publiccms.service.cms.CmsTagTypeService;
+import com.publiccms.service.log.LogLoginService;
 
 @Controller
 @RequestMapping("cmsTagType")

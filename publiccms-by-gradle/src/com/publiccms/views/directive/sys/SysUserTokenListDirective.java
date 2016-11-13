@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.publiccms.logic.service.sys.SysUserTokenService;
+import com.publiccms.service.sys.SysUserTokenService;
 import com.publiccms.common.base.AbstractTemplateDirective;
 import com.sanluan.common.handler.PageHandler;
 import com.sanluan.common.handler.RenderHandler;
@@ -25,6 +25,11 @@ public class SysUserTokenListDirective extends AbstractTemplateDirective {
     @Override
     public boolean needAppToken() {
         return true;
+    }
+    
+    @Override
+    public boolean needUserToken() {
+        return false;
     }
 
     @Autowired

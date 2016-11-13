@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.publiccms.entities.sys.SysUser;
-import com.publiccms.logic.service.sys.SysRoleAuthorizedService;
-import com.publiccms.logic.service.sys.SysRoleService;
-import com.publiccms.logic.service.sys.SysUserService;
+import com.publiccms.service.sys.SysRoleAuthorizedService;
+import com.publiccms.service.sys.SysRoleService;
+import com.publiccms.service.sys.SysUserService;
 import com.sanluan.common.base.BaseInterceptor;
 
 import config.initializer.AdminInitializer;

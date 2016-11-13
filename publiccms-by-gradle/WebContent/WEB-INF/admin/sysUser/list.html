@@ -79,10 +79,10 @@
 			<tr target="sid" rel="${a.id}">
 				<td>${a.id!}</td>
 				<td>${(a.name)!}</td>
-				<td>${(a.nickName)!}${(a.superuserAccess)?then('[<font color="red">管理员</font>]','')}</td>
+				<td>${(a.nickName)!}${(a.superuserAccess)?then('[<font color="red">管理员</font>]','')?no_esc}</td>
 				<td>${(a.email)!}</td>
 				<td>${a.emailChecked?then('已验证','未验证')}</td>
-				<td>${(a.disabled)?then('<font color="red">禁用</font>','正常')}</td>
+				<td>${(a.disabled)?then('<font color="red">禁用</font>','正常')?no_esc}</td>
 				<td>${a.lastLoginIp!}</td>
 				<td>${a.lastLoginDate!}</td>
 				<td>${a.loginCount!}</td>

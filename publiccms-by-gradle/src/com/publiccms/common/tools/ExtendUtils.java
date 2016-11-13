@@ -25,10 +25,10 @@ public class ExtendUtils extends Base {
             }
             for (SysExtendField extend : sysExtendFieldList) {
                 String value = extendFieldMap.get(extend.getCode());
-                if (notEmpty(value)) {
-                    map.put(extend.getCode(), value);
-                } else {
+                if (null == value) {
                     map.put(extend.getCode(), extend.getDefaultValue());
+                } else {
+                    map.put(extend.getCode(), value);
                 }
             }
         }
@@ -44,10 +44,10 @@ public class ExtendUtils extends Base {
             }
             for (ExtendField extend : extendFieldList) {
                 String value = extendFieldMap.get(extend.getCode());
-                if (notEmpty(value)) {
-                    map.put(extend.getCode(), value);
-                } else {
+                if (null == value) {
                     map.put(extend.getCode(), extend.getDefaultValue());
+                } else {
+                    map.put(extend.getCode(), value);
                 }
             }
         }

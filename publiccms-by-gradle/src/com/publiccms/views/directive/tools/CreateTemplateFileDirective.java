@@ -1,6 +1,6 @@
 package com.publiccms.views.directive.tools;
 
-import static com.publiccms.logic.component.SiteComponent.getFullFileName;
+import static com.publiccms.component.SiteComponent.getFullFileName;
 
 import java.io.IOException;
 
@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.publiccms.common.base.AbstractTemplateDirective;
+import com.publiccms.component.template.TemplateComponent;
 import com.publiccms.entities.sys.SysSite;
-import com.publiccms.logic.component.TemplateComponent;
 import com.sanluan.common.handler.RenderHandler;
 
 import freemarker.template.TemplateException;

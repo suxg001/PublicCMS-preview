@@ -30,8 +30,8 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.publiccms.common.view.InitializeFreeMarkerView;
-import com.publiccms.logic.component.SiteComponent;
-import com.publiccms.logic.component.TemplateComponent;
+import com.publiccms.component.SiteComponent;
+import com.publiccms.component.template.TemplateComponent;
 import com.sanluan.common.base.Base;
 import com.sanluan.common.datasource.MultiDataSource;
 
@@ -132,7 +132,7 @@ public class ApplicationConfig extends Base {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource bean = new ResourceBundleMessageSource();
-        bean.setBasenames(new String[] { "config.language.message", "config.language.config", "config.language.plugin" });
+        bean.setBasenames(new String[] { "config.language.message", "config.language.config", "config.language.operate" });
         bean.setCacheSeconds(300);
         bean.setUseCodeAsDefaultMessage(true);
         return bean;

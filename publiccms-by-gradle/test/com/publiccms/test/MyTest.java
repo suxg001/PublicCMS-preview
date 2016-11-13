@@ -10,8 +10,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.publiccms.entities.log.LogOperate;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.log.LogOperateService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.log.LogOperateService;
 
 import config.ApplicationConfig;
 

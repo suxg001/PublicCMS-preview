@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 import com.sanluan.common.base.Base;
 
-public class HTMLUtils extends Base {
+public class HtmlUtils extends Base {
     public static final Pattern HTML_PATTERN = Pattern.compile("<[^>]+>");
 
     public static String removeHtmlTag(String string) {

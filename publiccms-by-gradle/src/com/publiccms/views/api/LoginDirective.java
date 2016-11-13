@@ -20,9 +20,9 @@ import com.publiccms.entities.sys.SysApp;
 import com.publiccms.entities.sys.SysSite;
 import com.publiccms.entities.sys.SysUser;
 import com.publiccms.entities.sys.SysUserToken;
-import com.publiccms.logic.service.log.LogLoginService;
-import com.publiccms.logic.service.sys.SysUserService;
-import com.publiccms.logic.service.sys.SysUserTokenService;
+import com.publiccms.service.log.LogLoginService;
+import com.publiccms.service.sys.SysUserService;
+import com.publiccms.service.sys.SysUserTokenService;
 import com.sanluan.common.handler.RenderHandler;
 
 @Component
@@ -43,8 +43,7 @@ public class LoginDirective extends AbstractAppV1Directive {
             String ip = getIpAddress(handler.getRequest());
             if (user.getPassword().equals(encode(password))) {
                 String authToken = UUID.randomUUID().toString();
-                sysUserTokenService
-                        .save(new SysUserToken(authToken, site.getId(), user.getId(), app.getChannel(), getDate(), ip));
+                sysUserTokenService.save(new SysUserToken(authToken, site.getId(), user.getId(), app.getChannel(),getDate(), ip));
                 service.updateLoginStatus(user.getId(), ip);
                 logLoginService
                         .save(new LogLogin(site.getId(), username, user.getId(), app.getChannel(), ip, true, getDate(), ip));

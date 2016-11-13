@@ -8,7 +8,7 @@ import static com.publiccms.common.constants.CmsVersion.getVersion;
 import static com.publiccms.common.constants.CommonConstants.getCookiesUser;
 import static com.publiccms.common.constants.CommonConstants.getCookiesUserSplit;
 import static com.publiccms.common.constants.CommonConstants.getXPowered;
-import static com.publiccms.logic.service.log.LogLoginService.CHANNEL_WEB;
+import static com.publiccms.service.log.LogLoginService.CHANNEL_WEB;
 import static com.sanluan.common.tools.RequestUtils.cancleCookie;
 import static com.sanluan.common.tools.RequestUtils.getCookie;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -26,8 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.publiccms.entities.sys.SysUser;
 import com.publiccms.entities.sys.SysUserToken;
-import com.publiccms.logic.service.sys.SysUserService;
-import com.publiccms.logic.service.sys.SysUserTokenService;
+import com.publiccms.service.sys.SysUserService;
+import com.publiccms.service.sys.SysUserTokenService;
 import com.sanluan.common.base.BaseInterceptor;
 
 /**
@@ -68,6 +68,8 @@ public class WebContextInterceptor extends BaseInterceptor {
                         } catch (NumberFormatException e) {
                             cancleCookie(contextPath, response, getCookiesUser(), null);
                         }
+                    } else {
+                        cancleCookie(contextPath, response, getCookiesUser(), null);
                     }
                 }
             }

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.publiccms.common.base.AbstractTaskDirective;
-import com.publiccms.logic.service.cms.CmsContentService;
+import com.publiccms.service.cms.CmsContentService;
 import com.sanluan.common.handler.RenderHandler;
 
 @Component

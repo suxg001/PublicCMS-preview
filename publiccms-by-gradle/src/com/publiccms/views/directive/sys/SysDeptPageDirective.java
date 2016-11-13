@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 import com.publiccms.common.base.AbstractTemplateDirective;
 import com.publiccms.entities.sys.SysDept;
 import com.publiccms.entities.sys.SysDeptPage;
-import com.publiccms.logic.service.sys.SysDeptPageService;
-import com.publiccms.logic.service.sys.SysDeptService;
+import com.publiccms.service.sys.SysDeptPageService;
+import com.publiccms.service.sys.SysDeptService;
 import com.sanluan.common.handler.RenderHandler;
 
 @Component
