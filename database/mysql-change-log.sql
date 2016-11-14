@@ -163,7 +163,7 @@ ALTER TABLE `log_operate` MODIFY COLUMN `user_id`  bigint(20) NULL COMMENT '用�
 -- 20161109 --
 DROP TABLE IF EXISTS `plugin_site`;
 -- 20161112 --
-ALTER TABLE  `cms_category_attribute` CHANGE  `category_id`  `category_id` BIGINT( 11 ) NOT NULL COMMENT  '分类ID'
+ALTER TABLE  `cms_category_attribute` CHANGE  `category_id`  `category_id` BIGINT( 11 ) NOT NULL COMMENT  '分类ID';
 DROP TABLE IF EXISTS `plugin_lottery`;
 DROP TABLE IF EXISTS `plugin_lottery_user`;
 DROP TABLE IF EXISTS `plugin_lottery_user_attribute`;
