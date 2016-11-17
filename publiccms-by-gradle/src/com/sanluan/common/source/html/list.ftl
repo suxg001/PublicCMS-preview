@@ -25,17 +25,17 @@
 		</div>
 	</form>
 </div>
-<@_sysAuthorized roleIds=admin.roles urls='${entityName?uncap_first}/add,${entityName?uncap_first}/delete'><#assign authorizedMap=map/></@_sysAuthorized>
+<#noparse><@_sysAuthorized roleIds=admin.roles urls='</#noparse>${entityName?uncap_first}/add,${entityName?uncap_first}/delete<#noparse>'><#assign authorizedMap=map/></@_sysAuthorized></#noparse>
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-		<#if authorizedMap['${entityName?uncap_first}/add']>
+		<#noparse><#if authorizedMap['${entityName?uncap_first}/add']></#noparse>
 			<li><a href="${entityName?uncap_first}/add.html" target="navTab" rel="${entityName?uncap_first}/add"><i class="icon-plus-sign-alt icon-large"></i> 添加</a></li>
 			<li><a href="${entityName?uncap_first}/add.html?id={sid}" target="navTab" rel="${entityName?uncap_first}/edit"><i class="icon-edit icon-large"></i> 修改</a></li>
-		</#if>
-		<#if authorizedMap['${entityName?uncap_first}/delete']>
+		<#noparse></#if></#noparse>
+		<#noparse><#if authorizedMap['${entityName?uncap_first}/delete']></#noparse>
 			<li><a href="${entityName?uncap_first}/delete.do?id={sid}" title="确定要删除该条记录吗?" target="ajaxTodo"><i class="icon-trash icon-large"></i> 删除</a></li>
-		</#if>
+		<#noparse></#if></#noparse>
 		</ul>
 	</div>
 ${"<@_"+entityName?replace('Cms','')?uncap_first+"List"} <#include "../include_condition/paramter.ftl">>
